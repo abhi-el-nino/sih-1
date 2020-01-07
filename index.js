@@ -5,7 +5,10 @@ const app = express();
 const db = require('./config/mongoose');
 const path=require('path');
 const expressLayouts=require('express-ejs-layouts');
-
+const session = require('express-session');
+const passport=require('passport');
+const passportLocal = require('./config/passport-local-strategy');
+const mongoStore = require('connect-mongo')(session);
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -21,7 +24,23 @@ app.set('layout extractScripts', true);
 app.set('view engine', 'ejs');
 
 app.set('views', './views');
+app.use(session({
+    name: 'codial',
+    secret: 'utt4MOOxHZwzmZBtEWoY1ByGUDBYqlZb',
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        maxAge: (1000 * 60 * 100)
+    },
+    store: new mongoStore({
+        mongooseConnection: db,
+        autoRemove: 'disbaled'
+    })
+},
 
+));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/', require('./routes'));
 
 app.listen(port, function (err) {
