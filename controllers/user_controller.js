@@ -40,7 +40,7 @@ module.exports.login = (req, res) => {
 
     if (req.isAuthenticated()) {
 
-        return res.redirect('/users/profile')
+        return res.redirect('/');
     }
     return res.render('login', {
         title: "login"
