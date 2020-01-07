@@ -4,11 +4,12 @@ const path = require('path')
 const AVATAR_PATH = path.join('/uploads/users/avatars');
 const userSchema = new mongoose.Schema({
 
-    email: {
+    emailOrPhone: {
         type: String,
-        required: true,
-        unique: true
+        unique: true,
+        required:true
     },
+   
     password: {
         type: String,
         required: true,

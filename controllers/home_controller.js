@@ -4,8 +4,3 @@ module.exports.home=(req,res)=>{
     });
 }
 
-module.exports.register=(req,res)=>{
-    return res.render('register',{
-        title:'SIH | Home'
-    });
-}
