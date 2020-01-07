@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>BuyFresh</title>
-
+  <link rel="icon" href="img/logo.png">
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
@@ -187,7 +187,27 @@
   </header>
   <!-- Header End -->
   <%- body %>
+  <% if (locals.user){ %>
+  <div id="user-chat-box">
+    <ul id="chat-messages-list">
+      <li class="other-message">
+        <span>Other Message</span>
+      </li>
+      <li class="self-message">
+        <span>
+          Self Message
+        </span>
 
+      </li>
+
+    </ul>
+    <div id="chat-message-input-container">
+      <input id="chat-message-input" placeholder="Type message here">
+      <button id="send-message">Send</button>
+    </div>
+
+  </div>
+  <% } %>
   <!-- Partner Logo Section Begin -->
   <div class="partner-logo">
     <div class="container">
