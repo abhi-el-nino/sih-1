@@ -18,8 +18,7 @@
     background-color: white;
     overflow: auto; 
   }
-    
-    
+  
 #user-chat-box #chat-messages-list .other-message {
       text-align: left;
       padding: 5px; 
