@@ -1,6 +1,6 @@
 
 const mongoose =require('mongoose');
-mongoose.connect('mongodb://localhost/grooveMusic_development');
+mongoose.connect('mongodb://localhost/buyfresh');
 const db = mongoose.connection; //gives acess to database
 // if error
 db.on('error', console.error.bind('error connecting to db '));

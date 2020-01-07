@@ -7,7 +7,7 @@ const path=require('path');
 const expressLayouts=require('express-ejs-layouts');
 const session = require('express-session');
 const passport=require('passport');
-const passportLocal = require('./config/passport-local-strategy');
+const passportLocal = require('./config/passport-local');
 const mongoStore = require('connect-mongo')(session);
 
 // setup the chat server to be used with socket.io
@@ -48,6 +48,7 @@ app.use(session({
 ));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
 app.use('/', require('./routes'));
 
 app.listen(port, function (err) {

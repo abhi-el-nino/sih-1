@@ -10,15 +10,16 @@ module.exports.register = (req, res) => {
 }
 module.exports.createUser = async (req, res) => {
     try {
+        
         if (req.body.password != req.body.confirm_password) {
             return res.redirect('back');
         }
-        let user = User.findOne({
+        let user = await User.findOne({
             emailOrPhone: req.body.emailOrPhone
         });
 
         if (!user) {
-            let newuser = User.create({
+            let newuser = await User.create({
                 name: req.body.name,
                 emailOrPhone: req.body.emailOrPhone,
                 password: req.body.password
@@ -39,7 +40,7 @@ module.exports.login = (req, res) => {
 
     if (req.isAuthenticated()) {
 
-        return res.redirect('/users/profile')
+        return res.redirect('/');
     }
     return res.render('login', {
         title: "login"
