@@ -30,12 +30,12 @@ passport.use(new localStrategy({
 
 
 passport.serializeUser(function(user, done) {
-    console.log('serializer')
+   
     return done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-    console.log('deserializer')
+ 
     User.findById(id, function(err, user) {
         if (err) {
             console.log('error in finding-->passport');
@@ -47,7 +47,7 @@ passport.deserializeUser(function(id, done) {
 
 //check if user is authenticated or not
 passport.checkAuthentication = function(req, res, next) {
-    console.log("Checking auth");
+    
     
     if (req.isAuthenticated()) {
         return next();
@@ -62,7 +62,7 @@ passport.checkAuthentication = function(req, res, next) {
 passport.setAuthenticatedUser = function(req, res, next) {
     if (req.isAuthenticated()) {
        
-        console.log("setting auth");
+        
         res.locals.user = req.user;
 
     }
