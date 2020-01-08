@@ -198,7 +198,7 @@
           <nav class="nav-menu mobile-menu">
             <ul>
               <li class="active"><a href="/">Home</a></li>
-              <li><a href="./shop">Shop</a></li>
+              <li><a href="/shop">Shop</a></li>
               <li>
                 <a href="#">Collection</a>
                 <ul class="dropdown">
@@ -228,8 +228,8 @@
     <%- body %>
           <% if(locals.user){%>
           <!-- chat box start-->
-          <div id="user-chat-box">
-            <ul id="chat-messages-list">
+          <div id="user-chat-box" class="collapse">
+            <ul id="chat-messages-list" class="card card-body">
               <li class="other-message">
                 <span>Other Message</span>
               </li>
@@ -243,9 +243,9 @@
             </ul>
             <div id="chat-message-input-container">
               <input id="chat-message-input" placeholder="Type message here">
-              <button id="send-message">Send</button>
+              <button id="send-message"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
             </div>
-
+            
           </div>
           <%}%>
     <!-- Partner Logo Section Begin -->

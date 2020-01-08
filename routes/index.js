@@ -4,6 +4,7 @@ const passport=require('passport');
 const homeController=require('../controllers/home_controller');
 const itemController=require('../controllers/items_controller');
 router.get('/',homeController.home);
+router.get('/shop',homeController.shop);
 router.get('/contact',homeController.contact);
 router.get('/shopping-cart',homeController.shoppingCart);
 router.get("/buy_product/:num",homeController.buyProduct);

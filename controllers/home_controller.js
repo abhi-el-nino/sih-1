@@ -27,6 +27,11 @@ module.exports.home=(req,res)=>{
 }
 
 
+module.exports.shop=(req,res) =>{
+	res.render('shop.ejs');
+}
+
+
 module.exports.contact=(req,res)=>{
     return res.render('contact',{
         title:'SIH | Contact'
