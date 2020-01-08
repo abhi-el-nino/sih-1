@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="itemUpload-form">
+                <h2>Upload Item</h2>
+                <form action="/items/upload" method="POST" enctype="multipart/form-data">
+                    <div class="group-input">
+                        <label for="item-image">Item image*</label>
+                        <input type="file" id="item-image" name="item-image">
+                    </div>
+                    <div class="group-input">
+                        <label for="item-name">Item Name *</label>
+                        <input type="text" id="item-name" name="item_name">
+                    </div>
+                    <div class="group-input">
+                        <label for="price">Price *</label>
+                        <input type="text" id="price" name="price">
+                    </div>
+                    <button type="submit" class="site-btn register-btn">REGISTER</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

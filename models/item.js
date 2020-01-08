@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path')
-const AVATAR_PATH = path.join('/uploads/items/avatars');
+const IMAGE_PATH = path.join('/uploads/items/');
 const itemSchema = new mongoose.Schema({
 
     title: {
@@ -18,7 +18,7 @@ const itemSchema = new mongoose.Schema({
         ref: 'Users'
     },
 
-    avatar: {
+    image: {
         type: String
     },
     price: {
@@ -41,14 +41,14 @@ itemSchema.methods.toJSON = function () {
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
 
-        cb(null, path.join(__dirname, '..', AVATAR_PATH));
+        cb(null, path.join(__dirname, '..', IMAGE_PATH));
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now())
     }
 });
-itemSchema.statics.uploadedAvatar = multer({ storage: storage }).single('avatar');
-itemSchema.statics.avatarPath = AVATAR_PATH;
+itemSchema.statics.uploadedImage = multer({ storage: storage }).single('item-image');
+itemSchema.statics.imagePath = IMAGE_PATH;
 
 const Items = mongoose.model('Items', itemSchema);
 module.exports = Items;

@@ -1,3 +1,4 @@
+const Message=require('../models/message');
 module.exports.home=(req,res)=>{
     return res.render('index',{
         title:'SIH | Home'
@@ -15,4 +16,16 @@ module.exports.shoppingCart=(req,res)=>{
         title:'SIH | Shopping Cart'
     });
 }
+module.exports.fetchMessages=async (req,res)=>{
+try{
+    let messages=await Message.find({
+        $or: [
+            { $and : [ { sender:req.user._id }, { receiver:req.params.id } ] },
+            { $and : [ { sender:req.params._id }, { receiver:req.user._id} ] }
+        ]
+    });
+    return res.json()
+}catch(err){
 
+}
+}
