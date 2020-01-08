@@ -14,7 +14,7 @@
 #user-chat-box #chat-messages-list {
     list-style: none;
     padding: 10px;
-    height: 87%;
+    height: 76%;
     background-color: white;
     overflow: auto; 
   }
@@ -47,7 +47,8 @@
        }
 
  #user-chat-box #chat-message-input-container {
-    height: 13%;
+    height: 12%;
+    margin-bottom: 1%;
     width: 100%;
     overflow-y: auto;
     display: flex;
@@ -71,3 +72,29 @@
       border: none;
       background: #58d258; 
     }
+    #user-chat-box #chat-message-lock-container {
+      height: 13%;
+      width: 100%;
+      overflow-y: auto;
+      display: flex;
+      border-radius: 5px;
+      flex-direction: row; 
+    }
+  
+  
+  #user-chat-box #chat-message-lock-container #lock-input {
+        height: 100%;
+        width: 70%; 
+        border-radius: 5px;
+      }
+  
+  #user-chat-box #chat-message-lock-container #lock-buyer {
+        height: 100%;
+        width: 30%;
+        font-size: 25px;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        
+      }
+  

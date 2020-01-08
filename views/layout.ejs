@@ -55,7 +55,6 @@
         </div>
         <div class="ht-right">
 
-          <!-- chat box end-->
           <% if(locals.user == undefined){%>
           
           <a href="/users/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
@@ -245,6 +244,10 @@
               <input id="chat-message-input" placeholder="Type message here">
               <button id="send-message"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
             </div>
+            <form id="chat-message-lock-container" method="POST" action="/shop/<%=user.id%>">
+              <input id="lock-input" name="final-price" placeholder="final amount">
+              <button id="lock-buyer" class="btn btn-danger"><i class="fa fa-lock" aria-hidden="true"></i></button>
+            </form>
             
           </div>
           <%}%>
@@ -378,6 +381,7 @@
   <script src="/js/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
   <script src="/ajax/chat_engine.js"></script>
+  <script src="/js/lock-amount.js"></script>
   <% if (locals.user){ %>
           <script>
             new ChatEngine('user-chat-box', '<%= locals.user._id %>')

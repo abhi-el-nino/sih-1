@@ -6,7 +6,6 @@
     Version: 1.0
     Created: Colorlib
 ---------------------------------------------------------  */
-
 'use strict';
 
 (function ($) {
@@ -26,7 +25,6 @@
         var bg = $(this).data('setbg');
         $(this).css('background-image', 'url(' + bg + ')');
     });
-
     /*------------------
 		Navigation
 	--------------------*/

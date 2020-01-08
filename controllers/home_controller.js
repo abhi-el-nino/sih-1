@@ -1,4 +1,7 @@
 const Message=require('../models/message');
+const User=require('../models/User');
+const Order=require('../models/Order');
+const Item=require('../models/item');
 const products=[{
 	name:"Potato",
 	image:"//cdn.grofers.com/app/images/products/normal/pro_261115.jpg?ts=1576743641",
@@ -28,7 +31,39 @@ module.exports.home=(req,res)=>{
 
 
 module.exports.shop=(req,res) =>{
-	res.render('shop.ejs');
+	User.findById(req.params.id,function(err,user){
+		if(user){
+			var item = Item.create({
+				title:null,
+				farmer:null,
+				image:null,
+				price:req.body.final-price,
+				discount:0
+			})
+			 User.findById(user.order,function(err,order){
+				if(order){
+					order.items.push(item);
+					order.save();
+					// update total price
+				}else{
+				 order =  Order.create({
+					items:[],
+					buyer:req.params._id,
+					price:req.body.final-price,
+					transaction:null
+				});
+				order.items.push(item);
+				order.save();
+				 }
+			 });
+			 return res.status(200).json({
+				data:{
+					user:user
+				},
+				message:"order placed"
+			});
+	}})
+	
 }
 
 
