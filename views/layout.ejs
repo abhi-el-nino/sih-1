@@ -57,7 +57,13 @@
 
           <!-- chat box end-->
           <% if(locals.user == undefined){%>
+          
           <a href="/users/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
+          
+          <div class="top-social">
+            <a href="/users/auth/google"><i class="fa fa-google" aria-hidden="true">&nbsp login</i>
+            </a>
+          </div>
           <%}else{%>
           <a href="/users/logout" class="login-panel"><i class="fa fa-user"></i>Logout</a>
           <%}%>
@@ -85,12 +91,6 @@
               </select>
             </div>
             
-            <div class="top-social">
-              <a href="#"><i class="ti-facebook"></i></a>
-              <a href="#"><i class="ti-twitter-alt"></i></a>
-              <a href="#"><i class="ti-linkedin"></i></a>
-              <a href="#"><i class="ti-pinterest"></i></a>
-            </div>
           </div>
         </div>
       </div>
