@@ -46,7 +46,7 @@ module.exports.upload = (req, res) => {
 module.exports.toggleCart = async (req, res) => {
     try {
        
-
+let user=await Users.findById(req.user._id);
 
         
         
