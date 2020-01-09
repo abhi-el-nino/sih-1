@@ -11,4 +11,9 @@ router.get("/buy_product/:num",homeController.buyProduct);
 router.use('/api',require('./api'));
 router.post('/upload-item',passport.checkAuthentication,itemController.upload);
 router.use('/users',require('./user'));
+router.post('/sms',(req,res)=>{
+  console.log(req.params);
+  return res.send('200');
+})
+
 module.exports=router;
