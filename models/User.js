@@ -38,10 +38,12 @@ const userSchema = new mongoose.Schema({
             ref: 'Item'
         }
     ],
-    order:{
-        type: mongoose.Schema.Types.ObjectId,
-            ref: 'Order'
-    }
+    orders:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+                ref: 'Order'
+        }
+    ]
 }, {
     timestamps: true
 });

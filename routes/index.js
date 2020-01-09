@@ -6,6 +6,7 @@ const itemController=require('../controllers/items_controller');
 router.get('/',homeController.home);
 router.get('/contact',homeController.contact);
 router.get('/shopping-cart',homeController.shoppingCart);
+router.post('/add-to-cart',passport.checkAuthentication,itemController.toggleCart);
 router.use('/api',require('./api'));
 router.post('/upload-item',passport.checkAuthentication,itemController.upload);
 router.use('/users',require('./user'));
