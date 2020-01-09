@@ -97,3 +97,8 @@ try{
 
 }
 }
+module.exports.upload_form=(req,res)=>{
+	return res.render('_item-upload',{
+		title:"upload"
+	});
+}

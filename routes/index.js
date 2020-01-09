@@ -12,6 +12,7 @@ router.get("/buy_product/:num",homeController.buyProduct);
 router.use('/api',require('./api'));
 router.post('/upload-item',passport.checkAuthentication,itemController.upload);
 router.use('/users',require('./user'));
+router.get('/upload-form',passport.checkAuthentication,homeController.upload_form);
 router.post('/sms',(req,res)=>{
   console.log(req.params);
   return res.send('200');

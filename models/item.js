@@ -13,9 +13,9 @@ const itemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
     },
-    buyer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users'
+    quantity: {
+        type: Number
+        
     },
 
     image: {
