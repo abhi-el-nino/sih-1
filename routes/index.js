@@ -8,7 +8,7 @@ router.post('/shop/:id',homeController.shop);
 router.get('/contact',homeController.contact);
 router.get('/shopping-cart',homeController.shoppingCart);
 router.post('/add-to-cart',passport.checkAuthentication,itemController.toggleCart);
-router.get("/buy_product/:num",homeController.buyProduct);
+router.get("/buy_product/:id",homeController.buyProduct);
 router.use('/api',require('./api'));
 router.post('/upload-item',passport.checkAuthentication,itemController.upload);
 router.use('/users',require('./user'));
