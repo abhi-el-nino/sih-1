@@ -14,7 +14,7 @@
 #user-chat-box #chat-messages-list {
     list-style: none;
     padding: 10px;
-    height: 70%;
+    height: 76%;
     background-color: white;
     overflow: auto; 
   }
@@ -28,7 +28,9 @@
  #user-chat-box #chat-messages-list .other-message span {
         display: inline-block;
         padding: 15px;
-        background-color: #ffa0a0; 
+        color:white;
+        border-radius: 5px;
+        background-color: #dfad51; 
       }
     
        
@@ -39,27 +41,60 @@
  #user-chat-box #chat-messages-list .self-message span {
         display: inline-block;
         padding: 15px;
-        background-color: #a0dcff;
+        color:white;
+        border-radius: 5px;
+        background-color: #dfad51;
        }
 
  #user-chat-box #chat-message-input-container {
-    height: 24%;
+    height: 12%;
+    margin-bottom: 1%;
     width: 100%;
+    overflow-y: auto;
     display: flex;
+    border-radius: 5px;
     flex-direction: row; 
   }
 
 
 #user-chat-box #chat-message-input-container #chat-message-input {
-      height: 50%;
+      height: 100%;
       width: 70%; 
+      border-radius: 5px;
     }
 
 #user-chat-box #chat-message-input-container #send-message {
-      height: 50%;
+      height: 100%;
       width: 30%;
       font-size: 25px;
       color: white;
+      border-radius: 5px;
       border: none;
       background: #58d258; 
     }
+    #user-chat-box #chat-message-lock-container {
+      height: 13%;
+      width: 100%;
+      overflow-y: auto;
+      display: flex;
+      border-radius: 5px;
+      flex-direction: row; 
+    }
+  
+  
+  #user-chat-box #chat-message-lock-container #lock-input {
+        height: 100%;
+        width: 70%; 
+        border-radius: 5px;
+      }
+  
+  #user-chat-box #chat-message-lock-container #lock-buyer {
+        height: 100%;
+        width: 30%;
+        font-size: 25px;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        
+      }
+  
