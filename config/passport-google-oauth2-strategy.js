@@ -17,8 +17,8 @@ function(accessToken,refreshToken,profile,done){
     User.findOne({emailOrPhone:profile.emails[0].value}).exec(function(err,user){
         if(err){console.log("error in google-passport",err);return;}
 
-        console.log(profile);
-        console.log("user:-",user);
+        // console.log(profile);
+        // console.log("user:-",user);
         if(user){
             return done(null,user);
         }else{
