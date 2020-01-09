@@ -45,10 +45,16 @@ module.exports.upload = (req, res) => {
 }
 module.exports.toggleCart = async (req, res) => {
     try {
-        let user = await Users.findById(req.user._id);
-        if (user.cart.includes(req.body.itemId)) {
-            await user.update(req.user._id, { $pull: { cart: req.body.itemId } });
+       
 
+
+        
+        
+        if (await user.cart.includes(req.body.itemId)) {
+     
+            
+            await Users.findByIdAndUpdate(req.user._id,{ $pull: { cart:req.body.itemId} });
+            await user.save();
             return res.status(200).json({
                 data: {
                     added: false
@@ -56,7 +62,8 @@ module.exports.toggleCart = async (req, res) => {
             });
 
         } else {
-            user.cart.push(req.body.itemId);
+            await user.cart.push(req.body.itemId);
+            await user.save();
             return res.status(200).json({
                 data: {
                     added: true

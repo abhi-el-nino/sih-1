@@ -22,7 +22,7 @@ const itemSchema = new mongoose.Schema({
         type: String
     },
     price: {
-        type: Number
+        type: String
     },
     discount: {
         type: Number

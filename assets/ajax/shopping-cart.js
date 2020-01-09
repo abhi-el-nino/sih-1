@@ -1,14 +1,16 @@
+console.log("carter called");
 class CartFill {
     constructor(adder) {
         this.adder = adder;
         this.addTocart();
+       
 
     }
     addTocart() {
         $(this.adder).click(function (e) {
             e.preventDefault();
             let self = this;
-
+                console.log("Hello")
             let itemId = $(self).attr('id').split("-")[1];
             $.ajax({
                 type: "post",
@@ -18,6 +20,7 @@ class CartFill {
                 },
 
                 success: function (data) {
+                    console.log(data);
                     let cartCount = $('#cart-count').html();
                     cartCount = parseInt(cartCount);
                     if (data.data.added == true) {
