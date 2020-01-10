@@ -24,6 +24,16 @@ module.exports.createUser = async (req, res) => {
                 emailOrPhone: req.body.emailOrPhone,
                 password: req.body.password
             });
+            if(req.body.userType=="Farmer"){
+                newuser.isFarmer=true;
+                newuser.isBuyer=false;
+               await newuser.save();
+            }else{
+                newUser.isFarmer=false;
+                newuser.isBuyer=true;
+                await newuser.save();
+
+            }
             return res.redirect('/users/login')
         } else {
             return res.redirect('back');
