@@ -59,29 +59,42 @@ module.exports.contact=(req,res)=>{
         title:'SIH | Contact'
     });
 }
-module.exports.shoppingCart=(req,res)=>{
-	var cartItems=[];
-	User.findById(req.user._id,function(err,user){
-		if(err){
-			console.log(err);
-		}else{
-			(user.cart).forEach(function(item){
-				Item.findById(item,function(err,founditem){
-					if(err){
-						console.log(err);
-					}else{
-						cartItems.push(founditem);
-					}
-				});
-			});
-			console.log(cartItems);
-    return res.render('shopping-cart',{
-        title:'SIH | Shopping Cart',
-		cartItems:cartItems
-    });
-		}
-	});
+module.exports.shoppingCart=async (req,res)=>{
+	// var cartItems=[];
+	// User.findById(req.user._id,function(err,user){
+	// 	if(err){
+	// 		console.log(err);
+	// 	}else{
+	// 		(user.cart).forEach(function(item){
+	// 			Item.findById(item,function(err,founditem){
+	// 				if(err){
+	// 					console.log(err);
+	// 				}else{
+	// 					cartItems.push(founditem);
+	// 				}
+	// 			});
+	// 		});
+	// 		console.log(cartItems);
+    // return res.render('shopping-cart',{
+    //     title:'SIH | Shopping Cart',
+	// 	cartItems:cartItems
+    // });
+	// 	}
+	// });
 	
+	try {
+		let user=await User.findById(req.user._id)
+		.populate('cart');
+		return res.render('shopping-cart',{
+			title:"SIH | Cart",
+			cartItems:user.cart
+		});
+
+	} catch (e) {
+	console.log(e);
+	return;
+	}
+
 }
 module.exports.buyProduct=async (req,res)=>{
 	try{
