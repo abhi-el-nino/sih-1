@@ -1,13 +1,16 @@
 const Items = require('../models/item');
 const Users = require('../models/User');
 module.exports.upload = (req, res) => {
+    console.log(req.user);
+	req.user.isFarmer=true;
     if (req.user.isFarmer == true) {
 
         Items.uploadedImage(req, res, async function (err) {
 
             try {
+                console.log("here");
                 if (err) {
-                    console.log("multer error");
+                    console.log("multer error",err);
                     return;
                 }
                 if (!req.file) {
