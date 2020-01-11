@@ -23,9 +23,11 @@ const products=[{
 	description:"This is a cabbage",
 	price:"$34.00"
 }];
-module.exports.home=(req,res)=>{
+module.exports.home=async function(req,res){
+   let items= await	Item.find({});
     return res.render('index',{
-        title:'SIH | Home'
+				title:'SIH | Home',
+				products:items
     });
 }
 
