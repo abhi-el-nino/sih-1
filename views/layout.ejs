@@ -2,69 +2,69 @@
 <html lang="zxx">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="description" content="Fashi Template" />
-  <meta name="keywords" content="Fashi, unica, creative, html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>BuyFresh</title>
-
-  <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Fashi Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="description" content="Fashi Template" />
+    <meta name="keywords" content="Fashi, unica, creative, html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>BuyFresh</title>
-    <link rel="icon" href="/img/logo.png">
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
-    <link rel="stylesheet" href="/css/chat_box.css" type="text/css">
-  </head>
-  <!-- This is to prevent any pulling error -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Fashi Template">
+        <meta name="keywords" content="Fashi, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>BuyFresh</title>
+        <link rel="icon" href="/img/logo.png">
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-<body>
-  <!-- Page Preloder -->
-  <div id="preloder">
-    <div class="loader"></div>
-  </div>
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/themify-icons.css" type="text/css">
+        <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/style.css" type="text/css">
+        <link rel="stylesheet" href="/css/chat_box.css" type="text/css">
+    </head>
+    <!-- This is to prevent any pulling error -->
 
-  <!-- Header Section Begin -->
-  <header class="header-section">
-    <div class="header-top">
-      <div class="container">
-        <div class="ht-left">
-          <div class="mail-service">
-            <i class=" fa fa-envelope"></i> hello.colorlib@gmail.com
-          </div>
-          <div class="phone-service">
-            <i class=" fa fa-phone"></i> +65 11.188.888
-          </div>
+    <body>
+        <!-- Page Preloder -->
+        <div id="preloder">
+            <div class="loader"></div>
         </div>
-        <div class="ht-right">
 
-          <% if(locals.user == undefined){%>
+        <!-- Header Section Begin -->
+        <header class="header-section">
+            <div class="header-top">
+                <div class="container">
+                    <div class="ht-left">
+                        <div class="mail-service">
+                            <i class=" fa fa-envelope"></i> hello.colorlib@gmail.com
+                        </div>
+                        <div class="phone-service">
+                            <i class=" fa fa-phone"></i> +65 11.188.888
+                        </div>
+                    </div>
+                    <div class="ht-right">
 
-          <a href="/users/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                        <% if(locals.user == undefined){%>
 
-          <div class="top-social">
-            <a href="/users/auth/google"><i class="fa fa-google" aria-hidden="true">&nbsp login</i>
+                            <a href="/users/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
+
+                            <div class="top-social">
+                                <a href="/users/auth/google"><i class="fa fa-google" aria-hidden="true">&nbsp login</i>
             </a>
-          </div>
-          <%}else{%>
-          <a href="/users/logout" class="login-panel"><i class="fa fa-user"></i>Logout</a>
-          <%}%>
+                            </div>
+                            <%}else{%>
+                                <a href="/users/logout" class="login-panel"><i class="fa fa-user"></i>Logout</a>
+                                <%}%>
                                     <div class="lan-selector">
                                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                 <option
@@ -219,32 +219,32 @@
         </header>
         <!-- Header End -->
         <%- body %>
-          <% if(locals.user){%>
-          <!-- chat box start-->
-          <div id="user-chat-box" class="collapse">
-            <ul id="chat-messages-list" class="card card-body">
-              <li class="other-message">
-                <span>Other Message</span>
-              </li>
-              <li class="self-message">
-                <span>
+            <% if(locals.user){%>
+                <!-- chat box start-->
+                <div id="user-chat-box" class="collapse">
+                    <ul id="chat-messages-list" class="card card-body">
+                        <li class="other-message">
+                            <span>Other Message</span>
+                        </li>
+                        <li class="self-message">
+                            <span>
                   Self Message
                 </span>
 
-              </li>
+                        </li>
 
-            </ul>
-            <div id="chat-message-input-container">
-              <input id="chat-message-input" placeholder="Type message here">
-              <button id="send-message"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
-            </div>
-            <form id="chat-message-lock-container" method="POST" action="/shop/<%=user.id%>">
-              <input id="lock-input" name="final-price" placeholder="final amount">
-              <button id="lock-buyer" class="btn btn-danger"><i class="fa fa-lock" aria-hidden="true"></i></button>
-            </form>
+                    </ul>
+                    <div id="chat-message-input-container">
+                        <input id="chat-message-input" placeholder="Type message here">
+                        <button id="send-message"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                    </div>
+                    <form id="chat-message-lock-container" method="POST" action="/shop/<%=user.id%>">
+                        <input id="lock-input" name="final-price" placeholder="final amount">
+                        <button id="lock-buyer" class="btn btn-danger"><i class="fa fa-lock" aria-hidden="true"></i></button>
+                    </form>
 
-          </div>
-          <%}%>
+                </div>
+                <%}%>
                     <!-- Partner Logo Section Begin -->
                     <div class="partner-logo">
                         <div class="container">
@@ -345,7 +345,7 @@
                                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                             Copyright &copy;
                                             <script>
-                                              document.write(new Date().getFullYear());
+                                                document.write(new Date().getFullYear());
                                             </script>
                                             All rights reserved | This template is made with
                                             <i class="fa fa-heart-o" aria-hidden="true"></i> by
@@ -377,15 +377,30 @@
                     <script src="/ajax/chat_engine.js"></script>
                     <script src="/js/lock-amount.js"></script>
                     <script src="/ajax/shopping-cart.js"></script>
+                    <script src="/ajax/increase_quantity.js"></script>
                     <% if (locals.user){ %>
-          <script>
-            new ChatEngine('user-chat-box', '<%= locals.user._id %>')
-          </script>
-          <script>
-            let adder = $('.cart-toggler');
-            new CartFill(adder);
-          </script>
-          <% } %>
-</body>
+                        <script>
+                            console.log("new");
+                            let sender = {
+                                _id: "5e14d79207c90b3004663843",
+                                emailOrPhone: "abhi@abhi"
+                            }
+                            new ChatEngine('user-chat-box', '<%= locals.user._id%>', sender._id);
+                        </script>
+                        <script>
+                            console.error("hiii")
+                            console.log($(".quant"));
 
-</html>
+                            $("input").each(function() {
+                                let self = this;
+                                $(self).on('change', function() {
+                                    console.log("heee")
+                                });
+                            })
+                            let adder = $('.cart-toggler');
+                            new CartFill(adder);
+                        </script>
+                        <% } %>
+    </body>
+
+</html>s
