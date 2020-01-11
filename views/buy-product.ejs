@@ -23,7 +23,7 @@
             </ul>
             <div class="card-body d-flex justify-content-center">
                 <button class="btn primary-btn" type="button" data-toggle="collapse" data-target="#user-chat-box" aria-expanded="false" aria-controls="collapseExample" style="margin-right:18px;"
-                id="negotiate-button" data-farmerId="<%= product.farmerId %>" data-buyerId="<%= user.id %>"
+                id="negotiate-button" data-farmerId="<%= product.farmer %>" data-buyerId="<%= user.id %>"
                 >
 				negotiate
 			  </button>
@@ -55,7 +55,7 @@
       </ul>
       <div id="chat-message-input-container">
         <input id="chat-message-input" placeholder="Type message here">
-        <button id="send-message" data-farmerId="<%= product.farmerId %>" data-buyerId="<%= user.id %>"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+        <button id="send-message" data-farmerId="<%= product.farmer %>" data-buyerId="<%= user.id %>" data-userType="buyer"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
       </div>
       <form id="chat-message-lock-container" method="POST" action="/shop/<%=user.id%>">
         <input id="lock-input" name="final-price" placeholder="final amount">

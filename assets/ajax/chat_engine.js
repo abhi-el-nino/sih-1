@@ -1,8 +1,8 @@
 class ChatEngine{
-    constructor(chatBoxId, userEmail, userId){
+    constructor(chatBoxId, userEmail){
         this.chatBox = $(`#${chatBoxId}`);
         this.userEmail = userEmail;
-        this.userId    = userId;
+        //this.userId    = userId;
         this.socket = io.connect('http://localhost:5000');
 
         if (this.userEmail){
@@ -14,14 +14,14 @@ class ChatEngine{
 
     connectionHandler(){
         let self = this;
-
+        let connectionSelf = this;
         this.socket.on('connect', function(){
            // console.log('connection established using sockets...!');
 
 
             self.socket.emit('join_chat', {
                 user_email: self.userEmail,
-                user_id   : self.userId,
+               // user_id   : self.userId,
                 //chatroom: 'codeial'
             });
 
@@ -38,13 +38,26 @@ class ChatEngine{
             let msg = $('#chat-message-input').val();
             let farmerId = $(self).attr('data-farmerId');
             let buyerId  = $(self).attr('data-buyerId');
+            let userType = $(self).attr('data-userType');
             if (msg != ''){
-                self.socket.emit('send_message', {
+                connectionSelf.socket.emit('send_message', {
                     message: msg,
                     user_email: self.userEmail,
                     farmerId:farmerId,
-                    buyerId:buyerId
+                    buyerId:buyerId,
+                    userType:userType
                 });
+                
+                let newMessage = $('<li>');
+
+                newMessage.append($('<span>', {
+                    'html': msg
+                }));
+    
+                newMessage.addClass('self-message');
+                $('#chat-message-input').val('');
+                $('#chat-messages-list').append(newMessage);
+                $('#chat-messages-list').scrollTop($("#chat-messages-list")[0].scrollHeight);
             }
             $('#chat-messages-list').scrollTop($("#chat-messages-list")[0].scrollHeight);
         });
@@ -53,14 +66,12 @@ class ChatEngine{
             let self=this;
             let farmerId = $(self).attr('data-farmerId');
             let buyerId  = $(self).attr('data-buyerId');
-            if (msg != ''){
-                self.socket.emit('send_invite', {
+            console.log("Invite sent")
+                connectionSelf.socket.emit('send_invite', {
                     user_email: self.userEmail,
                     farmerId:farmerId,
                     buyerId:buyerId
                 });
-            }
-            $('#chat-messages-list').scrollTop($("#chat-messages-list")[0].scrollHeight);
         });
 
         self.socket.on('receive_message', function(data){
@@ -71,9 +82,6 @@ class ChatEngine{
 
             let messageType = 'other-message';
 
-            if (data.user_email == self.userEmail){
-                messageType = 'self-message';
-            }
 
             newMessage.append($('<span>', {
                 'html': data.message
@@ -89,6 +97,7 @@ class ChatEngine{
         self.socket.on('invite_received', function(data){
             console.log('invite received', data.message);
             $('#send-message').attr('data-buyerId',data.buyerId);
+            $('#send-message').attr('data-userType','farmer');
             $('#user-chat-box').addClass("show");
          })
 
