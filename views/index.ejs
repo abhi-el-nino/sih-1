@@ -101,36 +101,37 @@
 </div>
 <!-- Banner Section End -->
 <section>
-<div class="banner-section" style="text-align: center;">
-    <div class="row" style="background-color: #FEE140;
-    background-image: linear-gradient(to bottom right, #f8f8f0 100%, #e7ab3c 0%); box-shadow:5px 10px 20px 8px  #e7ab3c;">
-        <div class="col-lg-8 offset-lg-2">
-            <div class="inner-text mt-lg-5">
-                       <h3>We Offer Wide Range of Exotic Fruits/Vegetables</h3>
-                    </div>
-            <section class="slideshow" >
-                <div class="content">
-                    <div class="content-carrousel">
-                        <figure class="shadow"><img src="img/broccli.jpg"></figure>
-                        <figure class="shadow"><img src="img/capsicum.jpg"></figure>
-                        <figure class="shadow"><img src="img/dragon.jpg"></figure>
-                        <figure class="shadow"><img src="img/kiwi2.jpg"></figure>
-                        <figure class="shadow"><img src="img/jackfruit.jpg"></figure>
-                        <figure class="shadow"><img src="img/lettuce.jpg"></figure>
-                        <figure class="shadow"><img src="img/babycorn.jpg"></figure>
-                        <figure class="shadow"><img src="img/mangoes.jpg"></figure>
-                        <figure class="shadow"><img src="img/mangooseteen.jpg"></figure>
-                    </div>
-            </section>
+    <div class="banner-section" style="text-align: center;">
+        <div class="row"
+            style="background-color: #FEE140;
+    background-image: linear-gradient(to bottom right, #f8f8f0 100%, #e7ab3c 0%); box-shadow:0px 0px 20px 8px  #f8f8f0;">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="inner-text mt-lg-5">
+                    <h3>We Offer Wide Range of Exotic Fruits/Vegetables</h3>
+                </div>
+                <section class="slideshow">
+                    <div class="content">
+                        <div class="content-carrousel">
+                            <figure class="shadow"><img src="img/broccli.jpg"></figure>
+                            <figure class="shadow"><img src="img/capsicum.jpg"></figure>
+                            <figure class="shadow"><img src="img/dragon.jpg"></figure>
+                            <figure class="shadow"><img src="img/kiwi2.jpg"></figure>
+                            <figure class="shadow"><img src="img/jackfruit.jpg"></figure>
+                            <figure class="shadow"><img src="img/lettuce.jpg"></figure>
+                            <figure class="shadow"><img src="img/babycorn.jpg"></figure>
+                            <figure class="shadow"><img src="img/mangoes.jpg"></figure>
+                            <figure class="shadow"><img src="img/mangooseteen.jpg"></figure>
+                        </div>
+                </section>
+            </div>
         </div>
     </div>
-</div>
 </section>
 <!-- Man Banner Section Begin -->
 <section class="women-banner spad">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 d-flex align-items-center">
                 <div class="product-slider owl-carousel">
                     <%for(let item of items){%>
                     <div class="product-item">
@@ -164,8 +165,8 @@
                     <%}%>
                 </div>
             </div>
-            <div class="col-lg-3 offset-lg-1">
-                <div class="product-large set-bg" data-setbg="img/products/vege-large.jpg">
+            <div class="col-lg-3 offset-lg-1" id="side-image">
+                <div class="product-large set-bg " data-setbg="img/products/vege-large.jpg">
                     <h2>Farm Fresh</h2>
                     <a href="#">Discover More</a>
                 </div>
@@ -367,5 +368,19 @@
             </div>
         </div>
     </div>
+  
 </section>
+<script>
+    $(window).resize(function(){
+ 
+    if ($(document).width() <= 500) {  
+   
+        $('#side-image').hide();
+    }else{
+        $('#side-image').show();
+    }     
+    });
+    </script>
+
+
 <!-- Latest Blog Section End -->
