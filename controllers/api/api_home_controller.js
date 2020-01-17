@@ -28,12 +28,12 @@ module.exports.whetherReport = async (req, res) => {
 module.exports.getAllPRoducts = async (req, res) => {
     try {
         if (req.user != req.params.id) {
-            return res.status(404).JSON({
+            return res.json(404,{
                 message: "UNAUTHORIZED"
             });
         }
-        let items = Item.find({ farmer: req.params.id });
-        return res.status(200).JSON({
+        let items = await Item.find({ farmer: req.params.id });
+        return res.json(200,{
             message: "All products for the requsting farmer",
             data: {
                 items: items
@@ -41,7 +41,7 @@ module.exports.getAllPRoducts = async (req, res) => {
         });
     } catch (e) {
         console.log(e);
-        return res.satus(500).JSON({
+        return res.json(500,{
             message: "internal server error"
         });
     }
@@ -80,7 +80,7 @@ module.exports.addProduct = (req, res) => {
 
                     (await newItem).save();
 
-                    return res.status(200).JSON({
+                    return res.json(200,{
                         message: "item Successfully uploaded",
                         data: {
                             item: newItem
@@ -91,7 +91,7 @@ module.exports.addProduct = (req, res) => {
 
             } catch (error) {
                 console.log(error);
-                return res.satus(500).JSON({
+                return res.json(500,{
                     message: "internal server error"
                 });
             }
@@ -102,7 +102,7 @@ module.exports.updateProduct = async (req, res) => {
     try {
         let item = await Item.findById(req.body.itemId);
         if (req.user != item.farmer) {
-            return res.status(404).JSON({
+            return res.json(404,{
                 message: "UNAUTHORIZED"
             });
         }
@@ -112,7 +112,7 @@ module.exports.updateProduct = async (req, res) => {
             price: req.body.price,
             description: req.body.descripton
         });
-        return res.status(200).JSON({
+        return res.json(200,{
             message: "updated successfully",
             data: {
                 item: item
@@ -120,7 +120,7 @@ module.exports.updateProduct = async (req, res) => {
         });
     } catch (e) {
         console.log(e);
-        return res.status(500).JSON({
+        return res.json(500,{
             message: "internal server error"
         });
     }
@@ -129,7 +129,7 @@ module.exports.createUser = async (req, res) => {
     try {
 
         if (req.body.password != req.body.confirm_password) {
-            return res.status(409).JSON({
+            return res.json(409,{
                 message:"passwords dont match"
             });
         }
@@ -154,11 +154,11 @@ module.exports.createUser = async (req, res) => {
                 await newuser.save();
 
             }
-            return res.status(200).JSON({
+            return res.json(200,{
                 message:"Registered Successfully"
             });
         } else {
-            return res.status(409).JSON({
+            return res.json(409,{
                 message:"already exists"
             });
         }
@@ -166,7 +166,7 @@ module.exports.createUser = async (req, res) => {
 
     } catch (err) {
         console.log(err);
-        return res.status(500).JSON({
+        return res.json(500,{
             message:"internal server error"
         });
     }
