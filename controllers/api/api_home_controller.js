@@ -8,7 +8,7 @@ module.exports.api_home = (req, res) => {
 }
 module.exports.whetherReport = async (req, res) => {
     try {
-        console.log(req.query);
+ 
         let options = {
             method: 'GET',
         }
