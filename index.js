@@ -18,12 +18,7 @@ const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log('chat server is listening on port 5000');
 
-//setup ngrok
-const ngrok = require('ngrok');
-(async function() {
-  const url = await ngrok.connect(8000);
-  console.log('ngrok is running on port 8000')
-})();
+
 
 
 app.use(bodyParser.urlencoded({
