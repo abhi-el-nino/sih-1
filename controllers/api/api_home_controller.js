@@ -8,11 +8,12 @@ module.exports.api_home = (req, res) => {
 }
 module.exports.whetherReport = async (req, res) => {
     try {
+        console.log(req.query);
         let options = {
             method: 'GET',
         }
 
-        let response = await request(`http://api.openweathermap.org/data/2.5/weather?lat=${req.body.lat}&lon=${req.body.long}&appid=be50af9722a691e8eeb67031b90caaa3`, options);
+        let response = await request(`http://api.openweathermap.org/data/2.5/weather?lat=${req.query.lat}&lon=${req.query.lon}&appid=be50af9722a691e8eeb67031b90caaa3`, options);
 
         return res.json(200, {
             message: "whether",
