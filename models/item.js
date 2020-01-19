@@ -9,6 +9,9 @@ const itemSchema = new mongoose.Schema({
         required: true,
 
     },
+    description:{
+        type:String,
+    },
     farmer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
