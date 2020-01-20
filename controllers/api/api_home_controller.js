@@ -1,5 +1,6 @@
 const request = require('async-request');
 const Item = require('../../models/item');
+const User=require('../../models/User');
 const jwt = require('jsonwebtoken');
 module.exports.api_home = (req, res) => {
     return res.json(200, {
@@ -28,12 +29,8 @@ module.exports.whetherReport = async (req, res) => {
 }
 module.exports.getAllPRoducts = async (req, res) => {
     try {
-        if (req.user != req.params.id) {
-            return res.json(404,{
-                message: "UNAUTHORIZED"
-            });
-        }
-        let items = await Item.find({ farmer: req.params.id });
+       let farmer=await User.find({emailOrPhone:req.params.id})
+        let items = await Item.find({ farmer: farmer._id });
         return res.json(200,{
             message: "All products for the requsting farmer",
             data: {
