@@ -126,38 +126,36 @@ module.exports.updateProduct = async (req, res) => {
 module.exports.createUser = async (req, res) => {
     try {
 
-        if (req.body.password != req.body.confirm_password) {
-            return res.json(409,{
-                message:"passwords dont match"
-            });
-        }
+      
 
         let user = await User.findOne({
-            emailOrPhone: req.body.emailOrPhone
+            emailOrPhone: req.body.phone
         });
 
         if (!user) {
             let newuser = await User.create({
                 name: req.body.name,
-                emailOrPhone: req.body.emailOrPhone,
+                emailOrPhone: req.body.phone,
                 password: req.body.password
             });
-            if (req.body.userType == "Farmer") {
-                newuser.isFarmer = true;
-                newuser.isBuyer = false;
-                await newuser.save();
-            } else {
-                newUser.isFarmer = false;
-                newuser.isBuyer = true;
-                await newuser.save();
+            // if (req.body.userType == "Farmer") {
+            //     newuser.isFarmer = true;
+            //     newuser.isBuyer = false;
+            //     await newuser.save();
+            // } else {
+            //     newUser.isFarmer = false;
+            //     newuser.isBuyer = true;
+            //     await newuser.save();
 
-            }
-            return res.json(200,{
-                message:"Registered Successfully"
+            // }
+            return res.json(201,{
+            message:"Registered Successfully",
+            status:201
             });
         } else {
-            return res.json(409,{
-                message:"already exists"
+            return res.json(202,{
+                message:"already exists",
+                status:202
             });
         }
 
