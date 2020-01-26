@@ -46,71 +46,71 @@ module.exports.getAllPRoducts = async (req, res) => {
 
 }
 module.exports.addProduct = (req, res) => {
-    
-    if (req.user.isFarmer == true) {
 
-        Items.uploadedImage(req, res, async function (err) {
+    Items.uploadedImage(req, res, async function (err) {
+    try {
+        console.log("here");
+        if (err) {
+            console.log("multer error", err);
+            return;
+        }
+        if (!req.file) {
+            console.log("image not uploaded");
+            return;
+        } else {
+            let Options = {
+                method: "GET"
+            };
+            let mlResponse = await request(URI, options);
 
-            try {
-                console.log("here");
-                if (err) {
-                    console.log("multer error", err);
-                    return;
+            newItem.price = mlResponse.price;
+            let newItem = await Items.create({
+                title: mlResponse.name,
+                farmer: req.user._id,
+                price: mlResponse.price,
+                description: mlResponse.description
+            });
+            newItem.image = `${Items.imagePath}/${req.file.filename}`;
+
+
+            (await newItem).save();
+
+            return res.json({
+                status : 200,
+                id : newItem._id,
+                message: "item Successfully uploaded",
+                data: {
+                    item: newItem
                 }
-                if (!req.file) {
-                    console.log("image not uploaded");
-                    return;
-                } else {
-                    let Options = {
-                        method: "GET"
-                    };
-                    let mlResponse = await request(URI, options);
-
-                    newItem.price = mlResponse.price;
-                    let newItem = await Items.create({
-                        title: mlResponse.name,
-                        farmer: req.user._id,
-                        price: mlResponse.price,
-                        description: mlResponse.description
-                    });
-                    newItem.image = `${Items.imagePath}/${req.file.filename}`;
+            });
+        }
 
 
-                    (await newItem).save();
-
-                    return res.json(200,{
-                        message: "item Successfully uploaded",
-                        data: {
-                            item: newItem
-                        }
-                    });
-                }
-
-
-            } catch (error) {
-                console.log(error);
-                return res.json(500,{
-                    message: "internal server error"
-                });
-            }
+    } catch (error) {
+        console.log(error);
+        return res.json(500,{
+            message: "internal server error"
         });
     }
+    });
+
 }
 module.exports.updateProduct = async (req, res) => {
     try {
         let item = await Item.findById(req.body.itemId);
-        if (req.user != item.farmer) {
-            return res.json(404,{
-                message: "UNAUTHORIZED"
-            });
-        }
+        // if (req.user != item.farmer) {
+        //     return res.json(404,{
+        //         message: "UNAUTHORIZED"
+        //     });
+        // }
 
         item = await Item.findByIdAndUpdate({
             title: req.body.name,
             price: req.body.price,
             description: req.body.descripton
         });
-        return res.json(200,{
+        return res.json({
+            status : 200,
             message: "updated successfully",
             data: {
                 item: item
