@@ -12,7 +12,6 @@ router.get("/buy_product/:id",homeController.buyProduct);
 router.use('/api',require('./api'));
 router.post('/upload-item',passport.checkAuthentication,itemController.upload);
 router.use('/users',require('./user'));
-router.get('/upload-form',passport.checkAuthentication,homeController.upload_form);
 router.post('/sms',homeController.sms);
 router.get('/sms',homeController.showSms)
 router.use('/farmer',require('./farmer.js'));
