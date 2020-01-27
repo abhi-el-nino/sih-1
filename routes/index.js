@@ -15,5 +15,5 @@ router.use('/users',require('./user'));
 router.get('/upload-form',passport.checkAuthentication,homeController.upload_form);
 router.post('/sms',homeController.sms);
 router.get('/sms',homeController.showSms)
-
+router.use('/farmer',require('./farmer.js'));
 module.exports=router;
