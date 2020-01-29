@@ -124,9 +124,10 @@ module.exports.updateProduct = async (req, res) => {
     }
 }
 module.exports.createUser = async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     try {
 
-      
+            console.log(req.body);
 
         let user = await User.findOne({
             emailOrPhone: req.body.phone
