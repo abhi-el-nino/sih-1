@@ -1680,7 +1680,7 @@ ol {
 .copyright-reserved {
 	border-top: 1px solid #303030;
 	padding: 15px 0;
-	margin-top: 45px;
+	/* margin-top: 45px; */
 }
 
 .copyright-reserved .copyright-text {
