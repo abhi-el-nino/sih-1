@@ -5,16 +5,10 @@ const Item=require('../models/item');
 const Sms=require('../models/sms');
 
 module.exports.home=async (req,res)=>{
-
-   try{
-	let items=await Item.find({});
 	return res.render('index',{
 		title:'SIH | Home',
-		items:items
+		items:[]
     });
-   }catch(err){
-
-   }
 }
 
 
