@@ -1,6 +1,6 @@
 const express = require('express');
 let bodyParser = require('body-parser');
-const port = 8000;
+const port = process.env.PORT || 8000;
 const app = express();
 //const db = require('./config/mongoose');
 const path=require('path');
