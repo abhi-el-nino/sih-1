@@ -2,20 +2,20 @@ const express = require('express');
 let bodyParser = require('body-parser');
 const port = process.env.PORT || 8000;
 const app = express();
-//const db = require('./config/mongoose');
+const db = require('./config/mongoose');
 const path=require('path');
 const expressLayouts=require('express-ejs-layouts');
 const session = require('express-session');
 const passport=require('passport');
 const passportLocal = require('./config/passport-local');
 const strategy_Google=require('./config/passport-google-oauth2-strategy');
-//const mongoStore = require('connect-mongo')(session);
+const mongoStore = require('connect-mongo')(session);
 //const textLocal = require('./config/textlocal');
 
 // setup the chat server to be used with socket.io
-// const chatServer = require('http').Server(app);
-// const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
-// chatServer.listen(5000);
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+chatServer.listen(5000);
 //console.log('chat server is listening on port 5000');
 
 
@@ -43,10 +43,10 @@ app.use(session({
     cookie: {
         maxAge: (1000 * 60 * 100)
     },
-    // store: new mongoStore({
-    //     mongooseConnection: db,
-    //     autoRemove: 'disbaled'
-    // })
+    store: new mongoStore({
+        mongooseConnection: db,
+        autoRemove: 'disbaled'
+    })
 },
 
 ));
