@@ -12,7 +12,7 @@ const itemSchema = new mongoose.Schema({
     description:{
         type:String,
     },
-    farmer: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
     },

@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean
     },
-    cart: [
+    items: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Items'

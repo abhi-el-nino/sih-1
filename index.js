@@ -53,6 +53,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+
+//GraphQl configuration and schema
+const graphqlHTTP = require('express-graphql');
+const schema = require('./graphQl/schema');
+app.use('/graph',graphqlHTTP({
+    schema,
+    graphiql:true
+}))
+//
 app.use('/',require('./routes'));
 
 app.listen(port, function (err) {
