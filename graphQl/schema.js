@@ -4,6 +4,7 @@ const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLInt, GraphQLID, 
 
 const User = require('../models/User');
 const Item = require('../models/item');
+const jwt = require('jsonwebtoken');
 
 const ItemType = new GraphQLObjectType({
     name: 'Item',
@@ -40,8 +41,8 @@ const UserType = new GraphQLObjectType({
     name: 'User',
     fields: () => (
         {
-            id:{
-                type:GraphQLID
+            id: {
+                type: GraphQLID
             },
             emailOrPhone: {
                 type: GraphQLString
@@ -52,14 +53,12 @@ const UserType = new GraphQLObjectType({
             avatar: {
                 type: GraphQLString
             },
-            isFarmer: {
-                type: GraphQLString
-            },
-            isBuyer: {
-                type: GraphQLString
-            },
-            isAdmin: {
-                type: GraphQLString
+            authToken: {
+                type: GraphQLString,
+                resolve(parent, args) {
+                    let token = jwt.sign({ id: parent.id }, 'sih2020');
+                    return token
+                }
             },
             items: {
                 type: new GraphQLList(ItemType),
@@ -77,7 +76,7 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         item: {
             type: ItemType,
-            args: { id: { type: GraphQLID } }, 
+            args: { id: { type: GraphQLID } },
             async resolve(parent, args) {
                 let item = await Item.findById({ _id: args.id });
                 return item;
@@ -85,15 +84,16 @@ const RootQuery = new GraphQLObjectType({
         },
         user: {
             type: UserType,
-            args: { id: { type: GraphQLID} },
+            args: { emailOrPhone: { type: GraphQLString }, password: { type: GraphQLString } },
             async resolve(parent, args) {
-                let user = await User.findById({ _id: args.id });
-                return user;
+                let user = await User.findOne({ emailOrPhone: args.emailOrPhone });
+                return user
             }
         },
         users: {
             type: new GraphQLList(UserType),
-            async resolve(parent, args) {
+            async resolve(parent, args,context) {
+                console.log(context.headers.authorization);
                 let users = await User.find({});
                 return users;
             }
@@ -116,13 +116,14 @@ const Mutations = new GraphQLObjectType({
             args: {
                 name: { type: GraphQLString },
                 emailOrPhone: { type: GraphQLString },
-                password:{type:GraphQLString}
+                password: { type: GraphQLString }
             },
             async resolve(parent, args) {
+                console.log('hey');
                 let user = await User.create({
                     name: args.name,
                     emailOrPhone: args.emailOrPhone,
-                    password:args.password
+                    password: args.password
                 });
                 return user;
             }

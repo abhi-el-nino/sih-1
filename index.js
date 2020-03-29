@@ -10,6 +10,9 @@ const passport=require('passport');
 const passportLocal = require('./config/passport-local');
 const strategy_Google=require('./config/passport-google-oauth2-strategy');
 const mongoStore = require('connect-mongo')(session);
+//To allow cross origin requests
+const cors= require('cors');
+app.use(cors());
 //const textLocal = require('./config/textlocal');
 
 // setup the chat server to be used with socket.io
