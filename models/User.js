@@ -15,22 +15,24 @@ const userSchema = new mongoose.Schema({
         required: true,
 
     },
-    name: {
+    first_name: {
         type: String,
         required: true,
-        unique: true
+    },
+    last_name: {
+        type: String,
+        required: true,
+    },
+    address: {
+        type: String,
+        required: true,
     },
     avatar: {
         type: String
     },
-    isFarmer: {
-        type: Boolean
-    },
-    isBuyer: {
-        type: Boolean
-    },
-    isAdmin: {
-        type: Boolean
+    role: {
+        type: String,
+        required: true
     },
     items: [
         {

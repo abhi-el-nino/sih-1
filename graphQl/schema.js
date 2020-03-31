@@ -114,16 +114,22 @@ const Mutations = new GraphQLObjectType({
         addUser: {
             type: UserType,
             args: {
-                name: { type: GraphQLString },
+                firstName: { type: GraphQLString },
+                lastName: { type: GraphQLString },
                 emailOrPhone: { type: GraphQLString },
-                password: { type: GraphQLString }
+                password: { type: GraphQLString },
+                address: { type: GraphQLString },
+                role: { type: GraphQLString }
             },
             async resolve(parent, args) {
                 console.log('hey');
                 let user = await User.create({
-                    name: args.name,
+                    first_name: args.name,
                     emailOrPhone: args.emailOrPhone,
-                    password: args.password
+                    password: args.password,
+                    last_name:args.last_name,
+                    role:args.role,
+                    address:args.address
                 });
                 return user;
             }
