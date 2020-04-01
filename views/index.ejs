@@ -1,5 +1,8 @@
 <!-- Hero Section Begin -->
 <section class="hero-section">
+    <div id="root">
+
+    </div>
     <div class="hero-items owl-carousel">
         <div class="single-hero-items set-bg" data-setbg="img/hero-1.jpg">
             <div class="container">
@@ -108,41 +111,41 @@
                 <!-- putting it here -->
 
                 <div class="row">
-                <div class="col d-flex align-items-center">
-                    <div class="product-slider owl-carousel">
-                        <%for(let item of items){%>
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="<%=item.image%>" alt="">
-                                    <div class="sale">Sale</div>
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
+                    <div class="col d-flex align-items-center">
+                        <div class="product-slider owl-carousel">
+                            <%for(let item of items){%>
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        <img src="<%=item.image%>" alt="">
+                                        <div class="sale">Sale</div>
+                                        <div class="icon">
+                                            <i class="icon_heart_alt"></i>
+                                        </div>
+                                        <ul>
+                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="/buy_product/<%=item._id%>">Buy</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
                                     </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="/buy_product/<%=item._id%>">Buy</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">vegies</div>
-                                    <a href="#">
-                                        <h5>
-                                            <%=item.title%>
-                                        </h5>
-                                    </a>
-                                    <div class="product-price">
-                                        Rs.
-                                        <%=item.price%>
-    
+                                    <div class="pi-text">
+                                        <div class="catagory-name">vegies</div>
+                                        <a href="#">
+                                            <h5>
+                                                <%=item.title%>
+                                            </h5>
+                                        </a>
+                                        <div class="product-price">
+                                            Rs.
+                                            <%=item.price%>
+
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-    
-                            <%}%>
+
+                                <%}%>
+                        </div>
                     </div>
-                </div>
-            </div class="row">
+                </div class="row">
 
                 <!-- putting it here -->
 
@@ -161,9 +164,9 @@
                         </div>
                     </div>
                 </section> -->
-                </div>
             </div>
         </div>
+    </div>
 </section>
 <!-- Man Banner Section Begin -->
 <section class="women-banner spad">
@@ -440,6 +443,8 @@
         }
     });
 </script>
+<!-- <script src="../src/index.js"></script> -->
+<script src="../dist/bundle.js"></script>
 
 
 <!-- Latest Blog Section End -->
