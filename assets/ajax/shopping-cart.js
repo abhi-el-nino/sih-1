@@ -14,7 +14,7 @@ class CartFill {
             let itemId = $(self).attr('id').split("-")[1];
             $.ajax({
                 type: "post",
-                url: '/add-to-cart',
+                url: '/order/add-to-cart',
                 data: {
                     itemId: itemId
                 },

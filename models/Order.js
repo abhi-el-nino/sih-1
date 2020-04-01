@@ -10,13 +10,19 @@ const OrderSchema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
             ref: 'Users'
     },
-    price:{
+    amount:{
         type:Number
     },
-    transaction:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"transactions"
+    completed:{
+        type:Boolean,
+        default:false
+    },
+    transactionId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Transaction'
     }
+},{
+    timestamps:true
 });
 const Orders=mongoose.model('Orders',OrderSchema);
 module.exports=Orders;

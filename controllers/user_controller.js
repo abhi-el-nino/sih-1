@@ -10,7 +10,7 @@ module.exports.register = (req, res) => {
 }
 module.exports.createUser = async (req, res) => {
     try {
-        
+
         if (req.body.password != req.body.confirm_password) {
             return res.redirect('back');
         }
@@ -20,21 +20,19 @@ module.exports.createUser = async (req, res) => {
 
         if (!user) {
             let newuser = await User.create({
-                name: req.body.name,
+                first_name: req.body.firstName,
+                last_name: req.body.lastName,
                 emailOrPhone: req.body.emailOrPhone,
-                password: req.body.password
-            });
-            if(req.body.userType=="Farmer"){
-                newuser.isFarmer=true;
-                newuser.isBuyer=false;
-               await newuser.save();
-            }else{
-                newUser.isFarmer=false;
-                newuser.isBuyer=true;
-                await newuser.save();
+                password: req.body.password,
+                address: req.body.address,
+                role: req.body.userType
 
-            }
-            return res.redirect('/users/login')
+            });
+            req.login(newuser, function (err) {
+                if (err) { return next(err); }
+                return res.redirect('/users/login')
+            });
+
         } else {
             return res.redirect('back');
         }
