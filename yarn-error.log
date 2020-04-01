@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @babel/env
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js start
 
 PATH: 
   C:\Program Files\Microsoft MPI\Bin\;C:\Program Files (x86)\Python38-32\Scripts\;C:\Program Files (x86)\Python38-32\;C:\Windows;C:\Windows\system32;C:\Windows\System32\Wbem;C:\Program Files\MongoDB\Server\4.2\bin\;C:\Users\Abhinav Gautam\AppData\Roaming\npm;C:\php;C:\ProgramData\chocolatey\bin;C:\Program Files\PuTTY\;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\Java\jdk-13.0.2\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft MPI\Bin\;C:\Program Files (x86)\Python38-32\Scripts\;C:\Program Files (x86)\Python38-32\;C:\Windows;C:\Windows\system32;C:\Windows\System32\Wbem;C:\Program Files\MongoDB\Server\4.2\bin\;C:\Users\Abhinav Gautam\AppData\Roaming\npm;C:\php;C:\ProgramData\chocolatey\bin;C:\Program Files\PuTTY\;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\Java\jdk-13.0.2\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\john pc\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Abhinav Gautam\AppData\Local\Microsoft\WindowsApps;C:\Users\Abhinav Gautam\AppData\Local\Programs\Microsoft VS Code\bin;C:\MinGW\bin;C:\Users\Abhinav Gautam\AppData\Roaming\npm;C:\Users\Abhinav Gautam\AppData\Local\Android\Sdk\platform-tools;C:\Users\Abhinav Gautam\AppData\Local\Yarn\bin;%USERPROFILE%\AppData\Roaming\npm\
@@ -14,17 +14,12 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@babel%2fenv: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66096:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140748:22)
-      at Request.emit (events.js:321:20)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141720:10)
-      at Request.emit (events.js:321:20)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141642:12)
-      at Object.onceWrapper (events.js:427:28)
-      at IncomingMessage.emit (events.js:333:22)
-      at endReadableNT (_stream_readable.js:1201:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  SyntaxError: C:\Users\Abhinav Gautam\Desktop\sih-ejs\sih\package.json: Unexpected token < in JSON at position 1576
+      at JSON.parse (<anonymous>)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:310:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:321:13
 
 npm manifest: 
   {
@@ -35,13 +30,15 @@ npm manifest:
       "scripts": {
           "test": "echo \"Error: no test specified\" && exit 1",
           "start": "nodemon index.js",
-          "build": "webpack-dev-server --config webpack.config.js"
+          "build": "webpack-dev-server",
+          "build:prod": "webpack --config webpack.config.prod.js"
       },
       "author": "",
       "license": "ISC",
       "browsersList": "> 1%, last 2 versions",
       "dependencies": {
           "@babel/preset-env": "^7.9.0",
+          "@babel/preset-react": "^7.9.4",
           "async-request": "^1.2.0",
           "autoprefixer": "^9.7.5",
           "axios": "^0.19.1",
@@ -75,7 +72,11 @@ npm manifest:
           "regenerator-runtime": "^0.13.5",
           "request": "^2.88.0",
           "socket.io": "^2.3.0",
-          "urlencode": "^1.1.0"
+  <<<<<<< HEAD
+          "urlencode": "^1.1.0",
+          "webpack": "^4.42.1",
+          "webpack-cli": "^3.3.11",
+          "webpack-dev-server": "^3.10.3"
       },
       "devDependencies": {
           "@babel/core": "^7.9.0",
@@ -90,6 +91,10 @@ npm manifest:
           "webpack": "^4.42.1",
           "webpack-cli": "^3.3.11",
           "webpack-dev-server": "^3.10.3"
+  =======
+          "stripe": "^8.38.0",
+          "urlencode": "^1.1.0"
+  >>>>>>> 47073a752440a5e564f271df494c072f8cf10494
       }
   }
 

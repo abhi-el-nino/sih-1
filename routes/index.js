@@ -4,15 +4,13 @@ const passport=require('passport');
 const homeController=require('../controllers/home_controller');
 const itemController=require('../controllers/items_controller');
 router.get('/',homeController.home);
-router.post('/shop/:id',homeController.shop);
 router.get('/contact',homeController.contact);
-router.get('/shopping-cart',homeController.shoppingCart);
-router.post('/add-to-cart',passport.checkAuthentication,itemController.toggleCart);
-router.get("/buy_product/:id",homeController.buyProduct);
 router.use('/api',require('./api'));
 router.post('/upload-item',passport.checkAuthentication,itemController.upload);
 router.use('/users',require('./user'));
 router.post('/sms',homeController.sms);
 router.get('/sms',homeController.showSms)
 router.use('/farmer',require('./farmer.js'));
+router.use('/maps',homeController.maps);
+router.use('/order',passport.checkAuthentication,require('./order'));
 module.exports=router;

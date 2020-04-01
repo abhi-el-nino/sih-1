@@ -32,14 +32,14 @@ module.exports={
                     {
                         loader:'css-loader',
                         options:{
-                            importLoader: 1,
+                            // importLoader: 1,
                             modules:{
                                 localIdentName:'[name]__[local]__[hash:base64:5]'
                             }
                         }
                     },
                     {
-                        loader:'pastcss-loader',
+                        loader:'postcss-loader',
                         options:{
                             ident:'postcss',
                             plugins:()=>[autoPrefixer()]

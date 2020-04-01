@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import MapExample from './components/HeatMap';
+const App = () => {
 
-const App =()=>{
-    console.log('i am hero');
-    return(
-        <div><h1>Hello world</h1>
-        <h1>Hello world</h1>
-        <h1>Hello world</h1>
-        <h1>Hello world</h1>
-        </div>
-    )
+  console.log('app');
+  return (
+    <div>
+      <MapExample state="Bihar" dataselected="Rice" />
+    </div>
+  );
 }
 
-ReactDOM.render(<App/>,document.getElementById('root')); 
+ReactDOM.render(<App/>,document.getElementById('mapper'));
