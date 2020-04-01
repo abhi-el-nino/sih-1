@@ -5,6 +5,7 @@ var express = require('express'),
     Transaction = require('../models/transaction'),
     Order       = require('../models/Order'),
     Cart        = require('../models/Cart'),
+    block       = require('../blockchain/index'),
     endPoint = 'whsec_TmSun6kNPvQBremNO6mWRFkZJZcmjDeD';
 // paymentMailer = require('../../../mailer/attendeePayment');
 
@@ -59,6 +60,11 @@ router.get('/success', async function (req, res) {
     await Cart.deleteOne({buyer:req.user._id});
     order.completed=true;
     await order.save();
+    var newblock={
+        sessionId:req.query.session_id,
+        amount:order.amount
+    }
+    block.newTransaction(newblock);
     return  res.render('success', { sessionId: req.query.session_id });
 });
 
