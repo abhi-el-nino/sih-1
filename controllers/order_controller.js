@@ -55,7 +55,7 @@ module.exports.checkout = async (req, res) => {
             buyer:req.user._id,
             amount:cart.amount
         });
-        return res.redirect(`/order/payment/${order._id}`);
+        return res.redirect(`/order/payment/pay/${order._id}`);
    }
 }
 

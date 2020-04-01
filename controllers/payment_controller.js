@@ -10,7 +10,7 @@ var express = require('express'),
 
 
 
-router.get('/:orderId', async function (req, res) {
+router.get('/pay/:orderId', async function (req, res) {
 
     try {
         let order = await Order.findById(req.params.orderId);
@@ -23,7 +23,7 @@ router.get('/:orderId', async function (req, res) {
                     quantity: 1,
                     currency: 'inr',
                     description: '(Inclusive of 2% transaction charges)',
-                    images: ['https://ci4.googleusercontent.com/proxy/vpUjooo0dJmSfc8bdNyUI4tfweZkV_YA4Cqys_1yplVrlWhwjgrfeeUo-wmGgheyFrvVEphBq0Fm37VLZSQbZVrgDRlwL8XYHSzBxhJ-lYLKfS4=s0-d-e1-ft#https://drive.google.com/uc?id=1k4zpUXSY7CbsPP5j0LVeDPAlBRJlItXp'],
+                    images: ['https://drive.google.com/uc?id=1pi0meQST2sfriYUafHR-Iy1ycwqXDXFk'],
                     amount: [Math.ceil(order.amount / 98)] * 100
                     // Keep the amount on the server to prevent customers from manipulating
                 }
@@ -33,7 +33,7 @@ router.get('/:orderId', async function (req, res) {
                 // checkWebhook: 'Attendee'
             },
             // session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
-            success_url: `http://localhost:8000/payment/success?session_id={CHECKOUT_SESSION_ID}&orderId=${req.params.orderId}`,
+            success_url: `http://localhost:8000/order/payment/success?session_id={CHECKOUT_SESSION_ID}&orderId=${req.params.orderId}`,
             cancel_url: `http://localhost:8000/order/transactionFailed?orderId=${req.params.orderId}`
         });
         return res.render('pay', {
@@ -50,7 +50,7 @@ router.get('/:orderId', async function (req, res) {
 
 
 router.get('/success', async function (req, res) {
-    let order = await Order.findById(req.params.orderId);
+    let order = await Order.findById(req.query.orderId);
     let transaction = await Transaction.create({
         order:req.query.orderId,
         sessionId:req.query.session_id,
