@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const mongoose=require('mongoose');
 const CartSchema=new mongoose.Schema({
     items:[
@@ -9,15 +8,6 @@ const CartSchema=new mongoose.Schema({
         },
         quantity:{
             type:Number
-=======
-const mongoose = require('mongoose');
-const CartSchema = new mongoose.Schema({
-    orderQuantity: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Quantity',
-            required: true
->>>>>>> ffd43c037b90b90505c9c9d4125110d858794e43
         }
       }
     ],
