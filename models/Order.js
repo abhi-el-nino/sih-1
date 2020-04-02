@@ -1,14 +1,17 @@
 const mongoose=require('mongoose');
 const OrderSchema=new mongoose.Schema({
-    items:[
+    orderQuantity:[
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Item'
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Quantity',
+        required:true
         }
     ],
     buyer:{
-        type: mongoose.Schema.Types.ObjectId,
-            ref: 'Users'
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Users',
+        require:true,
+        unique:true
     },
     amount:{
         type:Number
