@@ -52,7 +52,12 @@ router.get('/pay/:orderId', async function (req, res) {
 
 
 router.get('/success', async function (req, res) {
-    let order = await Order.findById(req.query.orderId).populate('buyer').populate({path:'items',select:['title','description','price','discount']}).exec();
+    let order = await Order.findById(req.query.orderId).populate('buyer').populate({path:'orderQuanitity',
+    populate:{
+        path:'item',
+        select:['title','description','price','discount']}
+    }
+    ).exec();
     let receiptNumber=Math.random()*100000;
     receiptNumber=receiptNumber.toFixed(0);
     let transaction = await Transaction.create({
@@ -78,7 +83,7 @@ router.get('/success', async function (req, res) {
             country: "INDIA",
             postal_code: 244001
         },
-        items:order.items,
+        items:order.orderQuantity,
         subtotal: order.amount,
         paid: order.amount,
         invoice_nr: receiptNumber

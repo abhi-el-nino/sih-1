@@ -90,6 +90,7 @@ function generateHeader(doc) {
       "Item",
       "Description",
       "Unit Cost",
+      "Quantity",
       "Discount",
       "Line Total"
     );
@@ -102,11 +103,12 @@ function generateHeader(doc) {
       generateTableRow(
         doc,
         position,
-        item.item,
-        item.description,
-        formatCurrency(item.price),
+        item.item.title,
+        item.item.description,
+        formatCurrency(item.item.price),
+        item.quantity,
         item.discount,
-       // formatCurrency(item.amount)
+        formatCurrency(item.item.price*item.quantity)
       );
   
       generateHr(doc, position + 20);
