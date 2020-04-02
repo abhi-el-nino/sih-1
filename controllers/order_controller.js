@@ -11,33 +11,18 @@ console.log('rrrrrrrrrrr',req.body);
         let item = await Item.findById(req.body.itemId);
 
         if (!cart) {
-<<<<<<< HEAD
             let amount = item.price*req.body.quantity;
             let newCart =await Cart.create(
-=======
-            let amount = item.price * (req.body.quantity);
-            let newCart = await Cart.create(
->>>>>>> ffd43c037b90b90505c9c9d4125110d858794e43
                 {
                     buyer: req.user._id,
                     amount: amount
                 }
             );
-<<<<<<< HEAD
             const newItem={
                 item:req.body.itemId,
                 quantity:req.body.quantity
             }
             newCart.items.push(newItem);
-=======
-            let orderQuantity = await OrderQuantity.create(
-                {
-                    item: req.body.itemId,
-                    quantity: req.body.quantity
-                }
-            );
-            newCart.orderQuantity.push(orderQuantity._id);
->>>>>>> ffd43c037b90b90505c9c9d4125110d858794e43
             await newCart.save();
             return res.status(200).json({
                 data: {
@@ -47,7 +32,6 @@ console.log('rrrrrrrrrrr',req.body);
 
         } else {
             let amount = cart.amount;
-<<<<<<< HEAD
             amount += item.price*req.body.quantity;
             cart.amount = amount;
             let found=false;
@@ -58,17 +42,6 @@ console.log('rrrrrrrrrrr',req.body);
                 }
             }
             if(found===false)  await cart.items.push({item:req.body.itemId,quantity:req.body.quantity}); 
-=======
-            amount += item.price * (req.body.quantity);
-            cart.amount = amount;
-            let orderQuantity = await OrderQuantity.create(
-                {
-                    item: req.body.itemId,
-                    quantity: req.body.quantity
-                }
-            )
-            await cart.items.push(orderQuantity._id);
->>>>>>> ffd43c037b90b90505c9c9d4125110d858794e43
             await cart.save();
             return res.status(200).json({
                 data: {
