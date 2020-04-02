@@ -3,9 +3,10 @@ var express = require('express'),
     stripe = require('stripe')('sk_test_eWQQ4UsI4UMyEwGpT1e9uJfj00udOO6ZRo'),
     bodyParser = require('body-parser'),
     Transaction = require('../models/transaction'),
-    Order       = require('../models/Order'),
-    Cart        = require('../models/Cart'),
-    block       = require('../blockchain/index'),
+    Order = require('../models/Order'),
+    Cart = require('../models/Cart'),
+    block = require('../blockchain/index'),
+    generatePdf = require('../utilitis/pdfGenerator'),
     endPoint = 'whsec_TmSun6kNPvQBremNO6mWRFkZJZcmjDeD';
 // paymentMailer = require('../../../mailer/attendeePayment');
 
@@ -51,60 +52,41 @@ router.get('/pay/:orderId', async function (req, res) {
 
 
 router.get('/success', async function (req, res) {
-    let order = await Order.findById(req.query.orderId);
-    let transaction = await Transaction.create({
-        order:req.query.orderId,
-        sessionId:req.query.session_id,
-        paidAmount:order.amount
-    });
-    await Cart.deleteOne({buyer:req.user._id});
-    order.completed=true;
-    await order.save();
-    var newblock={
-        sessionId:req.query.session_id,
-        amount:order.amount
-    }
-    block.newTransaction(newblock);
-    return  res.render('success', { sessionId: req.query.session_id });
+    let order = await Order.findById(req.query.orderId).populate('buyer').populate({path:'items',select:['title','description','price','discount']}).exec();
+    let receiptNumber=Math.random()*100000;
+    receiptNumber=receiptNumber.toFixed(0);
+    // let transaction = await Transaction.create({
+    //     order: req.query.orderId,
+    //     sessionId: req.query.session_id,
+    //     paidAmount: order.amount,
+    //     receiptNumber:receiptNumber
+    // });
+    // await Cart.deleteOne({ buyer: req.user._id });
+    // order.completed = true;
+    // await order.save();
+    // var newblock = {
+    //     sessionId: req.query.session_id,
+    //     amount: order.amount
+    // }
+    // block.newTransaction(newblock);
+    const invoice = {
+        shipping: {
+            name: order.buyer.firstName+order.buyer.lastName,
+            address: order.buyer.address,
+            city: "Dehdradune",
+            state: "UK",
+            country: "INDIA",
+            postal_code: 244001
+        },
+        items:order.items,
+        subtotal: order.amount,
+        paid: order.amount,
+        invoice_nr: receiptNumber
+    };
+    generatePdf(invoice);
+    return res.render('success', { sessionId: 'req.query.session_id' });
 });
 
-
-
-// router.post('/webhook', bodyParser.raw({type: 'application/json'}), function(req, res){
-// 	const sig = req.headers['stripe-signature'];
-// 	let event;
-
-// 	try{
-// 		event = stripe.webhooks.constructEvent(req.body, sig, endPoint);
-// 	}
-// 	catch(err){
-// 		console.log('Webhook Error -> ' + err.message);
-// 		return res.status(400).send(`Webhook Error: ${err.message}`);
-// 	}
-
-// 	//Handle the checkout.session.completed event
-// 	if(event.type === 'checkout.session.completed' && event.data.object.metadata.checkWebhook == 'Attendee'){
-// 		const session = event.data.object;
-
-// 		//UPDATE THE TABLE FOR PAYMENT OF THE USER
-// 		var sql = "INSERT INTO conf_attendee (paymentId, paymentDone, email, paymentType) VALUES(?, ?, ?, ?)";
-// 		var values = [session.id, 1, session.customer_email, session.metadata.type];
-// 		con.query(sql, values, function(err, result){
-// 			if(err){
-// 				throw err;
-// 			}
-// 			var data = {
-// 				sessionId: session.id,
-// 				type: session.metadata.type,
-// 				amount: (session.display_items[0].amount)/100
-// 			}
-// 			paymentMailer.mail(data, session.customer_email);
-// 		});
-// 	}
-
-// 	//Return a response to acknowledge receipt of the event
-// 	res.json({received: true});
-// });
 
 
 

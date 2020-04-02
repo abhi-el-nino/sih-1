@@ -13,7 +13,6 @@ const mongoStore = require('connect-mongo')(session);
 //To allow cross origin requests
 const cors= require('cors');
 app.use(cors());
-//const textLocal = require('./config/textlocal');
 
 // setup the chat server to be used with socket.io
 const chatServer = require('http').Server(app);

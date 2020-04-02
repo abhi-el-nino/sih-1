@@ -13,6 +13,10 @@ const TransactionSchema=new mongoose.Schema({
         type:String,
         required:true,
         unique:true
+    },
+    receiptNumber:{
+        type:Number,
+        require:true
     }
 },{
     timestamps:true
