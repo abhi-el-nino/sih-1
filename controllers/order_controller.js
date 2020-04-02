@@ -5,36 +5,47 @@ const Order = require('../models/Order');
 
 module.exports.toggleCart = async (req, res) => {
     try {
-
+console.log('rrrrrrrrrrr',req.body);
         let cart = await Cart.findOne({ buyer: req.user._id });
         let item = await Item.findById(req.body.itemId);
         
         if (!cart) {
-            let amount = item.price;
+            let amount = item.price*req.body.quantity;
             let newCart =await Cart.create(
                 {
                     buyer: req.user._id,
                     amount: amount
                 }
             );
-            newCart.items.push(req.body.itemId);
+            const newItem={
+                item:req.body.itemId,
+                quantity:req.body.quantity
+            }
+            newCart.items.push(newItem);
             await newCart.save();
             return res.status(200).json({
                 data: {
                     added: false
-                }, message: "item removed"
+                }, message: "item added and existed"
             });
 
         } else {
             let amount = cart.amount;
-            amount += item.price;
+            amount += item.price*req.body.quantity;
             cart.amount = amount;
-            await cart.items.push(req.body.itemId);
+            let found=false;
+            for(let item in cart.items){
+                if(item.item===req.body.itemId){
+                    found=true;
+                    item.quantity=item.quantity+req.body.quantity;
+                }
+            }
+            if(found===false)  await cart.items.push({item:req.body.itemId,quantity:req.body.quantity}); 
             await cart.save();
             return res.status(200).json({
                 data: {
                     added: true
-                }, message: "item added to cart"
+                }, message: "item added to cart and doesn't existed"
             });
         }
     } catch (err) {

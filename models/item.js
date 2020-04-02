@@ -9,8 +9,12 @@ const itemSchema = new mongoose.Schema({
         required: true,
 
     },
-    description:{
-        type:String,
+    quality: {
+        type: String
+
+    },
+    description: {
+        type: String,
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -18,7 +22,7 @@ const itemSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number
-        
+
     },
 
     image: {
