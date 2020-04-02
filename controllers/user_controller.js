@@ -1,9 +1,10 @@
 const User = require('../models/User');
 module.exports.register = (req, res) => {
     if (req.isAuthenticated()) {
-
+        console.log('heyy');
         res.redirect('/users/profile');
     }
+    console.log('hello');
     return res.render('register', {
         title: "register"
     });

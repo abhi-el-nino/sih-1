@@ -25,11 +25,8 @@
         "core-js": "^3.6.4",
         "cors": "^2.8.5",
         "crypto": "^1.0.1",
-<<<<<<< HEAD
-        "css-loader": "^3.4.2",
-=======
         "crypto-js": "^4.0.0",
->>>>>>> 18b3cb07981c04abb15d597e7d7122220ad2db38
+        "css-loader": "^3.4.2",
         "ejs": "^3.0.1",
         "express": "^4.17.1",
         "express-ejs-layouts": "^2.5.0",
