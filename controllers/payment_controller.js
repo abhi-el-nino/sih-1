@@ -55,20 +55,20 @@ router.get('/success', async function (req, res) {
     let order = await Order.findById(req.query.orderId).populate('buyer').populate({path:'items',select:['title','description','price','discount']}).exec();
     let receiptNumber=Math.random()*100000;
     receiptNumber=receiptNumber.toFixed(0);
-    // let transaction = await Transaction.create({
-    //     order: req.query.orderId,
-    //     sessionId: req.query.session_id,
-    //     paidAmount: order.amount,
-    //     receiptNumber:receiptNumber
-    // });
-    // await Cart.deleteOne({ buyer: req.user._id });
-    // order.completed = true;
-    // await order.save();
-    // var newblock = {
-    //     sessionId: req.query.session_id,
-    //     amount: order.amount
-    // }
-    // block.newTransaction(newblock);
+    let transaction = await Transaction.create({
+        order: req.query.orderId,
+        sessionId: req.query.session_id,
+        paidAmount: order.amount,
+        receiptNumber:receiptNumber
+    });
+    await Cart.deleteOne({ buyer: req.user._id });
+    order.completed = true;
+    await order.save();
+    var newblock = {
+        sessionId: req.query.session_id,
+        amount: order.amount
+    }
+    block.newTransaction(newblock);
     const invoice = {
         shipping: {
             name: order.buyer.firstName+order.buyer.lastName,

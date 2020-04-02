@@ -2,22 +2,29 @@ const Users = require('../models/User');
 const Item = require('../models/item');
 const Cart = require('../models/Cart');
 const Order = require('../models/Order');
+const OrderQuantity = require('../models/item_quantity');
 
 module.exports.toggleCart = async (req, res) => {
     try {
 
         let cart = await Cart.findOne({ buyer: req.user._id });
         let item = await Item.findById(req.body.itemId);
-        
+
         if (!cart) {
-            let amount = item.price;
-            let newCart =await Cart.create(
+            let amount = item.price * (req.body.quantity);
+            let newCart = await Cart.create(
                 {
                     buyer: req.user._id,
                     amount: amount
                 }
             );
-            newCart.items.push(req.body.itemId);
+            let orderQuantity = await OrderQuantity.create(
+                {
+                    item: req.body.itemId,
+                    quantity: req.body.quantity
+                }
+            );
+            newCart.orderQuantity.push(orderQuantity._id);
             await newCart.save();
             return res.status(200).json({
                 data: {
@@ -27,9 +34,15 @@ module.exports.toggleCart = async (req, res) => {
 
         } else {
             let amount = cart.amount;
-            amount += item.price;
+            amount += item.price * (req.body.quantity);
             cart.amount = amount;
-            await cart.items.push(req.body.itemId);
+            let orderQuantity = await OrderQuantity.create(
+                {
+                    item: req.body.itemId,
+                    quantity: req.body.quantity
+                }
+            )
+            await cart.items.push(orderQuantity._id);
             await cart.save();
             return res.status(200).json({
                 data: {
@@ -48,21 +61,21 @@ module.exports.toggleCart = async (req, res) => {
 }
 
 module.exports.checkout = async (req, res) => {
-   let cart = await Cart.findOne({buyer:req.user._id}).populate('items').exec();
-   if(cart){
+    let cart = await Cart.findOne({ buyer: req.user._id }).exec();
+    if (cart) {
         let order = await Order.create({
-            items:cart.items,
-            buyer:req.user._id,
-            amount:cart.amount
+            items: cart.items,
+            buyer: req.user._id,
+            amount: cart.amount
         });
         return res.redirect(`/order/payment/pay/${order._id}`);
-   }
+    }
 }
 
 
 module.exports.shoppingCart = async (req, res) => {
     try {
-        let cart = await Cart.findOne({buyer:req.user._id}).populate('items').exec();
+        let cart = await Cart.findOne({ buyer: req.user._id }).populate('items').exec();
         return res.render('shopping-cart', {
             title: "SIH | Cart",
             cartItems: cart.items
@@ -89,6 +102,6 @@ module.exports.buyProduct = async (req, res) => {
     }
 }
 
-module.exports.transactionFailed=function(req,res){
+module.exports.transactionFailed = function (req, res) {
     return res.redirect('/');
 }
