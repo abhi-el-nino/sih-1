@@ -6,48 +6,47 @@ const OrderQuantity = require('../models/item_quantity');
 
 module.exports.toggleCart = async (req, res) => {
     try {
-
+console.log('rrrrrrrrrrr',req.body);
         let cart = await Cart.findOne({ buyer: req.user._id });
         let item = await Item.findById(req.body.itemId);
 
         if (!cart) {
-            let amount = item.price * (req.body.quantity);
-            let newCart = await Cart.create(
+            let amount = item.price*req.body.quantity;
+            let newCart =await Cart.create(
                 {
                     buyer: req.user._id,
                     amount: amount
                 }
             );
-            let orderQuantity = await OrderQuantity.create(
-                {
-                    item: req.body.itemId,
-                    quantity: req.body.quantity
-                }
-            );
-            newCart.orderQuantity.push(orderQuantity._id);
+            const newItem={
+                item:req.body.itemId,
+                quantity:req.body.quantity
+            }
+            newCart.items.push(newItem);
             await newCart.save();
             return res.status(200).json({
                 data: {
                     added: false
-                }, message: "item removed"
+                }, message: "item added and existed"
             });
 
         } else {
             let amount = cart.amount;
-            amount += item.price * (req.body.quantity);
+            amount += item.price*req.body.quantity;
             cart.amount = amount;
-            let orderQuantity = await OrderQuantity.create(
-                {
-                    item: req.body.itemId,
-                    quantity: req.body.quantity
+            let found=false;
+            for(let item in cart.items){
+                if(item.item===req.body.itemId){
+                    found=true;
+                    item.quantity=item.quantity+req.body.quantity;
                 }
-            )
-            await cart.items.push(orderQuantity._id);
+            }
+            if(found===false)  await cart.items.push({item:req.body.itemId,quantity:req.body.quantity}); 
             await cart.save();
             return res.status(200).json({
                 data: {
                     added: true
-                }, message: "item added to cart"
+                }, message: "item added to cart and doesn't existed"
             });
         }
     } catch (err) {
@@ -97,7 +96,7 @@ module.exports.buyProduct = async (req, res) => {
         });
 
     } catch (err) {
-        console.log(err);
+        console.log("errrrrrrrrr",err);
         return;
     }
 }

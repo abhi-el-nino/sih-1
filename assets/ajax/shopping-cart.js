@@ -10,17 +10,20 @@ class CartFill {
         $(this.adder).click(function (e) {
             e.preventDefault();
             let self = this;
-                
+            let quantity=($("#item-quantity")[0].value);
+            console.log("qq",quantity);
             let itemId = $(self).attr('id').split("-")[1];
+          if(quantity!==""){
             $.ajax({
                 type: "post",
                 url: '/order/add-to-cart',
                 data: {
-                    itemId: itemId
+                    itemId: itemId,
+                    quantity:quantity
                 },
 
                 success: function (data) {
-                    
+                    console.log("data",data);
                     let cartCount = $('#cart-count').html();
                     cartCount = parseInt(cartCount);
                     if (data.data.added == true) {
@@ -37,6 +40,9 @@ class CartFill {
                     console.log(err);
                 }
             });
+          }else{
+              console.log('chal be');
+          }
         });
 
     }

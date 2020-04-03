@@ -1,8 +1,9 @@
 const Items = require('../models/item');
 const Users = require('../models/User');
 module.exports.upload = (req, res) => {
-    if (req.user.isFarmer == true) {
-
+    console.log("kk",);
+    
+    if (req.user._doc.role ==="Farmer") {
         Items.uploadedImage(req, res, async function (err) {
 
             try {

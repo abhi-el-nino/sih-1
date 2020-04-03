@@ -34,20 +34,22 @@ passport.serializeUser(function(user, done) {
     return done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
- 
-    User.findById(id, function(err, user) {
-        if (err) {
-            console.log('error in finding-->passport');
-            return done(err);
+passport.deserializeUser(async function(id, done) {
+ console.log('deserialiser');
+   let user=await  User.findById(id);
+     
+            // console.log('error in finding-->passport');
+            // return done(err);
+        let newUser={
+            ...user,
+            k:12
         }
-        return done(null, user);
+        
+        return done(null, newUser);
     });
-});
 
 //check if user is authenticated or not
 passport.checkAuthentication = function(req, res, next) {
-    
     
     if (req.isAuthenticated()) {
         return next();
@@ -62,6 +64,7 @@ passport.checkAuthentication = function(req, res, next) {
 passport.setAuthenticatedUser = function(req, res, next) {
     if (req.isAuthenticated()) {
        
+    console.log('new',req.user.k);
         
         res.locals.user = req.user;
 
