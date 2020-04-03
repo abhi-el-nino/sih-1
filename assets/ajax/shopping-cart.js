@@ -7,9 +7,10 @@ class CartFill {
 
     }
     addTocart() {
-        $(this.adder).click(function (e) {
+        $(this.adder).click( function(e){
             e.preventDefault();
             let self = this;
+            console.log(self);
             let quantity=($("#item-quantity")[0].value);
             console.log("qq",quantity);
             let itemId = $(self).attr('id').split("-")[1];
@@ -46,4 +47,32 @@ class CartFill {
         });
 
     }
+}
+
+class RemoveFromCart{
+    constructor(deleteButton){
+        this.deleteButton=deleteButton;
+        this.deleteFromCart();
+    }
+
+deleteFromCart=()=>{
+    (this.deleteButton).click(function(e){
+
+    let self=this;
+    let itemId = $(self).attr('id').split("-")[1];
+    $.ajax({
+        type: "get",
+        url: `/order/remove-from-cart/${itemId}`,
+          success: function (data) {
+            console.log(data);
+            $(`#cart-item-${itemId}`).remove();    
+
+        }, error: function (err) {
+            console.log(err);
+        }
+    });
+       
+    });
+}
+
 }

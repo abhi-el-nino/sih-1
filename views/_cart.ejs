@@ -8,79 +8,52 @@
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" style="max-width:1043px" role="document">
         <div class="modal-content">
-
-            <div class="modal-body" style="min-height:400px">
-                <div>
-                    <h4 style="text-align: left;">Cart</h4>
-                </div>
-                <aside style="display:inline-block;vertical-align:top;width:53%;margin-top:8px;margin-right: 12px;">
-                    <div style="display:flex;flex-direction: column;">
-                        <div style="display:flex;flex-direction: column;box-shadow: -0.2px -0.2px 0.4px 0.6px #dcdcdc;margin-bottom: 2%;">
-                            <div class="details-delete">
-                                <div style="color:gray;font-size:14px;">
-                                    Abhinav Gautam
-                                </div>
-                                <div>
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </div>
-
-                            </div>
-                            <div style="display:flex;">
-                                <div class="image-container">
-                                    <img class="allcropimage" src="http://5.imimg.com/data5/NR/BA/MY-17256771/wheat-500x500.jpg" />
-                                </div>
-                                <div style="display:flex;flex-direction: column;align-items: flex-start;padding: 3px;">
-                                    <div style="font-weight:600;font-size:17px">
-                                        Premium Wheat
-                                    </div>
-                                    <div style="font-size:14px">
-                                        Item Count :3
-                                    </div>
-                                    <div>
-                                        &#x20b9;300
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
-                        <div style="display:flex;flex-direction: column;box-shadow: -0.2px -0.2px 0.4px 0.6px #dcdcdc;margin-bottom: 2%;">
-                            <div class="details-delete">
-                                <div style="color:gray;font-size:14px;">
-                                    Abhinav Gautam
-                                </div>
-                                <div>
-                                    <ion-icon style="color: red;" name="trash-outline"></ion-icon>
-
-                                </div>
-
-                            </div>
-                            <div style="display:flex;">
-                                <div class="image-container">
-                                    <img class="allcropimage" src="http://5.imimg.com/data5/NR/BA/MY-17256771/wheat-500x500.jpg" />
-                                </div>
-                                <div style="display:flex;flex-direction: column;align-items: flex-start;padding: 3px;">
-                                    <div style="font-weight:600;font-size:17px">
-                                        Premium Wheat
-                                    </div>
-                                    <div style="font-size:14px">
-                                        Item Count :3
-                                    </div>
-                                    <div>
-                                        &#x20b9;300
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
+            <%if(locals.user!==undefined){%>
+                <div class="modal-body" style="min-height:400px">
+                    <div>
+                        <h4 style="text-align: left;">Cart</h4>
                     </div>
-                    <!-- <div style="display:flex;flex-direction:column">
+                    <aside style="display:inline-block;vertical-align:top;width:53%;margin-top:8px;margin-right: 12px;">
+                        <div style="display:flex;flex-direction: column;">
+                            <%for(let i of locals.user.cart){%>
+                                <div id="cart-item-<%=i.item._id%>" style="display:flex;flex-direction: column;box-shadow: -0.2px -0.2px 0.4px 0.6px #dcdcdc;margin-bottom: 2%;">
+                                    <div class="details-delete">
+                                        <div style="color:gray;font-size:14px;">
+                                            ABHINAV GAUTAM
+                                        </div>
+                                        <div class="cart-remove" id="cartdelete-<%=i.item._id%>">
+                                            <ion-icon style="color: red;" name="trash-outline"></ion-icon>
+                                        </div>
+
+                                    </div>
+                                    <div style="display:flex;">
+                                        <div class="image-container">
+                                            <img class="allcropimage" src=" <%=i.item.image%>" />
+                                        </div>
+                                        <div style="display:flex;flex-direction: column;align-items: flex-start;padding: 3px;">
+                                            <div style="font-weight:600;font-size:17px">
+                                                <%=i.item.title%>
+                                            </div>
+                                            <div style="font-size:14px">
+                                                Item Count :
+                                                <%=i.quantity%>
+                                            </div>
+                                            <div>
+                                                &#x20b9;
+                                                <%=i.item.price * i.quantity%>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <%}%>
+
+
+                        </div>
+                        <!-- <div style="display:flex;flex-direction:column">
 
                         <div class="allcropscard">
                             <div style="display:flex;justify-content:space-between;margin-top:-7px">
@@ -115,21 +88,23 @@
 
 
                     </div> -->
-                </aside>
+                    </aside>
 
 
-                <aside style="display:inline-block;vertical-align:top;width:45%">
-                    <div style="display:flex;justify-content:space-between;margin-bottom:11px">
-                        <div style="font-size:18px">
-                            item(s) Total
+                    <aside style="display:inline-block;vertical-align:top;width:45%">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:11px">
+                            <div style="font-size:18px">
+                                item(s) Total
+                            </div>
+                            <div style="font-size:18px">
+                                &#x20b9;
+                                <%=locals.user.cartTotal%>
+                            </div>
                         </div>
-                        <div style="font-size:18px">
-                            &#x20b9; 302
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-dark btn-block"><a style="color:white" href="/order/checkout">CHECKOUT</a></button>
-                </aside>
-            </div>
+                        <button type="button" class="btn btn-dark btn-block"><a style="color:white" href="/order/checkout">CHECKOUT</a></button>
+                    </aside>
+                    <%}%>
+                </div>
 
         </div>
     </div>

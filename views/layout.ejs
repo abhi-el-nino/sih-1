@@ -356,19 +356,18 @@
         new ChatEngine('user-chat-box', '<%= locals.user._id%>', sender._id);
     </script>
     <script>
-        console.error("hiii")
-        console.log($(".quant"));
-
-        $("input").each(function () {
-            let self = this;
-            $(self).on('change', function () {
-                console.log("heee")
-            });
-        })
-        let adder = $('.cart-toggler');
-        new CartFill(adder);
-    </script>
-    <% } %>
+                    $("input").each(function() {
+                        let self = this;
+                        $(self).on('change', function() {
+                            console.log("heee")
+                        });
+                    })
+                    let adder = $('.cart-toggler');
+                    let cartRemoveButton = $('.cart-remove');
+                    new CartFill(adder);
+                    new RemoveFromCart(cartRemoveButton);
+                </script>
+                <% } %>
 
 </body>
 
