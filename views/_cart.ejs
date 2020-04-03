@@ -8,14 +8,14 @@
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" style="max-width:1043px" role="document">
         <div class="modal-content">
-            <%if(locals.user!==undefined){%>
+            <%if(locals.user!==undefined &&locals.cart){%>
                 <div class="modal-body" style="min-height:400px">
                     <div>
                         <h4 style="text-align: left;">Cart</h4>
                     </div>
                     <aside style="display:inline-block;vertical-align:top;width:53%;margin-top:8px;margin-right: 12px;">
                         <div style="display:flex;flex-direction: column;">
-                            <%for(let i of locals.user.cart){%>
+                            <%for(let i of locals.cart){%>
                                 <div id="cart-item-<%=i.item._id%>" style="display:flex;flex-direction: column;box-shadow: -0.2px -0.2px 0.4px 0.6px #dcdcdc;margin-bottom: 2%;">
                                     <div class="details-delete">
                                         <div style="color:gray;font-size:14px;">

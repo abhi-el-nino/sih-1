@@ -1,10 +1,8 @@
-console.log("carter called");
+
 class CartFill {
     constructor(adder) {
         this.adder = adder;
         this.addTocart();
-       
-
     }
     addTocart() {
         $(this.adder).click( function(e){

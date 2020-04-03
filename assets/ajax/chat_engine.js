@@ -95,13 +95,13 @@ class ChatEngine {
         })
         self.socket.on('receive_message_online', function (data) {
             $('#user-chat-box').addClass("show");
-            let oldMessages=await Message.find({
-                $or: [
-                    { $and : [ { sender:data.senderId }, { receiver:data.receiverId },{status:1} ] },
-                    { $and : [ { sender:data.receiverId }, { receiver:data.senderId},{status:1} ] }
-                ]
-            })
-            .sort('createdAt');
+            // let oldMessages=await Message.find({
+            //     $or: [
+            //         { $and : [ { sender:data.senderId }, { receiver:data.receiverId },{status:1} ] },
+            //         { $and : [ { sender:data.receiverId }, { receiver:data.senderId},{status:1} ] }
+            //     ]
+            // })
+            // .sort('createdAt');
             //apending old messages
             oldMessages.forEach((message)=>{
                 let newMessage = $('<li>');

@@ -315,7 +315,7 @@
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-    <script src="/ajax/chat_engine.js"></script>
+    <!-- <script src="/ajax/chat_engine.js"></script> -->
     <script src="/js/heatmap.js"></script>
     <script src="/js/leaflet-heatmap.js"></script>
     <script>
@@ -344,29 +344,15 @@
     </script>
     <%- script %>
     <!-- <script src="/js/lock-amount.js"></script> -->
-    <script src="/ajax/shopping-cart.js"></script>
-    <script src="/ajax/increase_quantity.js"></script>
     <% if (locals.user){ %>
-    <script>
+    <!-- <script>
             console.log("new");
         let sender = {
             _id: "5e14d79207c90b3004663843",
             emailOrPhone: "abhi@abhi"
         }
         new ChatEngine('user-chat-box', '<%= locals.user._id%>', sender._id);
-    </script>
-    <script>
-                    $("input").each(function() {
-                        let self = this;
-                        $(self).on('change', function() {
-                            console.log("heee")
-                        });
-                    })
-                    let adder = $('.cart-toggler');
-                    let cartRemoveButton = $('.cart-remove');
-                    new CartFill(adder);
-                    new RemoveFromCart(cartRemoveButton);
-                </script>
+    </script> -->
                 <% } %>
 
 </body>
