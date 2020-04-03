@@ -2,6 +2,8 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 
 const User = require('../models/User');
+const Cart=require('../models/Cart');
+const Item=require('../models/item');
 
 passport.use(new localStrategy({
         usernameField: 'emailOrPhone'
@@ -38,14 +40,28 @@ passport.deserializeUser(async function(id, done) {
  console.log('deserialiser');
    let user=await  User.findById(id);
      
-            // console.log('error in finding-->passport');
-            // return done(err);
-        let newUser={
-            ...user,
-            k:12
-        }
+         
+            let cart = await Cart.findOne({buyer:user._id});
+          let cartItems=cart.items;
+            // console.log("ii",cart);
+    
+            let populatedCart = await Promise.all(cartItems.map(async (item) => {
+                let foundItem = await Item.findById(item.item);
+                return ({
+                    item: foundItem,
+                    quantity: item.quantity
+                })
+            }));
+           user.cart=[...populatedCart];
+           user.cartTotal=cart.amount;
+
+                 
+            // console.log("user",user.cart);
+            return done(null, user);
+           
+       
         
-        return done(null, newUser);
+        // return done(null, user);
     });
 
 //check if user is authenticated or not
@@ -64,9 +80,10 @@ passport.checkAuthentication = function(req, res, next) {
 passport.setAuthenticatedUser = function(req, res, next) {
     if (req.isAuthenticated()) {
        
-    console.log('new',req.user.k);
+    // console.log('new',req.user.cart);
         
         res.locals.user = req.user;
+        console.log("set response",res.locals.user.cart);
 
     }
     return next();

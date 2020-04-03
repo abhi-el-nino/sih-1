@@ -10,5 +10,6 @@ router.post('/add-to-cart',passport.checkAuthentication,orderController.toggleCa
 router.get("/buy_product/:id",orderController.buyProduct);
 router.use('/payment',paymentController);
 router.get('/transactionFailed',orderController.transactionFailed);
+router.get('/remove-from-cart/:id',passport.checkAuthentication,orderController.removeFromCart);
 router.get('/checkout',orderController.checkout);
 module.exports=router;
