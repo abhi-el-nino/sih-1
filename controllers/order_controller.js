@@ -11,7 +11,7 @@ module.exports.toggleCart = async (req, res) => {
         let item = await Item.findById(req.body.itemId);
         console.log("mycart",cart);
         if (cart==null) {
-            let amount = item.price * req.body.quantity;
+            let amount = item.price * parseInt(req.body.quantity);
             let newCart = await Cart.create(
                 {
                     buyer: req.user._id,
@@ -32,16 +32,21 @@ module.exports.toggleCart = async (req, res) => {
 
         } else {
             let amount = cart.amount;
-            amount += item.price * req.body.quantity;
+            amount += item.price * parseInt(req.body.quantity);
             cart.amount = amount;
             let found = false;
-            for (let item in cart.items) {
-                if (item.item === req.body.itemId) {
+            console.log("kk",cart.items);
+            for (let item of cart.items) {
+                if (item.item._id == req.body.itemId) {
+                   
                     found = true;
-                    item.quantity = item.quantity + req.body.quantity;
+                    item.quantity = item.quantity + parseInt(req.body.quantity);
                 }
             }
-            if (found === false) await cart.items.push({ item: req.body.itemId, quantity: req.body.quantity });
+            console.log('found',found);
+            if (found === false){
+                await cart.items.push({ item: req.body.itemId, quantity: req.body.quantity });
+            }
             await cart.save();
             return res.status(200).json({
                 data: {
@@ -109,7 +114,9 @@ module.exports.removeFromCart = async (req, res) => {
    try {
     let cart = await Cart.findOne({ buyer: req.user._id });
     let updatedCart=(cart.items).filter((item)=>{
-        if(item.item._id===req.params.id){
+
+        console.log(item.item._id==req.params.id);
+        if(item.item._id==req.params.id){
             return false;
         }else{
             return true
@@ -117,8 +124,14 @@ module.exports.removeFromCart = async (req, res) => {
 
 
     });
-    cart.items=updatedCart;
+    
+    await Cart.findByIdAndUpdate(cart._id,{
+        items:updatedCart
+    });
     await cart.save();
+    let newCart = await Cart.findOne({ buyer: req.user._id });
+    console.log("upp",newCart.items)
+
     return res.status(200).json({
         message:"removed from cart"
     });
