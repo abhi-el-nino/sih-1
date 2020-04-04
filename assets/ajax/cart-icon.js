@@ -13,9 +13,16 @@ class RemoveFromCart {
                 url: `/order/remove-from-cart/${itemId}`,
                 success: function (data) {
                     $('#cart-total').text(`${data.amount}`);
-                    let cartCount=$('#cart-count').text();
+                    let cartCount = $('#cart-count').text();
                     $('#cart-count').text(cartCount--);
                     $(`#cart-item-${itemId}`).remove();
+                    new Noty({
+                        theme: 'relax',
+                        text: 'Item Removed From Cart',
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 2000
+                    }).show();
                 }, error: function (err) {
                     console.log(err);
                 }
@@ -27,7 +34,7 @@ class RemoveFromCart {
 
 let carthandler = function () {
     let cart = $('.cart-icon > a');
-    cart.click((e)=>{e.preventDefault()});
+    cart.click((e) => { e.preventDefault() });
     cart.mouseenter(function (e) {
         $.ajax({
             type: "get",
@@ -49,9 +56,10 @@ let carthandler = function () {
 }
 
 let createCartItem = (data) => {
-    return $(`<tr id="cart-item-${data.item._id}">
+    return $(`
+    <tr id="cart-item-${data.item._id}">
 <td class="si-pic">
-    <img src="${data.item.image}" style="width:50px;height:50px" alt="" />
+<a href="/order/buy_product/${data.item._id}">  <img src="${data.item.image}" style="width:50px;height:50px" alt="" /></a>
 </td>
 <td class="si-text">
     <div class="product-selected">

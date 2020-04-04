@@ -23,7 +23,7 @@ router.get('/pay/:orderId', async function (req, res) {
                     currency: 'inr',
                     description: '(Inclusive of 2% transaction charges)',
                     images: ['https://drive.google.com/uc?id=1pi0meQST2sfriYUafHR-Iy1ycwqXDXFk'],
-                    amount: [Math.ceil(order.amount / 98)] * 100
+                    amount: [order.amount] * 100
                     // Keep the amount on the server to prevent customers from manipulating
                 }
             ],
@@ -50,10 +50,9 @@ router.get('/pay/:orderId', async function (req, res) {
 
 router.get('/success', async function (req, res) {
     let order = await Order.findById(req.query.orderId).populate('buyer').populate({
-        path: 'orderQuanitity',
+        path: 'orderQuantity',
         populate: {
-            path: 'item',
-            select: ['title', 'description', 'price', 'discount']
+            path: 'item'
         }
     }
     ).exec();
@@ -75,7 +74,7 @@ router.get('/success', async function (req, res) {
     block.newTransaction(newblock);
     const invoice = {
         shipping: {
-            name: order.buyer.firstName + order.buyer.lastName,
+            name: `${order.buyer.first_name} ${order.buyer.last_name}`,
             address: order.buyer.address,
             city: "Dehdradune",
             state: "UK",

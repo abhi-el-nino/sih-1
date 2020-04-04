@@ -11,7 +11,6 @@ const OrderSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Users',
         require:true,
-        unique:true
     },
     amount:{
         type:Number

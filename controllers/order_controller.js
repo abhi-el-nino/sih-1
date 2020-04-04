@@ -31,12 +31,12 @@ module.exports.toggleCart = async (req, res) => {
 
         } else {
             let amount = cart.amount;
-            amount += (parseInt(item.price) * parseInt(req.body.quantity));
+            amount = (parseInt(item.price) * parseInt(req.body.quantity));
             cart.amount = amount;
             await cart.save();
             let itemExisted = await OrderQuantity.findOne({ cart: cart.id, item: req.body.itemId }).exec();
             if (itemExisted) {
-                itemExisted.quantity = parseInt(itemExisted.quantity) + parseInt(req.body.quantity);
+                itemExisted.quantity = parseInt(req.body.quantity);
                 await itemExisted.save()
                 return res.status(200).json({
                     data: {
@@ -71,11 +71,11 @@ module.exports.toggleCart = async (req, res) => {
     }
 }
 
-module.exports.checkout = async (req, res) => {
+module.exports.paymentProcedure = async (req, res) => {
     let cart = await Cart.findOne({ buyer: req.user._id }).exec();
     if (cart) {
         let order = await Order.create({
-            items: cart.items,
+            orderQuantity: cart.orderQuantity,
             buyer: req.user._id,
             amount: cart.amount
         });
@@ -86,10 +86,16 @@ module.exports.checkout = async (req, res) => {
 
 module.exports.shoppingCart = async (req, res) => {
     try {
-        let cart = await Cart.findOne({ buyer: req.user._id }).populate('items').exec();
+        let cart = await Cart.findOne({ buyer: req.user._id }).populate({
+            path: 'orderQuantity',
+            populate: {
+                path: 'item'
+            }
+        }).exec();
         return res.render('shopping-cart', {
             title: "SIH | Cart",
-            cartItems: cart.items
+            cartItems: cart.orderQuantity,
+            amount: cart.amount
         });
 
     } catch (e) {
@@ -102,11 +108,23 @@ module.exports.buyProduct = async (req, res) => {
     try {
 
         let item = await Item.findById(req.params.id);
-        return res.render("buy-product", {
-            title: "SIH | Buy",
-            product: item
-        });
-
+        let cart = await Cart.findOne({ buyer: req.user._id });
+        if (cart) {
+            let item_quantity = await OrderQuantity.findOne({ cart: cart._id, item: req.params.id });
+            if (item_quantity) {
+                return res.render("buy-product", {
+                    title: "SIH | Buy",
+                    product: item,
+                    quantity: item_quantity.quantity
+                });
+            }
+        } else {
+            return res.render("buy-product", {
+                title: "SIH | Buy",
+                product: item,
+                quantity: 0
+            });
+        }
     } catch (err) {
         console.log("errrrrrrrrr", err);
         return;

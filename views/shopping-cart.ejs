@@ -28,7 +28,7 @@
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
-                                <th><i class="ti-close"></i></th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -38,26 +38,25 @@
 
                             <% cartItems.forEach(function(item){%>
                                 <tr>
-                                    <td class="cart-pic"><img src="<%=item.image%>" alt=""></td>
+                                    <td class="cart-pic"><img src="<%=item.item.image%>" style="max-width: 100px;max-height: 100px ;padding: 5px;"></td>
                                     <td class="cart-title">
                                         <h5>
-                                            <%=item.title%>
+                                            <%=item.item.title%>
                                         </h5>
                                     </td>
                                     <td class="p-price">
-                                        <%=item.price%>
+                                        <%=item.item.price%>
                                     </td>
                                     <td class="qua-col">
                                         <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" class="quant" value="0">
-                                            </div>
+                                           
+                                             <b><%= item.quantity %></b>
+                                            
                                         </div>
                                     </td>
                                     <td class="total-price">
-                                        <%=item.price%>
+                                        <%=(item.item.price*item.quantity)%>
                                     </td>
-                                    <td class="close-td"><i class="ti-close"></i></td>
                                 </tr>
                                 <%})%>
                         </tbody>
@@ -66,8 +65,8 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="cart-buttons">
-                            <a href="#" class="primary-btn continue-shop">Continue shopping</a>
-                            <a href="#" class="primary-btn up-cart">Update cart</a>
+                           
+                            <a href="/" class="primary-btn up-cart">Continue Shopping</a>
                         </div>
                         <div class="discount-coupon">
                             <h6>Discount Codes</h6>
@@ -80,10 +79,10 @@
                     <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout">
                             <ul>
-                                <li class="subtotal">Subtotal <span>$240.00</span></li>
-                                <li class="cart-total">Total <span>$240.00</span></li>
+                                <li class="subtotal">Subtotal <span>Rs. <%= amount %></span></li>
+                                <li class="cart-total">Total <span>Rs. <%= amount %></span></li>
                             </ul>
-                            <a href="/order/checkout" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                            <a href="/order/proceedForPayment" class="proceed-btn">PROCEED TO PAY</a>
                         </div>
                     </div>
                 </div>
