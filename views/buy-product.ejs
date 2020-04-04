@@ -54,7 +54,6 @@
     </div>
 
 </div>
-<% if(locals.user){%>
     <!-- chat box start-->
     <div id="user-chat-box" class="collapse">
         <ul id="chat-messages-list" class="card card-body">
@@ -79,16 +78,10 @@
         </form>
 
     </div>
-    <%}%>
+  
     <script src="/ajax/shopping-cart.js"></script>
     <script src="/ajax/increase_quantity.js"></script>
     <script>
-        $("input").each(function() {
-            let self = this;
-            $(self).on('change', function() {
-                console.log("heee")
-            });
-        })
         let adder = $('.cart-toggler');
         let cartRemoveButton = $('.cart-remove');
         new CartFill(adder);

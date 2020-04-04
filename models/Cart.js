@@ -1,15 +1,11 @@
 const mongoose=require('mongoose');
 const CartSchema=new mongoose.Schema({
-    items:[
-      {
-          item:  {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Items'
-        },
-        quantity:{
-            type:Number
+    orderQuantity:[
+        {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Quantity',
+        required:true
         }
-      }
     ],
     buyer: {
         type: mongoose.Schema.Types.ObjectId,

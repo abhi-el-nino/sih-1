@@ -132,8 +132,11 @@
                                     <span>1</span>
                                 </a>
                             </li>
-                            <li class="cart-icon" data-toggle="modal" data-target="#exampleModalLong">
-                                <i class="icon_bag_alt"></i>
+                            <li class="cart-icon">
+                                <a href="/order/getCartItems">
+                                    <i class="icon_bag_alt"></i>
+                                    <span id="cart-count">0</span>
+                                </a>
                                 <%- include('_cart'); %>
                     </li>
 
@@ -318,6 +321,7 @@
     <!-- <script src="/ajax/chat_engine.js"></script> -->
     <script src="/js/heatmap.js"></script>
     <script src="/js/leaflet-heatmap.js"></script>
+    <script src="/ajax/cart-icon.js"></script>
     <script>
             <% if (success && success.length > 0) { %>
 
@@ -353,8 +357,8 @@
         }
         new ChatEngine('user-chat-box', '<%= locals.user._id%>', sender._id);
     </script> -->
+    
                 <% } %>
-
 </body>
 
 </html>
