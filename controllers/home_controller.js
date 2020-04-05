@@ -6,41 +6,13 @@ const Cart = require('../models/Cart');
 module.exports.home = async (req, res) => {
 	var items = await Item.find({});
 
-	// if (req.user) {
-	// 	let cart = await Cart.findOne({ buyer: req.user._id });
-	// 	let cartItems = cart.items;
-
-	// 	let populatedCart = await Promise.all(cartItems.map(async (item) => {
-	// 		let foundItem = await Item.findById(item.item);
-	// 		return ({
-	// 			item: foundItem,
-	// 			quantity: item.quantity
-	// 		})
-	// 	}));
-
-	// 	// console.log("ppp",populatedCart);
-
-	// 	return res.render('index', {
-	// 		title: 'SIH | Home',
-	// 		items: items,
-	// 		cart:populatedCart
-	// 	});
-
-	// }
-
-
-
 	return res.render('index', {
 		title: 'SIH | Home',
 		items: items
 	});
 }
 
-module.exports.maps = (req, res) => {
-	return res.render('maps', {
-		title: 'Maps | Production'
-	});
-}
+
 module.exports.fetchMessages = async (req, res) => {
 	try {
 		let messages = await Message.find({
