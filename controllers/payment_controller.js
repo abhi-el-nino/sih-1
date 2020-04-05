@@ -7,26 +7,23 @@ var express = require('express'),
     Cart = require('../models/Cart'),
     block = require('../blockchain/index'),
     generatePdf = require('../utilitis/pdfGenerator'),
-    endPoint = 'whsec_TmSun6kNPvQBremNO6mWRFkZJZcmjDeD';
-// paymentMailer = require('../../../mailer/attendeePayment');
-
-
+    mailer = require('../mailer/payment');
 
 router.get('/pay/:orderId', async function (req, res) {
 
     try {
         let order = await Order.findById(req.params.orderId);
         session = await stripe.checkout.sessions.create({
-            customer_email: req.user.emailOrPhone,
+            customer_email: req.user.email,
             payment_method_types: ['card'],
             line_items: [
                 {
-                    name: `Buyfreash Payment Gateway`,
+                    name: `Buyfresh Payment Gateway`,
                     quantity: 1,
                     currency: 'inr',
                     description: '(Inclusive of 2% transaction charges)',
                     images: ['https://drive.google.com/uc?id=1pi0meQST2sfriYUafHR-Iy1ycwqXDXFk'],
-                    amount: [Math.ceil(order.amount / 98)] * 100
+                    amount: [order.amount] * 100
                     // Keep the amount on the server to prevent customers from manipulating
                 }
             ],
@@ -52,19 +49,20 @@ router.get('/pay/:orderId', async function (req, res) {
 
 
 router.get('/success', async function (req, res) {
-    let order = await Order.findById(req.query.orderId).populate('buyer').populate({path:'orderQuanitity',
-    populate:{
-        path:'item',
-        select:['title','description','price','discount']}
+    let order = await Order.findById(req.query.orderId).populate('buyer').populate({
+        path: 'orderQuantity',
+        populate: {
+            path: 'item'
+        }
     }
     ).exec();
-    let receiptNumber=Math.random()*100000;
-    receiptNumber=receiptNumber.toFixed(0);
+    let receiptNumber = Math.random() * 100000;
+    receiptNumber = receiptNumber.toFixed(0);
     let transaction = await Transaction.create({
         order: req.query.orderId,
         sessionId: req.query.session_id,
         paidAmount: order.amount,
-        receiptNumber:receiptNumber
+        receiptNumber: receiptNumber
     });
     await Cart.deleteOne({ buyer: req.user._id });
     order.completed = true;
@@ -76,23 +74,25 @@ router.get('/success', async function (req, res) {
     block.newTransaction(newblock);
     const invoice = {
         shipping: {
-            name: order.buyer.firstName+order.buyer.lastName,
+            name: `${order.buyer.first_name} ${order.buyer.last_name}`,
             address: order.buyer.address,
             city: "Dehdradune",
             state: "UK",
             country: "INDIA",
             postal_code: 244001
         },
-        items:order.orderQuantity,
+        items: order.orderQuantity,
         subtotal: order.amount,
         paid: order.amount,
         invoice_nr: receiptNumber
     };
     generatePdf(invoice);
+    var data = {
+        sessionId: req.query.session_id,
+        amount: order.amount
+    }
+    mailer.mail(data, order.buyer.email);
     return res.render('success', { sessionId: 'req.query.session_id' });
 });
-
-
-
 
 module.exports = router;

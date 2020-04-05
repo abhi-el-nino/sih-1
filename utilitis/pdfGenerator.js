@@ -91,7 +91,6 @@ function generateHeader(doc) {
       "Description",
       "Unit Cost",
       "Quantity",
-      "Discount",
       "Line Total"
     );
     generateHr(doc, invoiceTableTop + 20);
@@ -107,7 +106,6 @@ function generateHeader(doc) {
         item.item.description,
         formatCurrency(item.item.price),
         item.quantity,
-        item.discount,
         formatCurrency(item.item.price*item.quantity)
       );
   
@@ -188,8 +186,8 @@ function generateHeader(doc) {
       .stroke();
   }
   
-  function formatCurrency(cents) {
-    return "Rs" + (cents / 100).toFixed(2);
+  function formatCurrency(rupees) {
+    return "Rs" + (rupees).toFixed(2);
   }
   
   function formatDate(date) {

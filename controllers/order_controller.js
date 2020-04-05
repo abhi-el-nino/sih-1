@@ -6,53 +6,60 @@ const OrderQuantity = require('../models/item_quantity');
 
 module.exports.toggleCart = async (req, res) => {
     try {
-        // console.log('rrrrrrrrrrr',req.body);
-        let cart = await Cart.findOne({ buyer: req.user._id });
+        let cart = await Cart.findOneAndUpdate({ buyer: req.user._id });
         let item = await Item.findById(req.body.itemId);
-        console.log("mycart",cart);
-        if (cart==null) {
-            let amount = item.price * parseInt(req.body.quantity);
+        if (cart == null) {
+            let amount = parseInt(item.price) * parseInt(req.body.quantity);
             let newCart = await Cart.create(
                 {
                     buyer: req.user._id,
                     amount: amount
                 }
             );
-            const newItem = {
+            let item_quantity = await OrderQuantity.create({
                 item: req.body.itemId,
-                quantity: req.body.quantity
-            }
-            newCart.items.push(newItem);
+                quantity: req.body.quantity,
+                cart: newCart._id
+            });
+            newCart.orderQuantity.push(item_quantity._id);
             await newCart.save();
             return res.status(200).json({
                 data: {
-                    added: false
-                }, message: "item added and existed"
+                    added: true
+                }, message: "item added and new cart created"
             });
 
         } else {
             let amount = cart.amount;
-            amount += item.price * parseInt(req.body.quantity);
+            amount = (parseInt(item.price) * parseInt(req.body.quantity));
             cart.amount = amount;
-            let found = false;
-            console.log("kk",cart.items);
-            for (let item of cart.items) {
-                if (item.item._id == req.body.itemId) {
-                   
-                    found = true;
-                    item.quantity = item.quantity + parseInt(req.body.quantity);
-                }
-            }
-            console.log('found',found);
-            if (found === false){
-                await cart.items.push({ item: req.body.itemId, quantity: req.body.quantity });
-            }
             await cart.save();
-            return res.status(200).json({
-                data: {
-                    added: true
-                }, message: "item added to cart and doesn't existed"
-            });
+            let itemExisted = await OrderQuantity.findOne({ cart: cart.id, item: req.body.itemId }).exec();
+            if (itemExisted) {
+                itemExisted.quantity = parseInt(req.body.quantity);
+                await itemExisted.save()
+                return res.status(200).json({
+                    data: {
+                        added: false
+                        , message: "item added to cart and cart existed"
+                    }
+                });
+            } else {
+                let item_quantity = await OrderQuantity.create({
+                    item: req.body.itemId,
+                    quantity: req.body.quantity,
+                    cart: cart._id
+                });
+                await cart.orderQuantity.push(item_quantity._id);
+                await cart.save();
+
+                return res.status(200).json({
+                    data: {
+                        added: true
+                        , message: "item added to cart and cart existed"
+                    }
+                });
+            }
         }
     } catch (err) {
         console.log(err);
@@ -64,11 +71,11 @@ module.exports.toggleCart = async (req, res) => {
     }
 }
 
-module.exports.checkout = async (req, res) => {
+module.exports.paymentProcedure = async (req, res) => {
     let cart = await Cart.findOne({ buyer: req.user._id }).exec();
     if (cart) {
         let order = await Order.create({
-            items: cart.items,
+            orderQuantity: cart.orderQuantity,
             buyer: req.user._id,
             amount: cart.amount
         });
@@ -79,10 +86,16 @@ module.exports.checkout = async (req, res) => {
 
 module.exports.shoppingCart = async (req, res) => {
     try {
-        let cart = await Cart.findOne({ buyer: req.user._id }).populate('items').exec();
+        let cart = await Cart.findOne({ buyer: req.user._id }).populate({
+            path: 'orderQuantity',
+            populate: {
+                path: 'item'
+            }
+        }).exec();
         return res.render('shopping-cart', {
             title: "SIH | Cart",
-            cartItems: cart.items
+            cartItems: cart.orderQuantity,
+            amount: cart.amount
         });
 
     } catch (e) {
@@ -95,11 +108,23 @@ module.exports.buyProduct = async (req, res) => {
     try {
 
         let item = await Item.findById(req.params.id);
-        return res.render("buy-product", {
-            title: "SIH | Buy",
-            product: item
-        });
-
+        let cart = await Cart.findOne({ buyer: req.user._id });
+        if (cart) {
+            let item_quantity = await OrderQuantity.findOne({ cart: cart._id, item: req.params.id });
+            if (item_quantity) {
+                return res.render("buy-product", {
+                    title: "SIH | Buy",
+                    product: item,
+                    quantity: item_quantity.quantity
+                });
+            }
+        } else {
+            return res.render("buy-product", {
+                title: "SIH | Buy",
+                product: item,
+                quantity: 0
+            });
+        }
     } catch (err) {
         console.log("errrrrrrrrr", err);
         return;
@@ -111,37 +136,40 @@ module.exports.transactionFailed = function (req, res) {
 }
 
 module.exports.removeFromCart = async (req, res) => {
-   try {
-    let cart = await Cart.findOne({ buyer: req.user._id });
-    let updatedCart=(cart.items).filter((item)=>{
+    try {
+        let cart = await Cart.findOne({ buyer: req.user._id });
+        console.log(req.params.itemId);
+        let item = await OrderQuantity.findOneAndDelete({ cart: cart._id, item: req.params.itemId }).populate('item').exec();
+        cart.orderQuantity.pull(item._id);
+        cart.amount = cart.amount - ((item.item.price) * item.quantity);
+        await cart.save();
+        return res.status(200).json({
+            message: "removed from cart",
+            amount: cart.amount
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "internaal server error"
+        });
+    }
+}
 
-        console.log(item.item._id==req.params.id);
-        if(item.item._id==req.params.id){
-            return false;
-        }else{
-            return true
-        }
+module.exports.getItems = async (req, res) => {
+    try {
+        let cart = await Cart.findOne({ buyer: req.user._id }).populate({
+            path: 'orderQuantity',
+            populate: {
+                path: 'item'
+            }
+        }).exec();
+        return res.json(200, {
+            cart: cart,
+            cartItems: cart.orderQuantity
+        });
 
-
-    });
-    
-    await Cart.findByIdAndUpdate(cart._id,{
-        items:updatedCart
-    });
-    await cart.save();
-    let newCart = await Cart.findOne({ buyer: req.user._id });
-    console.log("upp",newCart.items)
-
-    return res.status(200).json({
-        message:"removed from cart"
-    });
-   } catch (error) {
-       console.log(error);
-    return res.status(500).json({
-        message:"internaal server error"
-    }); 
-   }
-
-
-
+    } catch (e) {
+        console.log(e);
+        return;
+    }
 }

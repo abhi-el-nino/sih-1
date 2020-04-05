@@ -23,7 +23,8 @@ module.exports.createUser = async (req, res) => {
             let newuser = await User.create({
                 first_name: req.body.firstName,
                 last_name: req.body.lastName,
-                emailOrPhone: req.body.emailOrPhone,
+                email: req.body.email,
+                phone:req.body.phone,
                 password: req.body.password,
                 address: req.body.address,
                 role: req.body.userType
