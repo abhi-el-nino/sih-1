@@ -11,6 +11,6 @@ router.use('/users',require('./user'));
 router.post('/sms',homeController.sms);
 router.get('/sms',homeController.showSms)
 router.use('/farmer',require('./farmer.js'));
-router.use('/maps',homeController.maps);
+router.use('/maps',require('./maps'));
 router.use('/order',passport.checkAuthentication,require('./order'));
 module.exports=router;
