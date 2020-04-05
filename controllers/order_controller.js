@@ -117,6 +117,12 @@ module.exports.buyProduct = async (req, res) => {
                     product: item,
                     quantity: item_quantity.quantity
                 });
+            } else {
+                return res.render("buy-product", {
+                    title: "SIH | Buy",
+                    product: item,
+                    quantity: 0
+                })
             }
         } else {
             return res.render("buy-product", {
@@ -138,7 +144,6 @@ module.exports.transactionFailed = function (req, res) {
 module.exports.removeFromCart = async (req, res) => {
     try {
         let cart = await Cart.findOne({ buyer: req.user._id });
-        console.log(req.params.itemId);
         let item = await OrderQuantity.findOneAndDelete({ cart: cart._id, item: req.params.itemId }).populate('item').exec();
         cart.orderQuantity.pull(item._id);
         cart.amount = cart.amount - ((item.item.price) * item.quantity);

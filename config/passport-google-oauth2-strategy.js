@@ -14,7 +14,7 @@ passport.use(new googleStrategy({
 },
     function (accessToken, refreshToken, profile, done) {
 
-        User.findOne({ emailOrPhone: profile.emails[0].value }).exec(function (err, user) {
+        User.findOne({ email: profile.emails[0].value }).exec(function (err, user) {
             if (err) { console.log("error in google-passport", err); return; }
 
             // console.log(profile);
@@ -27,7 +27,8 @@ passport.use(new googleStrategy({
                     last_name: (profile.displayName).split(" ",2)[1],
                     address:"New Delhi",
                     role:"buyer",
-                    emailOrPhone: profile.emails[0].value,
+                    email: profile.emails[0].value,
+                    phone:0,
                     password: crypto.randomBytes(20).toString('hex')
                 }, function (err, user) {
                     if (err) { console.log("error in creating user", err); return; }

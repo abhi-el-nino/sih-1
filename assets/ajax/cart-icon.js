@@ -14,7 +14,7 @@ class RemoveFromCart {
                 success: function (data) {
                     $('#cart-total').text(`${data.amount}`);
                     let cartCount = $('#cart-count').text();
-                    $('#cart-count').text(cartCount--);
+                    $('#cart-count').text(--cartCount);
                     $(`#cart-item-${itemId}`).remove();
                     new Noty({
                         theme: 'relax',
@@ -49,6 +49,13 @@ let carthandler = function () {
                     new RemoveFromCart($('.remove-item', newRow));
                 })
             }, error: function (err) {
+                new Noty({
+                    theme: 'relax',
+                    text: 'Please Login to See Cart Items',
+                    type: 'error',
+                    layout: 'topRight',
+                    timeout: 2000
+                }).show();
                 console.log(err);
             }
         });

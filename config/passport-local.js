@@ -47,6 +47,11 @@ passport.checkAuthentication = function (req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
+    if(req.xhr){
+        return res.json(404,{
+            message:'Please Login'
+        })
+    }
     //if the user is not signIn
     req.flash('error','Permission Denied!! Login In to Proceed');
     return res.redirect('/users/login');
