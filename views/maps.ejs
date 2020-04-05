@@ -8,15 +8,15 @@
     // import '../assets/js/leaflet-heatmap';
 
     var testData = {
-        max: 8,
+        max: 10,
         data: [{
-            lat: 24.6408,
-            lng: 46.7728,
-            count: 3
+            lat: 30.316496,
+            lng: 78.032111,
+            count: 10
         }, {
-            lat: 50.75,
-            lng: -1.55,
-            count: 1
+            lat: 29.316496,
+            lng: 78.032111,
+            count: 5
         }]
     };
 
@@ -30,7 +30,7 @@
     var cfg = {
         // radius should be small ONLY if scaleRadius is true (or small radius is intended)
         // if scaleRadius is false it will be the constant radius used in pixels
-        "radius": 2,
+        "radius": 0.04,
         "maxOpacity": .8,
         // scales the radius based on map zoom
         "scaleRadius": true,
@@ -49,11 +49,37 @@
 
     var heatmapLayer = new HeatmapOverlay(cfg);
 
-    var map = new L.Map('mapid', {
-        center: new L.LatLng(30.316496, 78.032111),
-        zoom: 10,
-        layers: [baseLayer, heatmapLayer]
-    });
+    var func = ({
+            lat,
+            lng
+        }) => {
+            console.log("rendering map", lat, lng);
+            var map = new L.Map('mapid', {
+                center: new L.LatLng(lat, lng),
+                zoom: 10,
+                layers: [baseLayer, heatmapLayer]
+            });
+        }
+        // func();
 
     heatmapLayer.setData(testData);
+</script>
+<script>
+    function helper() {
+        $.ajax({
+            type: "get",
+            url: "/change-center",
+            success: function(data) {
+                func({
+                    lat: 30.316496,
+                    lng: 78.032111
+                });
+
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    }
+    helper();
 </script>
