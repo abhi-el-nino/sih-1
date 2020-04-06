@@ -1,8 +1,22 @@
 <div id="mapid" style="height:100vh">
 
 </div>
-
-
+<form id="city-selector-form" method="POST" action="#">
+    <input name="city" placeholder="city">
+    <button type="submit" id="selector-submit-btn">Submit</button>
+</form>
+<div id="charts-container" style="display: flex; flex-direction: row;justify-content: space-evenly;flex-wrap: wrap;">
+    <div id="pie-chart-container" style="height: 500px;width: 500px;">
+        <canvas id="pieChart"></canvas>
+    </div>
+    <div id="radar-chart-container" style="height: 500px;width: 500px;">
+        <canvas id="radarChart"></canvas>
+    </div>
+    <div id="bar-chart-container" style="height: 500px;width: 500px;">
+        <canvas id="barChart"></canvas>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0" defer></script>
 <script>
     // import "heatmap.js";
     // import '../assets/js/leaflet-heatmap';
@@ -57,3 +71,4 @@
 
     heatmapLayer.setData(testData);
 </script>
+<script src="/ajax/chart.js"></script>

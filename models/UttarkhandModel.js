@@ -7,7 +7,7 @@ const dataSchema = new mongoose.Schema({
         type: String
     },
     Crop_Year: {
-        type: String
+        type: Number
     },
     Season: {
         type: String
