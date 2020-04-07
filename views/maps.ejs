@@ -1,9 +1,9 @@
-<div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: space-between;">
-<div id="mapid" style="height:100vh;width:60vw">
+<div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: space-around;">
+<div id="mapid" style="height:80vh;width:60vw">
 
 </div>
 
-<div id="charts-container" style="display: flex; flex-direction: column;justify-content: space-evenly;flex-wrap: wrap;">
+
     <div id="pie-chart-container" style="height: 500px;width: 500px;">
         <canvas id="pieChart"></canvas>
     </div>
@@ -13,7 +13,7 @@
     <div id="bar-chart-container" style="height: 500px;width: 500px;">
         <canvas id="barChart"></canvas>
     </div>
-</div>
+
 </div>
 <script>
     var baseLayer = L.tileLayer(
@@ -24,7 +24,7 @@
     );
 
     var map = new L.Map('mapid', {
-        center: new L.LatLng(30.316496, 78.032111),
+        center: new L.LatLng(30.152586, 78.772548),
         zoom: 8,
         layers: [baseLayer]
     });

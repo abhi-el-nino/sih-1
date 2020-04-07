@@ -1,6 +1,4 @@
 
-
-
 $(document).ready(function () {
 
     $.ajax({
@@ -8,6 +6,7 @@ $(document).ready(function () {
         url: '/maps/markers',
         success: function (data) {
             addMarkers(data);
+            chartDisplayFunction('DEHRADUN');
         },
         error: function (err) {
             console.log(err);
@@ -15,11 +14,11 @@ $(document).ready(function () {
     })
 
     function addMarkers(data) {
-        var markers = []
         for (i in data) {
-            markers[data[i].district] = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
-            markers[data[i].district]._icon.district = data[i].District;
-            markers[data[i].district]._icon.setAttribute("data-district", data[i].District);
+            let  marker = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
+            marker._icon.district = data[i].District;
+            marker.bindTooltip(`${data[i].District}`).openTooltip();
+            marker._icon.setAttribute("data-district", data[i].District);
         }
         addClickevent();
     }
@@ -39,9 +38,9 @@ function chartDisplayFunction(District) {
         type: 'GET',
         url: `/maps/chart?District=${District}`,
         success: function (data) {
-            addPieChart(data);
-            addRadarChart(data);
-            addBarChart(data);
+            addPieChart(data,District);
+            addRadarChart(data,District);
+            addBarChart(data,District);
         },
         error: function (err) {
             console.log(err);
@@ -49,7 +48,7 @@ function chartDisplayFunction(District) {
     })
 }
 
-function addBarChart(data) {
+function addBarChart(data,District) {
     $('#barChart').remove();
     $('#bar-chart-container').append('<canvas id="barChart" height="50px" width="50px"></canvas>');
     var ctx = document.getElementById('barChart').getContext('2d');
@@ -71,13 +70,13 @@ function addBarChart(data) {
             title: {
                 display: true,
                 fontSize: 20,
-                text: "Area Under Cultivation For Top 5 Crops"
+                text: `Area Under Cultivation For Top 5 Crops(${District})`
             },
         }
     });
 }
 
-function addRadarChart(data) {
+function addRadarChart(data,District) {
     $('#radarChart').remove();
     $('#radar-chart-container').append('<canvas id="radarChart" height="50px" width="50px"></canvas>');
     var ctx = document.getElementById('radarChart').getContext('2d');
@@ -109,13 +108,13 @@ function addRadarChart(data) {
             title: {
                 display: true,
                 fontSize: 20,
-                text: "Variation In Production Of Major Crops Over Years"
+                text: `Variation In Production Of Major Crops Over Years(${District})`
             },
         }
     });
 }
 
-function addPieChart(data) {
+function addPieChart(data,District) {
     var color = [];
     for (let i = 0; i < data.pie.labels.length; i++) {
         var o = Math.round, r = Math.random, s = 255;
@@ -143,7 +142,7 @@ function addPieChart(data) {
             title: {
                 display: true,
                 fontSize: 20,
-                text: "Various Crop's Production In The District"
+                text: `Various Crop's Production In The District (${District})`
             },
         }
     });
