@@ -1,13 +1,43 @@
 
-let cityForm = $('#city-selector-form');
 
-cityForm.submit(function (event) {
-    event.preventDefault();
+
+$(document).ready(function () {
 
     $.ajax({
-        type: 'POST',
-        url: '/maps/chart',
-        data: cityForm.serialize(),
+        type: 'GET',
+        url: '/maps/markers',
+        success: function (data) {
+            addMarkers(data);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+
+    function addMarkers(data) {
+        var markers = []
+        for (i in data) {
+            markers[data[i].district] = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
+            markers[data[i].district]._icon.district = data[i].District;
+            markers[data[i].district]._icon.setAttribute("data-district", data[i].District);
+        }
+        addClickevent();
+    }
+    function addClickevent() {
+        $('.leaflet-marker-icon').on('click', function (e) {
+            var el = $(e.srcElement || e.target);
+            district = el.attr('data-district');
+            chartDisplayFunction(district);
+        });
+    }
+});
+
+
+
+function chartDisplayFunction(District) {
+    $.ajax({
+        type: 'GET',
+        url: `/maps/chart?District=${District}`,
         success: function (data) {
             addPieChart(data);
             addRadarChart(data);
@@ -17,7 +47,7 @@ cityForm.submit(function (event) {
             console.log(err);
         }
     })
-})
+}
 
 function addBarChart(data) {
     $('#barChart').remove();
@@ -89,7 +119,7 @@ function addPieChart(data) {
     var color = [];
     for (let i = 0; i < data.pie.labels.length; i++) {
         var o = Math.round, r = Math.random, s = 255;
-        let temp='rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + 0.7 + ')';
+        let temp = 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + 0.7 + ')';
         color.push(temp);
     }
     $('#pieChart').remove();

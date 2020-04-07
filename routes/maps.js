@@ -4,5 +4,6 @@ const mapController= require('../controllers/map_controller');
 
 router.get('/', mapController.maps);
 router.get('/getData',mapController.getData);
-router.post('/chart',mapController.chart);
+router.get('/chart',mapController.chart);
+router.get('/markers',mapController.markers);
 module.exports=router;
