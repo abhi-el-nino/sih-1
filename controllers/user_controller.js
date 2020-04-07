@@ -1,4 +1,22 @@
 const User = require('../models/User');
+const {google} =require('googleapis');
+const oauth2Client = new google.auth.OAuth2(
+    "897366205304-4fl4vppb2l7hco1ov61t5fgc5239p1am.apps.googleusercontent.com",
+    "QMujDlu1ZlnlEVpk0j9Ug0-_",
+    "http://localhost:8000/users/auth/google/callback"
+  );
+  const scopes = [
+      'email',
+      'profile',
+    'https://www.googleapis.com/auth/user.phonenumbers.read'
+  ];
+  const url = oauth2Client.generateAuthUrl({
+    // 'online' (default) or 'offline' (gets refresh_token)
+    access_type: 'offline',
+  
+    // If you only need one scope you can pass it as a string
+    scope: scopes
+  });
 module.exports.register = (req, res) => {
     if (req.isAuthenticated()) {
         console.log('heyy');
@@ -57,6 +75,7 @@ module.exports.login = (req, res) => {
     });
 }
 module.exports.create_session = (req, res) => {
+    // console.log("qq",req.query.code);
     return res.redirect('/');
 }
 module.exports.destroySession = function (req, res) {

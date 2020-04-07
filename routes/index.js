@@ -6,6 +6,7 @@ const itemController=require('../controllers/items_controller');
 const mapsController=require('../controllers/maps_controller');
 router.get('/',homeController.home);
 router.get('/change-center',mapsController.changeCenter);
+// router.post('/fetch-heatmap-data/crop');
 router.get('/contact',homeController.contact);
 router.use('/api',require('./api'));
 router.post('/upload-item',passport.checkAuthentication,itemController.upload);
