@@ -1,3 +1,14 @@
+<link rel="stylesheet" href="/css/maps.css">
+
+<select id="maps-select">
+        <option>rice</option>
+        <option>wheat</option>
+        <option>Dropdown Item 2</option>
+        <option>Dropdown Item 3</option>
+        <option>Dropdown Item 4</option>
+    </select>
+
+
 <div id="mapid" style="height:100vh">
 
 </div>
@@ -22,15 +33,47 @@
     // import '../assets/js/leaflet-heatmap';
 
     var testData = {
-        max: 8,
+        max: 20,
         data: [{
-            lat: 24.6408,
-            lng: 46.7728,
-            count: 3
+            lat: 29.383547,
+            lng: 79.463956,
+            count: 20
         }, {
-            lat: 50.75,
-            lng: -1.55,
-            count: 1
+            lat: 29.946656,
+            lng: 78.152984,
+            count: 17
+        }, {
+            lat: 29.581709,
+            lng: 80.212158,
+            count: 15
+        }, {
+            lat: 29.839006,
+            lng: 79.774028,
+            count: 12
+        }, {
+            lat: 29.59318,
+            lng: 29.59318,
+            count: 12
+        }, {
+            lat: 30.379608,
+            lng: 78.438862,
+            count: 12
+        }, {
+            lat: 30.314882,
+            lng: 78.033458,
+            count: 11
+        }, {
+            lat: 30.152586,
+            lng: 78.772548,
+            count: 11
+        }, {
+            lat: 30.746471,
+            lng: 79.495277,
+            count: 10
+        }, {
+            lat: 30.402772,
+            lng: 79.331771,
+            count: 9
         }]
     };
 
@@ -44,7 +87,7 @@
     var cfg = {
         // radius should be small ONLY if scaleRadius is true (or small radius is intended)
         // if scaleRadius is false it will be the constant radius used in pixels
-        "radius": 2,
+        "radius": 0.07,
         "maxOpacity": .8,
         // scales the radius based on map zoom
         "scaleRadius": true,
@@ -63,12 +106,70 @@
 
     var heatmapLayer = new HeatmapOverlay(cfg);
 
-    var map = new L.Map('mapid', {
-        center: new L.LatLng(30.316496, 78.032111),
-        zoom: 10,
-        layers: [baseLayer, heatmapLayer]
-    });
+    var func = ({
+            lat,
+            lng
+        }) => {
+            console.log("rendering map", lat, lng);
+            var map = new L.Map('mapid', {
+                center: new L.LatLng(lat, lng),
+                zoom: 9,
+                layers: [baseLayer, heatmapLayer]
+            });
+        }
+        // func();
 
-    heatmapLayer.setData(testData);
+    function showheatMapLayer(testData) {
+        heatmapLayer.setData(testData);
+
+    }
+    showheatMapLayer(testData);
+</script>
+<script>
+    function helper() {
+        $.ajax({
+            type: "get",
+            url: "/change-center",
+            success: function(data) {
+                func({
+                    lat: 29.6434,
+                    lng: 79.4322
+                });
+
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    }
+    helper();
+
+    function changeHandling() {
+        $('#maps-select').change(function(e) {
+            let crop = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: "/maps/fetch-heatmap-data/crop",
+                data: {
+                    crop: crop
+                },
+                success: function(data) {
+                    let testData = {
+                        max: 20,
+                        data: data.data.mapData
+                    };
+                    console.log(testData);
+                    showheatMapLayer(testData);
+
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+
+    }
+    changeHandling();
 </script>
 <script src="/ajax/chart.js"></script>
