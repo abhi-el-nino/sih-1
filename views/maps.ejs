@@ -1,7 +1,7 @@
 <div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: space-around;">
-<div id="mapid" style="height:80vh;width:60vw">
+    <div id="mapid" style="height:80vh;width:60vw">
 
-</div>
+    </div>
 
 
     <div id="pie-chart-container" style="height: 500px;width: 500px;">
@@ -18,15 +18,22 @@
 <script>
     var baseLayer = L.tileLayer(
         'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '...',
-            maxZoom: 25
-        }
+        attribution: '...',
+        maxZoom: 25
+    }
     );
 
     var map = new L.Map('mapid', {
         center: new L.LatLng(30.152586, 78.772548),
         zoom: 8,
         layers: [baseLayer]
+    });
+
+    var greenIcon = L.icon({
+        iconUrl: '/img/marker.png',
+        iconSize: [38, 70], // size of the icon 
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        tooltipAnchor: [ 0, -41 ]
     });
 
 </script>

@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     function addMarkers(data) {
         for (i in data) {
-            let  marker = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
+            let  marker = L.marker([data[i].Latitude,data[i].Longitude],{icon:greenIcon}).addTo(map);
             marker._icon.district = data[i].District;
             marker.bindTooltip(`${data[i].District}`).openTooltip();
             marker._icon.setAttribute("data-district", data[i].District);
@@ -57,7 +57,7 @@ function addBarChart(data,District) {
         data: {
             labels: data.bar.labels,
             datasets: [{
-                label: "Population (millions)",
+                label: "Area (acres)",
                 backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                 data: data.bar.areaData
             }]
