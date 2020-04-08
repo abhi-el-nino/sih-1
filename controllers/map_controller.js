@@ -124,7 +124,7 @@ module.exports.fetchCrop = async (req, res) => {
     }
 
     let topDistricts=districts.slice(1,11);
-    // console.log(topDistricts);
+    console.log(districts);
     let newArr=giveCount(topDistricts);
     // console.log("body", newArr);
 

@@ -1,5 +1,3 @@
-
-
 <select id="maps-select">
         <option>rice</option>
         <option>wheat</option>
@@ -7,6 +5,7 @@
         <option>Dropdown Item 3</option>
         <option>Dropdown Item 4</option>
     </select>
+
 
 <div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: space-around;">
     <div id="mapid" style="height:80vh;width:60vw">
@@ -76,9 +75,9 @@
 
     var baseLayer = L.tileLayer(
         'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '...',
-        maxZoom: 25
-    }
+            attribution: '...',
+            maxZoom: 25
+        }
     );
 
     var cfg = {
@@ -171,16 +170,15 @@
     var map = new L.Map('mapid', {
         center: new L.LatLng(30.152586, 78.772548),
         zoom: 8,
-        layers: [baseLayer]
+        layers: [baseLayer, heatmapLayer]
     });
 
     var greenIcon = L.icon({
         iconUrl: '/img/marker.png',
         iconSize: [38, 70], // size of the icon 
         iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        tooltipAnchor: [ 0, -41 ]
+        tooltipAnchor: [0, -41]
     });
-
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0" defer></script>
 <script src="/ajax/chart.js"></script>
