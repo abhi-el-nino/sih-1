@@ -1,30 +1,58 @@
-
+<link rel="stylesheet" type="text/css" href="/css/cube.css">
 
 <select id="maps-select">
-        <option>rice</option>
-        <option>wheat</option>
-        <option>Dropdown Item 2</option>
-        <option>Dropdown Item 3</option>
-        <option>Dropdown Item 4</option>
-    </select>
+    <option>rice</option>
+    <option>wheat</option>
+    <option>Dropdown Item 2</option>
+    <option>Dropdown Item 3</option>
+    <option>Dropdown Item 4</option>
+</select>
 
 <div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: space-around;">
     <div id="mapid" style="height:80vh;width:60vw">
 
     </div>
 
-
-    <div id="pie-chart-container" style="height: 500px;width: 500px;">
-        <canvas id="pieChart"></canvas>
+    <div class="scene">
+        <div class="cube">
+            <div class="cube__face cube__face--front"><div id="pie-chart-container" style="height: 400px;width: 400px; margin: auto;">
+                <canvas id="pieChart"></canvas>
+            </div></div>
+            <div class="cube__face cube__face--back"><div id="radar-chart-container" style="height: 400px;width: 400px; margin: auto;">
+                <canvas id="radarChart"></canvas>
+            </div></div>
+            <div class="cube__face cube__face--right">   <div id="bar-chart-container" style="height: 400px;width: 400px; margin: auto;">
+                <canvas id="barChart"></canvas>
+            </div></div>
+            <div class="cube__face cube__face--left">left</div>
+            <div class="cube__face cube__face--top">top</div>
+            <div class="cube__face cube__face--bottom">bottom</div>
+        </div>
     </div>
-    <div id="radar-chart-container" style="height: 500px;width: 500px;">
-        <canvas id="radarChart"></canvas>
-    </div>
-    <div id="bar-chart-container" style="height: 500px;width: 500px;">
-        <canvas id="barChart"></canvas>
-    </div>
-
+    <diV>
+        <p class="radio-group">
+            <label>
+                <input type="radio" name="rotate-cube-side" value="front" checked /> pie
+            </label>
+            <label>
+                <input type="radio" name="rotate-cube-side" value="right" />bar
+            </label>
+            <label>
+                <input type="radio" name="rotate-cube-side" value="back" /> radar
+            </label>
+            <label>
+                <input type="radio" name="rotate-cube-side" value="left" /> left
+            </label>
+            <label>
+                <input type="radio" name="rotate-cube-side" value="top" /> top
+            </label>
+            <label>
+                <input type="radio" name="rotate-cube-side" value="bottom" /> bottom
+            </label>
+        </p>
+    </diV>
 </div>
+
 <script>
     // import "heatmap.js";
     // import '../assets/js/leaflet-heatmap';
@@ -104,17 +132,17 @@
     var heatmapLayer = new HeatmapOverlay(cfg);
 
     var func = ({
-            lat,
-            lng
-        }) => {
-            console.log("rendering map", lat, lng);
-            var map = new L.Map('mapid', {
-                center: new L.LatLng(lat, lng),
-                zoom: 9,
-                layers: [baseLayer, heatmapLayer]
-            });
-        }
-        // func();
+        lat,
+        lng
+    }) => {
+        console.log("rendering map", lat, lng);
+        var map = new L.Map('mapid', {
+            center: new L.LatLng(lat, lng),
+            zoom: 9,
+            layers: [baseLayer, heatmapLayer]
+        });
+    }
+    // func();
 
     function showheatMapLayer(testData) {
         heatmapLayer.setData(testData);
@@ -123,26 +151,8 @@
     showheatMapLayer(testData);
 </script>
 <script>
-    function helper() {
-        $.ajax({
-            type: "get",
-            url: "/change-center",
-            success: function(data) {
-                func({
-                    lat: 29.6434,
-                    lng: 79.4322
-                });
-
-            },
-            error: function(err) {
-                console.log(err);
-            }
-        });
-    }
-    helper();
-
     function changeHandling() {
-        $('#maps-select').change(function(e) {
+        $('#maps-select').change(function (e) {
             let crop = $(this).val();
 
             $.ajax({
@@ -151,7 +161,7 @@
                 data: {
                     crop: crop
                 },
-                success: function(data) {
+                success: function (data) {
                     let testData = {
                         max: 20,
                         data: data.data.mapData
@@ -160,7 +170,7 @@
                     showheatMapLayer(testData);
 
                 },
-                error: function(err) {
+                error: function (err) {
                     console.log(err);
                 }
             });
@@ -174,13 +184,14 @@
         layers: [baseLayer]
     });
 
-    var greenIcon = L.icon({
-        iconUrl: '/img/marker.png',
-        iconSize: [38, 70], // size of the icon 
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        tooltipAnchor: [ 0, -41 ]
-    });
+    // var greenIcon = L.icon({
+    //     iconUrl: '/img/marker.png',
+    //     iconSize: [38, 70], // size of the icon 
+    //     iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+    //     tooltipAnchor: [0, -41]
+    // });
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0" defer></script>
 <script src="/ajax/chart.js"></script>
+<script src="/ajax/cube.js"></script>

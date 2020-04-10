@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     function addMarkers(data) {
         for (i in data) {
-            let  marker = L.marker([data[i].Latitude,data[i].Longitude],{icon:greenIcon}).addTo(map);
+            let marker = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
             marker._icon.district = data[i].District;
             marker.bindTooltip(`${data[i].District}`).openTooltip();
             marker._icon.setAttribute("data-district", data[i].District);
@@ -23,24 +23,23 @@ $(document).ready(function () {
         addClickevent();
     }
     function addClickevent() {
-        $('.leaflet-marker-icon').on('click', function (e) {
+        $('.leaflet-marker-icon').on('mouseenter', function (e) {
             var el = $(e.srcElement || e.target);
             district = el.attr('data-district');
             chartDisplayFunction(district);
         });
     }
 });
-
-
+    
 
 function chartDisplayFunction(District) {
     $.ajax({
         type: 'GET',
         url: `/maps/chart?District=${District}`,
         success: function (data) {
-            addPieChart(data,District);
-            addRadarChart(data,District);
-            addBarChart(data,District);
+            addPieChart(data, District);
+            addRadarChart(data, District);
+            addBarChart(data, District);
         },
         error: function (err) {
             console.log(err);
@@ -48,17 +47,24 @@ function chartDisplayFunction(District) {
     })
 }
 
-function addBarChart(data,District) {
+function addBarChart(data, District) {
     $('#barChart').remove();
     $('#bar-chart-container').append('<canvas id="barChart" height="50px" width="50px"></canvas>');
     var ctx = document.getElementById('barChart').getContext('2d');
-    var chart = new Chart(ctx, {
+    let gradient = ctx.createLinearGradient(0, 0, 0, 450);
+    gradient.addColorStop(0.2, '#051937');
+    gradient.addColorStop(0.4, '#004d7a');
+    gradient.addColorStop(0.6, '#008793');
+    gradient.addColorStop(0.8, '#00bf72');
+    gradient.addColorStop(1, '#a8eb12');
+
+    let barChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: data.bar.labels,
             datasets: [{
                 label: "Area (acres)",
-                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                backgroundColor: gradient,
                 data: data.bar.areaData
             }]
         },
@@ -76,11 +82,11 @@ function addBarChart(data,District) {
     });
 }
 
-function addRadarChart(data,District) {
+function addRadarChart(data, District) {
     $('#radarChart').remove();
     $('#radar-chart-container').append('<canvas id="radarChart" height="50px" width="50px"></canvas>');
     var ctx = document.getElementById('radarChart').getContext('2d');
-    var chart = new Chart(ctx, {
+    let radarChart = new Chart(ctx, {
         type: 'radar',
         data: {
             labels: data.radar.labels,
@@ -114,7 +120,7 @@ function addRadarChart(data,District) {
     });
 }
 
-function addPieChart(data,District) {
+function addPieChart(data, District) {
     var color = [];
     for (let i = 0; i < data.pie.labels.length; i++) {
         var o = Math.round, r = Math.random, s = 255;
@@ -124,7 +130,7 @@ function addPieChart(data,District) {
     $('#pieChart').remove();
     $('#pie-chart-container').append('<canvas id="pieChart" height="50px" width="50px"></canvas>');
     var ctx = document.getElementById('pieChart').getContext('2d');
-    var chart = new Chart(ctx, {
+    let pieChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: data.pie.labels,
@@ -147,3 +153,4 @@ function addPieChart(data,District) {
         }
     });
 }
+

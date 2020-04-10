@@ -70,9 +70,7 @@ module.exports.login = (req, res) => {
 
         return res.redirect('/');
     }
-    return res.render('login', {
-        title: "login"
-    });
+    return res.render('login', {layout:"loginLayout"});
 }
 module.exports.create_session = (req, res) => {
     // console.log("qq",req.query.code);
