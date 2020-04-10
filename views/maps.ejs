@@ -1,12 +1,38 @@
 <link rel="stylesheet" type="text/css" href="/css/cube.css">
-
 <select id="maps-select">
-    <option>rice</option>
-    <option>wheat</option>
-    <option>Dropdown Item 2</option>
-    <option>Dropdown Item 3</option>
-    <option>Dropdown Item 4</option>
+    <option>Rice</option>
+    <option>Wheat</option>
+    <option>Arhar/Tur</option>
+    <option>Bajra</option>
+    <option>Barley</option>
+    <option>Ginger</option>
+    <option>Garlic</option>
+    <option>Gram</option>
+    <option>Groundnut</option>
+    <option>Horse-gram</option>
+    <option>Lentil</option>
+    <option>Linseed</option>
+    <option>Maize</option>
+    <option>Masoor</option>
+    <option>Moong(Green Gram)</option>
+    <option>Moth</option>
+    <option>Onion</option>
+    <option>Peas & beans (Pulses)</option>
+    <option>Potato</option>
+    <option>Pulses total</option>
+    <option>Ragi</option>
+    <option>Rapeseed &Mustard</option>
+    <option>Urad</option>
+    <option>Turmeric</option>
+    <option>Tobacco</option>
+    <option>Sunflower</option>
+    <option>Soyabean</option>
+    <option>Sugarcane</option>
+    <option>Sesamum</option>
+    <option>Small millets</option>
+   
 </select>
+
 
 <div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: space-around;">
     <div id="mapid" style="height:80vh;width:60vw">
@@ -104,9 +130,9 @@
 
     var baseLayer = L.tileLayer(
         'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '...',
-        maxZoom: 25
-    }
+            attribution: '...',
+            maxZoom: 25
+        }
     );
 
     var cfg = {
@@ -181,7 +207,7 @@
     var map = new L.Map('mapid', {
         center: new L.LatLng(30.152586, 78.772548),
         zoom: 8,
-        layers: [baseLayer]
+        layers: [baseLayer, heatmapLayer]
     });
 
     // var greenIcon = L.icon({

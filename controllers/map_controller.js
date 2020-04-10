@@ -109,7 +109,7 @@ module.exports.fetchCrop = async (req, res) => {
     }
     let districts = await uttarkhand.find({
         Crop: capitalizeFirstLetter(req.body.crop),
-        Crop_Year: '2014',
+        Crop_Year: 2014,
         Season: 'Whole Year'
 
     }).sort({Production:-1}).exec();
@@ -117,13 +117,13 @@ module.exports.fetchCrop = async (req, res) => {
     if(districts.length==0){
         districts= await uttarkhand.find({
             Crop: capitalizeFirstLetter(req.body.crop),
-            Crop_Year: '2014',
+            Crop_Year: 2014,
             
     
         }).sort({Production:-1}).exec();
     }
 
-    let topDistricts=districts.slice(1,11);
+    let topDistricts=districts.slice(0,11);
     // console.log(topDistricts);
     let newArr=giveCount(topDistricts);
     // console.log("body", newArr);
