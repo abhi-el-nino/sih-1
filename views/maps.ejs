@@ -1,5 +1,7 @@
 <link rel="stylesheet" type="text/css" href="/css/cube.css">
-<select id="maps-select">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<!-- <select id="maps-select">
     <option>Rice</option>
     <option>Wheat</option>
     <option>Arhar/Tur</option>
@@ -31,8 +33,40 @@
     <option>Sesamum</option>
     <option>Small millets</option>
    
-</select>
-
+</select> -->
+<select class="js-example-responsive">
+    <option>Rice</option>
+    <option>Wheat</option>
+    <option>Arhar/Tur</option>
+    <option>Bajra</option>
+    <option>Barley</option>
+    <option>Ginger</option>
+    <option>Garlic</option>
+    <option>Gram</option>
+    <option>Groundnut</option>
+    <option>Horse-gram</option>
+    <option>Lentil</option>
+    <option>Linseed</option>
+    <option>Maize</option>
+    <option>Masoor</option>
+    <option>Moong(Green Gram)</option>
+    <option>Moth</option>
+    <option>Onion</option>
+    <option>Peas & beans (Pulses)</option>
+    <option>Potato</option>
+    <option>Pulses total</option>
+    <option>Ragi</option>
+    <option>Rapeseed &Mustard</option>
+    <option>Urad</option>
+    <option>Turmeric</option>
+    <option>Tobacco</option>
+    <option>Sunflower</option>
+    <option>Soyabean</option>
+    <option>Sugarcane</option>
+    <option>Sesamum</option>
+    <option>Small millets</option>
+   
+  </select>
 
 <div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: space-around;">
     <div id="mapid" style="height:80vh;width:60vw">
@@ -41,15 +75,21 @@
 
     <div class="scene">
         <div class="cube">
-            <div class="cube__face cube__face--front"><div id="pie-chart-container" style="height: 400px;width: 400px; margin: auto;">
-                <canvas id="pieChart"></canvas>
-            </div></div>
-            <div class="cube__face cube__face--back"><div id="radar-chart-container" style="height: 400px;width: 400px; margin: auto;">
-                <canvas id="radarChart"></canvas>
-            </div></div>
-            <div class="cube__face cube__face--right">   <div id="bar-chart-container" style="height: 400px;width: 400px; margin: auto;">
-                <canvas id="barChart"></canvas>
-            </div></div>
+            <div class="cube__face cube__face--front">
+                <div id="pie-chart-container" style="height: 400px;width: 400px; margin: auto;">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+            <div class="cube__face cube__face--back">
+                <div id="radar-chart-container" style="height: 400px;width: 400px; margin: auto;">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+            <div class="cube__face cube__face--right">
+                <div id="bar-chart-container" style="height: 400px;width: 400px; margin: auto;">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
             <div class="cube__face cube__face--left">left</div>
             <div class="cube__face cube__face--top">top</div>
             <div class="cube__face cube__face--bottom">bottom</div>
@@ -82,7 +122,13 @@
 <script>
     // import "heatmap.js";
     // import '../assets/js/leaflet-heatmap';
-
+    $(document).ready(function() {
+        console.log('doc ready');
+        $('.js-example-responsive').select2({
+            closeOnSelect: true,
+            theme: "classic"
+        });
+    });
     var testData = {
         max: 20,
         data: [{
@@ -158,17 +204,17 @@
     var heatmapLayer = new HeatmapOverlay(cfg);
 
     var func = ({
-        lat,
-        lng
-    }) => {
-        console.log("rendering map", lat, lng);
-        var map = new L.Map('mapid', {
-            center: new L.LatLng(lat, lng),
-            zoom: 9,
-            layers: [baseLayer, heatmapLayer]
-        });
-    }
-    // func();
+            lat,
+            lng
+        }) => {
+            console.log("rendering map", lat, lng);
+            var map = new L.Map('mapid', {
+                center: new L.LatLng(lat, lng),
+                zoom: 9,
+                layers: [baseLayer, heatmapLayer]
+            });
+        }
+        // func();
 
     function showheatMapLayer(testData) {
         heatmapLayer.setData(testData);
@@ -178,7 +224,7 @@
 </script>
 <script>
     function changeHandling() {
-        $('#maps-select').change(function (e) {
+        $('.js-example-responsive').change(function(e) {
             let crop = $(this).val();
 
             $.ajax({
@@ -187,7 +233,7 @@
                 data: {
                     crop: crop
                 },
-                success: function (data) {
+                success: function(data) {
                     let testData = {
                         max: 20,
                         data: data.data.mapData
@@ -196,7 +242,7 @@
                     showheatMapLayer(testData);
 
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
@@ -216,7 +262,6 @@
     //     iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
     //     tooltipAnchor: [0, -41]
     // });
-
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0" defer></script>
 <script src="/ajax/chart.js"></script>
