@@ -76,7 +76,7 @@ router.get('/success', async function (req, res) {
         shipping: {
             name: `${order.buyer.first_name} ${order.buyer.last_name}`,
             address: order.buyer.address,
-            city: "Dehdradune",
+            city: "DEHRADUN",
             state: "UK",
             country: "INDIA",
             postal_code: 244001
