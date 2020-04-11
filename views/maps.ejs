@@ -1,5 +1,7 @@
 <link rel="stylesheet" type="text/css" href="/css/cube.css">
-<select id="maps-select">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<select class="js-example-responsive">
     <option>Rice</option>
     <option>Wheat</option>
     <option>Arhar/Tur</option>
@@ -31,8 +33,7 @@
     <option>Sesamum</option>
     <option>Small millets</option>
    
-</select>
-
+  </select>
 
 <div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: space-around;margin-bottom: 50px;">
 
@@ -43,15 +44,21 @@
  <div id="chart-container" style="display: flex;flex-direction: column;justify-content: space-evenly;align-items: center;">
     <div class="scene">
         <div class="cube">
-            <div class="cube__face cube__face--front"><div id="pie-chart-container" style="height: 400px;width: 400px; margin: auto;">
-                <canvas id="pieChart"></canvas>
-            </div></div>
-            <div class="cube__face cube__face--back"><div id="radar-chart-container" style="height: 400px;width: 400px; margin: auto;">
-                <canvas id="radarChart"></canvas>
-            </div></div>
-            <div class="cube__face cube__face--right">   <div id="bar-chart-container" style="height: 400px;width: 400px; margin: auto;">
-                <canvas id="barChart"></canvas>
-            </div></div>
+            <div class="cube__face cube__face--front">
+                <div id="pie-chart-container" style="height: 400px;width: 400px; margin: auto;">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+            <div class="cube__face cube__face--back">
+                <div id="radar-chart-container" style="height: 400px;width: 400px; margin: auto;">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+            <div class="cube__face cube__face--right">
+                <div id="bar-chart-container" style="height: 400px;width: 400px; margin: auto;">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
             <div class="cube__face cube__face--left">left</div>
             <div class="cube__face cube__face--top">top</div>
             <div class="cube__face cube__face--bottom">bottom</div>
@@ -88,7 +95,13 @@
 <script>
     // import "heatmap.js";
     // import '../assets/js/leaflet-heatmap';
-
+    $(document).ready(function() {
+        console.log('doc ready');
+        $('.js-example-responsive').select2({
+            closeOnSelect: true,
+            theme: "classic"
+        });
+    });
     var testData = {
         max: 20,
         data: [{
@@ -171,7 +184,7 @@
 </script>
 <script>
     function changeHandling() {
-        $('#maps-select').change(function (e) {
+        $('.js-example-responsive').change(function(e) {
             let crop = $(this).val();
 
             $.ajax({
@@ -180,7 +193,7 @@
                 data: {
                     crop: crop
                 },
-                success: function (data) {
+                success: function(data) {
                     let testData = {
                         max: 20,
                         data: data.data.mapData
@@ -189,7 +202,7 @@
                     showheatMapLayer(testData);
 
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
@@ -209,7 +222,6 @@
     //     iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
     //     tooltipAnchor: [0, -41]
     // });
-
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0" defer></script>
 <script src="/ajax/chart.js"></script>
