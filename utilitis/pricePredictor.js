@@ -2,56 +2,56 @@ const distanceCalculator = require('./distanceCalculator');
 const Order = require('../models/Order');
 const Uttarkhand = require('../models/UttarkhandModel')
 const axios = require('axios');
-const PricePerKilometer = [50, 75, 100];
-module.exports = async function (orderId) {
-    new Promise(async function (resolve, reject) {
+const PricePerKilometer = [10, 15, 25];
+module.exports = async function (req, orderId) {
+    return new Promise(async function (resolve, reject) {
         try {
-            let citiesCovered = new Array;
-            let order = await Order.findById(orderId).populate({
+            var citiesCovered = new Array;
+            let orderPlaced = await Order.findById(orderId).populate({
                 path: 'orderQuantity',
                 populate: {
                     path: 'item',
                     populate: {
-                        path: 'user'
+                        path: 'farmer'
                     }
                 }
             });
             let deliveryAmount = 0;
-            order.orderQuantity.forEach(async (item) => {
+            var ordersArray = orderPlaced.orderQuantity;
+            for (order in ordersArray) {
                 let buyerCoordinates = await axios.get(`https://atlas.mapmyindia.com/api/places/geocode?address=${req.user.address}`, {
                     headers: {
                         Authorization: "52b9a85c-942d-4ac6-b3a8-eb230b2cd904"
                     }
                 });
-                console.log(buyerCoordinates);
-                let farmerDistrict = await Uttarkhand.findOne({ District_Name: item.user.address });
-                if (!citiesCovered.includes(item.user.address)) {
-                    let distance = distanceCalculator(buyerCoordinates.data.cropResult.Latitude, buyerCoordinates.data.cropResult.Longitude, farmerDistrict.Latitude, farmerDistrict.Longitude);
+                let farmerDistrict = await Uttarkhand.findOne({ District_Name: ordersArray[order].item.farmer.address });
+                if (!citiesCovered.includes(ordersArray[order].item.farmer.address)) {
+                    let distance = distanceCalculator(buyerCoordinates.data.copResults.latitude, buyerCoordinates.data.copResults.longitude, farmerDistrict.Latitude, farmerDistrict.Longitude);
                     let data = {
                         distance: distance,
-                        quantity: item.quantity
+                        quantity: ordersArray[order].quantity
                     }
-                    citiesCovered[`${item.user.address}`] = data;
+                    citiesCovered[`${ordersArray[order].item.farmer.address}`] = data;
                 } else {
-                    let data = citiesCovered[item.user.address];
-                    let newQuantity = data.quantity + item.quantity;
+                    let data = citiesCovered[ordersArray[order].item.farmer.address];
+                    let newQuantity = data.quantity + ordersArray[order].quantity;
                     data.quantity = newQuantity;
-                    citiesCovered[`${item.user.address}`] = data;
+                    citiesCovered[`${ordersArray[order].item.farmer.address}`] = data;
                 }
-            });
-            citiesCovered.forEach((city) => {
+            }
+            for (city in citiesCovered) {
                 let truck = -1;
-                if (city.quantity <= 50) { truck = 0 }
-                else if (city.quantity > 50 && city.quantity < 100) {
+                if (citiesCovered[city].quantity <= 50) { truck = 0 }
+                else if (citiesCovered[city].quantity > 50 && citiesCovered[city].quantity < 100) {
                     truck = 1;
                 } else {
                     truck = 2;
                 }
-                deliveryAmount += (distance * PricePerKilometer[truck]);
-            })
+                deliveryAmount += (citiesCovered[city].distance * PricePerKilometer[truck]);
+            }
             let amount = {
                 deliveryAmount: deliveryAmount,
-                itemTotal: order.amount
+                itemTotal: orderPlaced.amount
             }
             resolve(amount);
         } catch (err) {

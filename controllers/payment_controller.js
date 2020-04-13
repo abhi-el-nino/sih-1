@@ -9,10 +9,10 @@ var express = require('express'),
     generatePdf = require('../utilitis/pdfGenerator'),
     mailer = require('../mailer/payment');
 
-router.get('/pay/:orderId', async function (req, res) {
+router.get('/pay', async function (req, res) {
 
     try {
-        let order = await Order.findById(req.params.orderId);
+        let order = await Order.findById(req.query.orderId);
         session = await stripe.checkout.sessions.create({
             customer_email: req.user.email,
             payment_method_types: ['card'],
@@ -23,7 +23,7 @@ router.get('/pay/:orderId', async function (req, res) {
                     currency: 'inr',
                     description: '(Inclusive of 2% transaction charges)',
                     images: ['https://drive.google.com/uc?id=1pi0meQST2sfriYUafHR-Iy1ycwqXDXFk'],
-                    amount: [order.amount] * 100
+                    amount: [parseInt(order.amount) + parseInt(req.query.deliveryCost)] * 100
                     // Keep the amount on the server to prevent customers from manipulating
                 }
             ],
@@ -32,8 +32,8 @@ router.get('/pay/:orderId', async function (req, res) {
                 // checkWebhook: 'Attendee'
             },
             // session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
-            success_url: `http://localhost:8000/order/payment/success?session_id={CHECKOUT_SESSION_ID}&orderId=${req.params.orderId}`,
-            cancel_url: `http://localhost:8000/order/transactionFailed?orderId=${req.params.orderId}`
+            success_url: `http://localhost:8000/order/payment/success?session_id={CHECKOUT_SESSION_ID}&orderId=${req.query.orderId}&deliveryCost=${req.query.deliveryCost}`,
+            cancel_url: `http://localhost:8000/order/transactionFailed?orderId=${req.query.orderId}`
         });
         return res.render('pay', {
             title: 'Payment',
@@ -61,7 +61,7 @@ router.get('/success', async function (req, res) {
     let transaction = await Transaction.create({
         order: req.query.orderId,
         sessionId: req.query.session_id,
-        paidAmount: order.amount,
+        paidAmount: parseInt(order.amount) + parseInt(req.query.deliveryCost),
         receiptNumber: receiptNumber
     });
     await Cart.deleteOne({ buyer: req.user._id });
@@ -69,7 +69,7 @@ router.get('/success', async function (req, res) {
     await order.save();
     var newblock = {
         sessionId: req.query.session_id,
-        amount: order.amount
+        amount: parseInt(order.amount) + parseInt(req.query.deliveryCost)
     }
     block.newTransaction(newblock);
     const invoice = {
@@ -82,14 +82,14 @@ router.get('/success', async function (req, res) {
             postal_code: 244001
         },
         items: order.orderQuantity,
-        subtotal: order.amount,
+        subtotal: parseInt(order.amount) + parseInt(req.query.deliveryCost),
         paid: order.amount,
         invoice_nr: receiptNumber
     };
     generatePdf(invoice);
     var data = {
         sessionId: req.query.session_id,
-        amount: order.amount
+        amount: parseInt(order.amount) + parseInt(req.query.deliveryCost)
     }
     mailer.mail(data, order.buyer.email);
     return res.render('success', { sessionId: 'req.query.session_id' });

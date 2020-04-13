@@ -16,7 +16,7 @@ const itemSchema = new mongoose.Schema({
     description: {
         type: String,
     },
-    user: {
+    farmer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
     },
@@ -24,8 +24,8 @@ const itemSchema = new mongoose.Schema({
         type: Number
 
     },
-    quality:{
-        type:Number
+    quality: {
+        type: Number
     },
     image: {
         type: String

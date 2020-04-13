@@ -80,11 +80,8 @@ module.exports.paymentProcedure = async (req, res) => {
             buyer: req.user._id,
             amount: cart.amount
         });
-        let price = await pricePredictor(order._id);
-        return res.status(200).json({
-            data: price
-        })
-        // return res.redirect(`/order/payment/pay/${order._id}`);
+        let price = await pricePredictor(req , order._id);
+        return res.redirect(`/order/payment/pay?orderId=${order._id}&deliveryCost=${price.deliveryAmount}`);
     }
 }
 
