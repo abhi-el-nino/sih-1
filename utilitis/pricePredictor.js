@@ -4,7 +4,7 @@ const Uttarkhand = require('../models/UttarkhandModel')
 const axios = require('axios');
 const PricePerKilometer = [50, 75, 100];
 module.exports = async function (orderId) {
-    new Promise(function (resolve, reject) {
+    new Promise(async function (resolve, reject) {
         try {
             let citiesCovered = new Array;
             let order = await Order.findById(orderId).populate({
@@ -18,7 +18,12 @@ module.exports = async function (orderId) {
             });
             let deliveryAmount = 0;
             order.orderQuantity.forEach(async (item) => {
-                let buyerCoordinates = await axios.get();
+                let buyerCoordinates = await axios.get(`https://atlas.mapmyindia.com/api/places/geocode?address=${req.user.address}`, {
+                    headers: {
+                        Authorization: "52b9a85c-942d-4ac6-b3a8-eb230b2cd904"
+                    }
+                });
+                console.log(buyerCoordinates);
                 let farmerDistrict = await Uttarkhand.findOne({ District_Name: item.user.address });
                 if (!citiesCovered.includes(item.user.address)) {
                     let distance = distanceCalculator(buyerCoordinates.data.cropResult.Latitude, buyerCoordinates.data.cropResult.Longitude, farmerDistrict.Latitude, farmerDistrict.Longitude);

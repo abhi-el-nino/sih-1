@@ -19,10 +19,8 @@ const oauth2Client = new google.auth.OAuth2(
   });
 module.exports.register = (req, res) => {
     if (req.isAuthenticated()) {
-        console.log('heyy');
-        res.redirect('/users/profile');
+        res.redirect('/');
     }
-    console.log('hello');
     return res.render('register', {
         title: "register"
     });
@@ -34,7 +32,7 @@ module.exports.createUser = async (req, res) => {
             return res.redirect('back');
         }
         let user = await User.findOne({
-            emailOrPhone: req.body.emailOrPhone
+            email: req.body.email
         });
 
         if (!user) {
@@ -49,7 +47,9 @@ module.exports.createUser = async (req, res) => {
 
             });
             req.login(newuser, function (err) {
-                if (err) { return next(err); }
+                if (err) { 
+                    console.log(err);
+                    return next(err); }
                 return res.redirect('/users/login')
             });
 

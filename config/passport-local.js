@@ -1,16 +1,13 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
-
 const User = require('../models/User');
-const Cart=require('../models/Cart');
-const Item=require('../models/item');
 
 passport.use(new localStrategy({
     usernameField: 'emailOrPhone'
 }, function (emailOrPhone, password, done) {
 
 
-    User.findOne({ emailOrPhone: emailOrPhone }, function (err, user) {
+    User.findOne({ email: emailOrPhone }, function (err, user) {
         if (err) {
             console.log('error in finding-->passport');
             return done(err);
