@@ -24,7 +24,9 @@ const itemSchema = new mongoose.Schema({
         type: Number
 
     },
-
+    quality:{
+        type:Number
+    },
     image: {
         type: String
     },
