@@ -29,7 +29,7 @@ module.exports.register = (req, res) => {
 }
 module.exports.createUser = async (req, res) => {
     try {
-
+        console.log(req.body);
         if (req.body.password != req.body.confirm_password) {
             return res.redirect('back');
         }
