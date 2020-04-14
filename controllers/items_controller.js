@@ -1,14 +1,12 @@
 const Items = require('../models/item');
 const Users = require('../models/User');
 module.exports.upload = (req, res) => {
-    console.log("kk",);
-    
-    if (req.user._doc.role ==="Farmer") {
+    if (req.user._doc.role === "Farmer") {
         Items.uploadedImage(req, res, async function (err) {
 
             try {
                 if (err) {
-                    console.log("multer error",err);
+                    console.log("multer error", err);
                     return;
                 }
                 if (!req.file) {
@@ -18,7 +16,9 @@ module.exports.upload = (req, res) => {
                     let newItem = await Items.create({
                         title: req.body.item_name,
                         farmer: req.user._id,
-                        price: req.body.price
+                        price: req.body.price,
+                        quality: 5,
+                        quantity: req.body.quantity
                     });
                     newItem.image = `${Items.imagePath}/${req.file.filename}`;
                     await newItem.save();

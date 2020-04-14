@@ -1,39 +1,6 @@
 <link rel="stylesheet" type="text/css" href="/css/cube.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<!-- <select id="maps-select">
-    <option>Rice</option>
-    <option>Wheat</option>
-    <option>Arhar/Tur</option>
-    <option>Bajra</option>
-    <option>Barley</option>
-    <option>Ginger</option>
-    <option>Garlic</option>
-    <option>Gram</option>
-    <option>Groundnut</option>
-    <option>Horse-gram</option>
-    <option>Lentil</option>
-    <option>Linseed</option>
-    <option>Maize</option>
-    <option>Masoor</option>
-    <option>Moong(Green Gram)</option>
-    <option>Moth</option>
-    <option>Onion</option>
-    <option>Peas & beans (Pulses)</option>
-    <option>Potato</option>
-    <option>Pulses total</option>
-    <option>Ragi</option>
-    <option>Rapeseed &Mustard</option>
-    <option>Urad</option>
-    <option>Turmeric</option>
-    <option>Tobacco</option>
-    <option>Sunflower</option>
-    <option>Soyabean</option>
-    <option>Sugarcane</option>
-    <option>Sesamum</option>
-    <option>Small millets</option>
-   
-</select> -->
 <select class="js-example-responsive">
     <option>Rice</option>
     <option>Wheat</option>
@@ -68,11 +35,13 @@
    
   </select>
 
-<div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: space-around;">
+<div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: space-around;margin-bottom: 50px;">
+
     <div id="mapid" style="height:80vh;width:60vw">
 
     </div>
-
+   
+ <div id="chart-container" style="display: flex;flex-direction: column;justify-content: space-evenly;align-items: center;">
     <div class="scene">
         <div class="cube">
             <div class="cube__face cube__face--front">
@@ -96,15 +65,16 @@
         </div>
     </div>
     <diV>
-        <p class="radio-group">
+        <p class="radio-group" style="font-size: 2rem;">
             <label>
-                <input type="radio" name="rotate-cube-side" value="front" checked /> pie
+                <input type="radio" name="rotate-cube-side" value="front" checked /> <span data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom"><i class="fas fa-chart-pie"></i></span>
             </label>
             <label>
-                <input type="radio" name="rotate-cube-side" value="right" />bar
+                <input type="radio" name="rotate-cube-side" value="right" />
+                <i class="fas fa-chart-bar"></i>
             </label>
             <label>
-                <input type="radio" name="rotate-cube-side" value="back" /> radar
+                <input type="radio" name="rotate-cube-side" value="back" /> <i class="fas fa-chart-line"></i>
             </label>
             <label>
                 <input type="radio" name="rotate-cube-side" value="left" /> left
@@ -117,6 +87,9 @@
             </label>
         </p>
     </diV>
+
+</div>
+  
 </div>
 
 <script>
@@ -203,19 +176,6 @@
 
     var heatmapLayer = new HeatmapOverlay(cfg);
 
-    var func = ({
-            lat,
-            lng
-        }) => {
-            console.log("rendering map", lat, lng);
-            var map = new L.Map('mapid', {
-                center: new L.LatLng(lat, lng),
-                zoom: 9,
-                layers: [baseLayer, heatmapLayer]
-            });
-        }
-        // func();
-
     function showheatMapLayer(testData) {
         heatmapLayer.setData(testData);
 
@@ -251,8 +211,8 @@
     }
     changeHandling();
     var map = new L.Map('mapid', {
-        center: new L.LatLng(30.152586, 78.772548),
-        zoom: 8,
+        center: new L.LatLng(29.936263, 79.171103),
+        zoom: 9,
         layers: [baseLayer, heatmapLayer]
     });
 
