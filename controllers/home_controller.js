@@ -3,9 +3,12 @@ const Item = require('../models/item');
 const Sms = require('../models/sms');
 const User = require('../models/User');
 const Cart = require('../models/Cart');
+const OTP=require('../models/Otp');
+
 module.exports.home = async (req, res) => {
 	var items = await Item.find({});
 
+// console.log(otps);
 	return res.render('index', {
 		title: 'SIH | Home',
 		items: items
