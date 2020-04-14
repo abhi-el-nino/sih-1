@@ -9,7 +9,6 @@ module.exports.sendOtp=async (req,res,next)=>{
     const phone=req.user.phone;
     axios.get(`https://api.textlocal.in/send/?apiKey=9vAkgLw23+M-W42nfAuLIxvHE1dkEhr8kjtx8FQ9EV&sender=TXTLCL&numbers=${phone}&message= Your OTP for Buyfresh Login: ${otp}`)
   .then(response => {
-    console.log(response);
     next();
    
   })
