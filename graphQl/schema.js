@@ -44,7 +44,10 @@ const UserType = new GraphQLObjectType({
             id: {
                 type: GraphQLID
             },
-            emailOrPhone: {
+            email: {
+                type: GraphQLString
+            },
+            phone:{
                 type: GraphQLString
             },
             name: {
@@ -84,12 +87,28 @@ const RootQuery = new GraphQLObjectType({
         },
         user: {
             type: UserType,
-            args: { emailOrPhone: { type: GraphQLString }, password: { type: GraphQLString } },
+            args: { phone: { type: GraphQLString }},
             async resolve(parent, args) {
-                let user = await User.findOne({ emailOrPhone: args.emailOrPhone });
+                let user = await User.findOne({ phone: args.phone});
                 return user
             }
         },
+        farmers:{
+                type: new GraphQLList(UserType),
+                async resolve(parent, args){
+                    let farmers = await User.findOne({role:'Farmer'});
+                    return farmers;
+                }
+        },
+        farmer:{
+            type:UserType,
+            args: {id:{type: GraphQLID }},
+            async resolve(parent, args){
+                let farmer = await User.findById(args.id);
+                return farmer;
+            }
+    },
+
         users: {
             type: new GraphQLList(UserType),
             async resolve(parent, args,context) {

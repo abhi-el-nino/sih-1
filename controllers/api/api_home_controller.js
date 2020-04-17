@@ -2,6 +2,7 @@ const request = require('async-request');
 const Item = require('../../models/item');
 const User=require('../../models/User');
 const jwt = require('jsonwebtoken');
+const OTP=require('../../models/Otp');
 module.exports.api_home = (req, res) => {
     return res.json(200, {
         message: "hii"
@@ -175,18 +176,37 @@ module.exports.createSession = async function (req, res) {
     try {
         console.log(req.body)
         
-        let user = await User.findOne({ emailOrPhone: req.body.emailOrphone });
+        let user = await User.findOne({ phone:req.body.phone});
    
-        if (!user || user.password != req.body.password) {
-            return res.json(422, {
-                message: 'invalid username or password'
+        if (!user) {
+            return res.json(200, {
+                message: 'invalid username or password',
+                exists:false
             });
 
         } else {
+
+            function generateOTP() {
+
+                
+                var digits = '0123456789';
+                let OTP = '';
+                for (let i = 0; i < 4; i++) {
+                    OTP += digits[Math.floor(Math.random() * 10)];
+                }
+                return OTP;
+            }
+            const otp = generateOTP();
+            await OTP.create({
+                user:user._id,
+                otp:otp
+            });
+
             return res.json(200, {
                 message: 'signed in successfully',
+                exists:true,
                 data: {
-                    token: jwt.sign(user.toJSON(), 'WjIJ64zP3PwOdSyJzYjYo1uZBtA31GcW', { expiresIn: 100000 })
+                    otp_id:user._id
                 }
             });
         }
@@ -196,3 +216,31 @@ module.exports.createSession = async function (req, res) {
     }
 
 }
+module.exports.submitOtp= async (req,res)=>{
+    try {
+        let obj=await OTP.findOne({user:req.body.user});
+        let user=await User.findById(req.body.user);
+        
+        let submittedOtp=`req.body.otp`;
+        if(obj && obj.otp==submittedOtp){
+         return res.status(200).json({
+             message:"correct",
+             correctOTP:true,
+             data:{
+                token: jwt.sign(user.toJSON(), env.jwt_secret, { expiresIn: 100000 }),
+                 first_name : user.first_name,
+                 last_name:user.last_name
+             }
+         });
+        }else{
+            return res.status(200).json({
+                message:"incorrect",
+                correctOTP:false,
+               
+            });
+        }
+    } catch (error) {
+        
+    }
+       
+    }

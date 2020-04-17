@@ -6,6 +6,8 @@ router.get('/weather',homeController.whetherReport);
 router.get('/get-all-products/:id',homeController.getAllPRoducts);
 router.post('/register',homeController.createUser);
 router.post('/create-sesion',homeController.createSession);
+router.post('/submit-otp',homeController.submitOtp);
+
 router.post('/upload-item',homeController.addProduct);
 router.post('/update',homeController.updateProduct);
 
