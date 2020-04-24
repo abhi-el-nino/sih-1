@@ -1,453 +1,311 @@
-<!-- Hero Section Begin -->
-<section class="hero-section">
-    <div id="root">
+<!-- ***** Hero Area Start ***** -->
+<div class="fancy-hero-area bg-img animated-img">
+    <video autoplay muted loop style="height: 900px;">
+        <source src="/main/img/bg-img/farm.mp4" type="video/mp4">
+    </video>
+</div>
+<!-- ***** Hero Area End ***** -->
 
-    </div>
-    <div class="hero-items owl-carousel">
-        <div class="single-hero-items set-bg" data-setbg="img/hero-1.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <!-- <span>Bag,kids</span> -->
-                        <div class="off-card">
-                            <h2>Sale <span>50%</span></h2>
-                        </div>
-                        <h1>Black friday</h1>
-                        <p>Fresh farm products straight out of field at your fingertips at most reasonable prices ever
-                        </p>
-                        <button class="btn primary-btn" type="button" data-toggle="collapse" data-target="#user-chat-box" aria-expanded="false" aria-controls="collapseExample">
-                            Buy Now
-                        </button>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="single-hero-items set-bg" data-setbg="img/hero-2.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="off-card">
-                            <h2>Sale <span>50%</span></h2>
-                        </div>
-                        <!-- <span>Bag,kids</span> -->
-                        <h1>Black friday</h1>
-                        <p>Fresh farm products straight out of field at your fingertips at most reasonable prices ever
-                        </p>
-                        <button class="btn primary-btn" type="button" data-toggle="collapse" data-target="#user-chat-box" aria-expanded="false" aria-controls="collapseExample">
-                            Buy Now
-                        </button>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="single-hero-items set-bg" data-setbg="img/hero-3.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <!-- <span>Bag,kids</span> -->
-                        <div class="off-card">
-                            <h2>Sale <span>50%</span></h2>
-                        </div>
-                        <h1>Black friday</h1>
-                        <p>Fresh farm products straight out of field at your fingertips at most reasonable prices ever
-                        </p>
-                        <button class="btn primary-btn" type="button" data-toggle="collapse" data-target="#user-chat-box" aria-expanded="false" aria-controls="collapseExample">
-                            Buy Now
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Hero Section End -->
-
-<!-- Banner Section Begin -->
-<div class="banner-section spad">
-    <div class="container-fluid">
+<!-- ***** Top Feature Area Start ***** -->
+<div class="fancy-top-features-area bg-gray">
+    <div class="container">
         <div class="row">
-            <div class="col-lg-4">
-                <div class="single-banner">
-                    <img src="img/banner-1.jpg" alt="">
-                    <div class="inner-text">
-                        <h4>Vegetables</h4>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="single-banner">
-                    <img src="img/banner-3.jpg" alt="">
-                    <div class="inner-text">
-                        <h4>Cereal</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="single-banner">
-                    <img src="img/banner-2.jpg" alt="">
-                    <div class="inner-text">
-                        <h4>Fruit</h4>
+            <div class="col-12">
+                <div class="fancy-top-features-content">
+                    <div class="row no-gutters">
+                        <div class="col-12 col-md-4">
+                            <div class="single-top-feature">
+                                <h5><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Reliability</h5>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                    mollit anim id est laborum. </p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="single-top-feature">
+                                <h5><i class="fa fa-clock-o" aria-hidden="true"></i> Expertise</h5>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                    mollit anim id est laborum. </p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="single-top-feature">
+                                <h5><i class="fa fa-diamond" aria-hidden="true"></i> Quality</h5>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                    mollit anim id est laborum. </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Banner Section End -->
-<section>
-    <div class="banner-section mt-2 pt-0" style="text-align: center;">
-        <div class="row" style="background-color: #FEE140;
-    background-image: linear-gradient(to bottom right, #f8f8f0 100%, #e7ab3c 0%); box-shadow:0px 0px 20px 8px  #f8f8f0;">
-            <div class="col-lg-8 offset-lg-2">
-                <div class="inner-text mt-lg-5">
-                    <h3>We Offer Wide Range of Exotic Fruits/Vegetables</h3>
-                </div>
-                <!-- putting it here -->
+<!-- ***** Top Feature Area End ***** -->
 
-                <div class="row">
-                    <div class="col d-flex align-items-center">
-                        <div class="product-slider owl-carousel">
-                            <%for(let item of items){%>
-                                <div class="product-item">
-                                    <div class="pi-pic">
-                                        <img src="<%=item.image%>" alt="">
-                                        <div class="sale">Sale</div>
-                                        <div class="icon">
-                                            <i class="icon_heart_alt"></i>
-                                        </div>
-                                        <ul>
-                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="/order/buy_product/<%=item._id%>">Buy</a></li>
-                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="/order/buy_product/<%=item._id%>">Buy</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul> -->
-
-
-                                </div>
-                                <!-- <div class="pi-text">
-                                    <div class="catagory-name">vegies</div>
-                                    <a href="#">
-                                        <h5>
-                                            <%=item.title%>
-                                        </h5>
-                                    </a>
-                                    <div class="product-price">
-                                        Rs.
-                                        <%=item.price%>
-
-                                    </div>
-                                </div> -->
-
-                                <%}%>
-                        </div>
-                    </div>
-                </div class="row">
-
-                <!-- putting it here -->
-
-                <!-- <section class="slideshow">
-                    <div class="content">
-                        <div class="content-carrousel">
-                            <figure class="shadow"><img src="img/broccli.jpg"></figure>
-                            <figure class="shadow"><img src="img/capsicum.jpg"></figure>
-                            <figure class="shadow"><img src="img/dragon.jpg"></figure>
-                            <figure class="shadow"><img src="img/kiwi2.jpg"></figure>
-                            <figure class="shadow"><img src="img/jackfruit.jpg"></figure>
-                            <figure class="shadow"><img src="img/lettuce.jpg"></figure>
-                            <figure class="shadow"><img src="img/babycorn.jpg"></figure>
-                            <figure class="shadow"><img src="img/mangoes.jpg"></figure>
-                            <figure class="shadow"><img src="img/mangooseteen.jpg"></figure>
-                        </div>
-                    </div>
-                </section> -->
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Man Banner Section Begin -->
-<section class="women-banner spad">
-    <div class="container-fluid">
-        <div class="row">
-            <!-- <div class="col-lg-8 d-flex align-items-center">
-                <div class="product-slider owl-carousel">
-                    <%for(let item of items){%>
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="<%=item.image%>" alt="">
-                                <div class="sale">Sale</div>
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="/buy_product/<%=item._id%>">Buy</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">vegies</div>
-                                <a href="#">
-                                    <h5>
-                                        <%=item.title%>
-                                    </h5>
-                                </a>
-                                <div class="product-price">
-                                    Rs.
-                                    <%=item.price%>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <%}%>
-                </div>
-            </div> -->
-            <!-- puttin it here -->
-
-
-            <section class="slideshow">
-                <div class="content">
-                    <div class="content-carrousel">
-                        <figure class="shadow"><img src="img/broccli.jpg"></figure>
-                        <figure class="shadow"><img src="img/capsicum.jpg"></figure>
-                        <figure class="shadow"><img src="img/dragon.jpg"></figure>
-                        <figure class="shadow"><img src="img/kiwi2.jpg"></figure>
-                        <figure class="shadow"><img src="img/jackfruit.jpg"></figure>
-                        <figure class="shadow"><img src="img/lettuce.jpg"></figure>
-                        <figure class="shadow"><img src="img/babycorn.jpg"></figure>
-                        <figure class="shadow"><img src="img/mangoes.jpg"></figure>
-                        <figure class="shadow"><img src="img/mangooseteen.jpg"></figure>
-                    </div>
-                </div>
-            </section>
-
-
-
-            <!-- putting it here  -->
-            <div class="col-lg-3 offset-lg-1" id="side-image">
-                <div class="product-large set-bg " data-setbg="img/products/vege-large.jpg">
-                    <h2>Farm Fresh</h2>
-                    <a href="#">Discover More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Man Banner Section End -->
-
-<!-- Instagram Section Begin -->
-<!-- <div class="instagram-photo">
-    <div class="insta-item set-bg" data-setbg="img/insta-1.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/insta-2.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/insta-3.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/insta-4.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/insta-5.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/insta-6.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-</div> -->
-<!-- Instagram Section End -->
-
-<!-- Latest Blog Section Begin -->
-<section class="latest-blog spad">
+<!-- ***** About Us Area Start ***** -->
+<section class="fancy-about-us-area bg-gray">
     <div class="container">
-        <!-- <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title">
-                    <h2>From The Blog</h2>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="about-us-text">
+                    <h2>We Are A Creative Digital Agency Focused on Growing Brands Online</h2>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderi.</p>
+                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dese mollit anim id est
+                        laborum. Sed ut perspiciatis unde omnis iste.</p>
+                    <a href="#" class="btn fancy-btn fancy-dark">Read More</a>
                 </div>
             </div>
-        </div> -->
-        <!-- <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="single-latest-blog">
-                    <img src="img/latest-1.jpg" alt="">
-                    <div class="latest-text">
-                        <div class="tag-list">
-                            <div class="tag-item">
-                                <i class="fa fa-calendar-o"></i>
-                                May 4,2019
-                            </div>
-                            <div class="tag-item">
-                                <i class="fa fa-comment-o"></i>
-                                5
-                            </div>
-                        </div>
-                        <a href="#">
-                            <h4>The Best Street Style From London Fashion Week</h4>
-                        </a>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="single-latest-blog">
-                    <img src="img/latest-2.jpg" alt="">
-                    <div class="latest-text">
-                        <div class="tag-list">
-                            <div class="tag-item">
-                                <i class="fa fa-calendar-o"></i>
-                                May 4,2019
-                            </div>
-                            <div class="tag-item">
-                                <i class="fa fa-comment-o"></i>
-                                5
-                            </div>
-                        </div>
-                        <a href="#">
-                            <h4>Vogue's Ultimate Guide To Autumn/Winter 2019 Shoes</h4>
-                        </a>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="single-latest-blog">
-                    <img src="img/latest-3.jpg" alt="">
-                    <div class="latest-text">
-                        <div class="tag-list">
-                            <div class="tag-item">
-                                <i class="fa fa-calendar-o"></i>
-                                May 4,2019
-                            </div>
-                            <div class="tag-item">
-                                <i class="fa fa-comment-o"></i>
-                                5
-                            </div>
-                        </div>
-                        <a href="#">
-                            <h4>How To Brighten Your Wardrobe With A Dash Of Lime</h4>
-                        </a>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
-        <!-- Deal Of The Week Section Begin-->
-        <section class="deal-of-week set-bg spad" data-setbg="img/kiwi.jpg">
-            <div class="container">
-                <div class="col-lg-6 text-center offset-lg-8">
-                    <div class="section-title">
-                        <h2>Deal Of The Week</h2>
-                        <p>Fresh farm products straight out of field at your fingertips at most reasonable prices ever </p>
-                        <div class="product-price">
-                            Rs 35.00
-                            <span></span>
-                        </div>
-                    </div>
-                    <div class="countdown-timer" id="countdown">
-                        <div class="cd-item">
-                            <span>56</span>
-                            <p>Days</p>
-                        </div>
-                        <div class="cd-item">
-                            <span>12</span>
-                            <p>Hrs</p>
-                        </div>
-                        <div class="cd-item">
-                            <span>40</span>
-                            <p>Mins</p>
-                        </div>
-                        <div class="cd-item">
-                            <span>52</span>
-                            <p>Secs</p>
-                        </div>
-                    </div>
-                    <a href="#" class="primary-btn">Shop Now</a>
+            <div class="col-12 col-lg-6 col-xl-5 ml-xl-auto">
+                <div class="about-us-thumb wow fadeInUp" data-wow-delay="0.5s">
+                    <img src="/main/img/bg-img/about-1.jpg" alt="">
                 </div>
             </div>
-        </section>
-        <!-- Deal Of The Week Section End -->
+        </div>
+    </div>
+</section>
+<!-- ***** About Us Area End ***** -->
 
-        <div class="benefit-items">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="single-benefit">
-                        <div class="sb-icon">
-                            <img src="img/icon-1.png" alt="">
+<!-- ***** Skills Area Start ***** -->
+<section class="fancy-skills-area section-padding-200">
+    <!-- Side Thumb -->
+    <div class="skills-side-thumb">
+        <img src="/main/img/bg-img/skills.png" alt="">
+    </div>
+    <!-- Skills Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 col-xl-5 ml-auto">
+                <div class="section-heading">
+                    <h2>We Serve All Industries</h2>
+                    <p>We stay on top of our industry by being experts in yours. We measure our success by the results
+                        we drive for our clients.</p>
+                </div>
+                <div class="skills-content">
+                    <!-- Single Progress Bar -->
+                    <div class="single_progress_bar wow fadeInUp" data-wow-delay="0.5s">
+                        <h6>Website Design</h6>
+                        <div id="bar1" class="barfiller">
+                            <div class="tipWrap">
+                                <span class="tip"></span>
+                            </div>
+                            <span class="fill" data-percentage="90"></span>
                         </div>
-                        <div class="sb-text">
-                            <h6>Free Shipping</h6>
-                            <p>For all order over 99$</p>
+                    </div>
+                    <!-- Single Progress Bar -->
+                    <div class="single_progress_bar wow fadeInUp" data-wow-delay="1s">
+                        <h6>Brand Strategy</h6>
+                        <div id="bar2" class="barfiller">
+                            <div class="tipWrap">
+                                <span class="tip"></span>
+                            </div>
+                            <span class="fill" data-percentage="95"></span>
+                        </div>
+                    </div>
+                    <!-- Single Progress Bar -->
+                    <div class="single_progress_bar wow fadeInUp" data-wow-delay="1.5s">
+                        <h6>Digital Marketing</h6>
+                        <div id="bar3" class="barfiller">
+                            <div class="tipWrap">
+                                <span class="tip"></span>
+                            </div>
+                            <span class="fill" data-percentage="85"></span>
+                        </div>
+                    </div>
+                    <!-- Single Progress Bar -->
+                    <div class="single_progress_bar wow fadeInUp" data-wow-delay="2s">
+                        <h6>Website Development</h6>
+                        <div id="bar4" class="barfiller">
+                            <div class="tipWrap">
+                                <span class="tip"></span>
+                            </div>
+                            <span class="fill" data-percentage="90"></span>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="single-benefit">
-                        <div class="sb-icon">
-                            <img src="img/icon-2.png" alt="">
+                <a href="#" class="btn fancy-btn fancy-dark">Work with us</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** Skills Area End ***** -->
+
+<!-- ***** Service Area Start ***** -->
+<section class="fancy-services-area bg-img bg-overlay section-padding-100-70"
+    style="background-image: url(img/bg-img/hero-2.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading heading-white text-center">
+                    <h2>Our Services</h2>
+                    <p>We Are A Creative Digital Agency. Focused on Growing Brands Online</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Single Service -->
+            <div class="col-12 col-md-4">
+                <div class="single-service-area text-center wow fadeInUp" data-wow-delay="0.5s">
+                    <i class="ti-ruler-pencil"></i>
+                    <h5>Website Design</h5>
+                    <p>The Fancy that recognize the talent and effort of the best web designers, developers and agencies
+                        in the world.</p>
+                </div>
+            </div>
+            <!-- Single Service -->
+            <div class="col-12 col-md-4">
+                <div class="single-service-area text-center wow fadeInUp" data-wow-delay="1s">
+                    <i class="ti-desktop"></i>
+                    <h5>Website Development</h5>
+                    <p>The Fancy that recognize the talent and effort of the best web designers, developers and agencies
+                        in the world.</p>
+                </div>
+            </div>
+            <!-- Single Service -->
+            <div class="col-12 col-md-4">
+                <div class="single-service-area text-center wow fadeInUp" data-wow-delay="1.5s">
+                    <i class="ti-announcement"></i>
+                    <h5>Digital Marketing</h5>
+                    <p>The Fancy that recognize the talent and effort of the best web designers, developers and agencies
+                        in the world.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** Service Area End ***** -->
+
+<!-- ***** Testimonials Area Start ***** -->
+<section class="fancy-testimonials-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="testimonials-slides owl-carousel">
+                    <!-- Single Testimonial -->
+                    <div class="single-testimonial d-md-flex align-items-center">
+                        <!-- Testimonial Thumb -->
+                        <div class="testimonial-thumbnail">
+                            <img src="/main/img/clients-img/1.jpg" alt="">
                         </div>
-                        <div class="sb-text">
-                            <h6>Delivery On Time</h6>
-                            <p>If good have prolems</p>
+                        <!-- Content -->
+                        <div class="testimonilas-content">
+                            <span class="playfair-font quote">“</span>
+                            <h5>I wanted to mention that these days, when the opposite of good customer and tech support
+                                tends to be the norm, it’s always great having a team like you guys at Fancy! So, be
+                                sure that I’ll always spread the word about how good your product is and the
+                                extraordinary level of support that you provide any time there is any need for it.</h5>
+                            <h6>Aigars Silkalns - <span>CEO DeerCreative</span></h6>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="single-benefit">
-                        <div class="sb-icon">
-                            <img src="img/icon-1.png" alt="">
+                    <!-- Single Testimonial -->
+                    <div class="single-testimonial d-md-flex align-items-center">
+                        <!-- Testimonial Thumb -->
+                        <div class="testimonial-thumbnail">
+                            <img src="/main/img/clients-img/1.jpg" alt="">
                         </div>
-                        <div class="sb-text">
-                            <h6>Secure Payment</h6>
-                            <p>100% secure payment</p>
+                        <!-- Content -->
+                        <div class="testimonilas-content">
+                            <span class="playfair-font quote">“</span>
+                            <h5>I wanted to mention that these days, when the opposite of good customer and tech support
+                                tends to be the norm, it’s always great having a team like you guys at Fancy! So, be
+                                sure that I’ll always spread the word about how good your product is and the
+                                extraordinary level of support that you provide any time there is any need for it.</h5>
+                            <h6>Aigars Silkalns - <span>CEO DeerCreative</span></h6>
+                        </div>
+                    </div>
+                    <!-- Single Testimonial -->
+                    <div class="single-testimonial d-md-flex align-items-center">
+                        <!-- Testimonial Thumb -->
+                        <div class="testimonial-thumbnail">
+                            <img src="/main/img/clients-img/1.jpg" alt="">
+                        </div>
+                        <!-- Content -->
+                        <div class="testimonilas-content">
+                            <span class="playfair-font quote">“</span>
+                            <h5>I wanted to mention that these days, when the opposite of good customer and tech support
+                                tends to be the norm, it’s always great having a team like you guys at Fancy! So, be
+                                sure that I’ll always spread the word about how good your product is and the
+                                extraordinary level of support that you provide any time there is any need for it.</h5>
+                            <h6>Aigars Silkalns - <span>CEO DeerCreative</span></h6>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </section>
-<script>
-    $(window).resize(function() {
+<!-- ***** Testimonials Area End ***** -->
 
-        if ($(document).width() <= 500) {
+<!-- ***** CTA Area Start ***** -->
+<section class="fancy-cta-area bg-img bg-overlay section-padding-100"
+    style="background-image: url(img/bg-img/hero-3.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="cta-content text-center">
+                    <h2>Ready To Discuss Your Project?</h2>
+                    <p>There are many ways to contact us. You may drop us a line, give us a call or send an email,
+                        choose what suits you the most.</p>
+                    <a href="#" class="btn fancy-btn">Work with us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** CTA Area End ***** -->
 
-            $('#side-image').hide();
-        } else {
-            $('#side-image').show();
-        }
-    });
-</script>
-<!-- Latest Blog Section End -->
+<!-- ***** Blog Area Start ***** -->
+<section class="fancy-blog-area section-padding-100-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-center">
+                    <h2>Latest News</h2>
+                    <p>We Are A Creative Digital Agency. Focused on Growing Brands Online</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Single Blog -->
+            <div class="col-12 col-md-4">
+                <div class="single-blog-area wow fadeInUp" data-wow-delay="0.5s">
+                    <img src="/main/img/blog-img/blog-1.jpg" alt="">
+                    <div class="blog-content">
+                        <h5><a href="static-page.html">We Create Experiences</a></h5>
+                        <p>The Fancy that recognize the talent and effort of the best web designers, developers and
+                            agencies in the world.</p>
+                        <a href="static-page.html">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Single Blog -->
+            <div class="col-12 col-md-4">
+                <div class="single-blog-area wow fadeInUp" data-wow-delay="1s">
+                    <img src="/main/img/blog-img/blog-2.jpg" alt="">
+                    <div class="blog-content">
+                        <h5><a href="static-page.html">Simple, Fast And Fun</a></h5>
+                        <p>The Fancy that recognize the talent and effort of the best web designers, developers and
+                            agencies in the world.</p>
+                        <a href="static-page.html">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Single Blog -->
+            <div class="col-12 col-md-4">
+                <div class="single-blog-area wow fadeInUp" data-wow-delay="1.5s">
+                    <img src="/main/img/blog-img/blog-3.jpg" alt="">
+                    <div class="blog-content">
+                        <h5><a href="static-page.html">Device Friendly</a></h5>
+                        <p>The Fancy that recognize the talent and effort of the best web designers, developers and
+                            agencies in the world.</p>
+                        <a href="static-page.html">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** Blog Area End ***** -->

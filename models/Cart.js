@@ -1,10 +1,10 @@
-const mongoose=require('mongoose');
-const CartSchema=new mongoose.Schema({
-    orderQuantity:[
+const mongoose = require('mongoose');
+const CartSchema = new mongoose.Schema({
+    orderQuantity: [
         {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Quantity',
-        required:true
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Quantity',
+            required: true
         }
     ],
     buyer: {
@@ -12,6 +12,9 @@ const CartSchema=new mongoose.Schema({
         ref: 'Users'
     },
     amount: {
+        type: Number
+    },
+    delivery: {
         type: Number
     }
 }, {

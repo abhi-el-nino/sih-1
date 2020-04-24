@@ -1,5 +1,5 @@
 const distanceCalculator = require('./distanceCalculator');
-const Order = require('../models/Order');
+const Cart = require('../models/Cart');
 const Uttarkhand = require('../models/UttarkhandModel')
 const axios = require('axios');
 const PricePerKilometer = [10, 15, 25];
@@ -7,7 +7,7 @@ module.exports = async function (req, orderId) {
     return new Promise(async function (resolve, reject) {
         try {
             var citiesCovered = new Array;
-            let orderPlaced = await Order.findById(orderId).populate({
+            let orderPlaced = await Cart.findById(orderId).populate({
                 path: 'orderQuantity',
                 populate: {
                     path: 'item',
@@ -21,7 +21,7 @@ module.exports = async function (req, orderId) {
             for (order in ordersArray) {
                 let buyerCoordinates = await axios.get(`https://atlas.mapmyindia.com/api/places/geocode?address=${req.user.address}`, {
                     headers: {
-                        Authorization: "52b9a85c-942d-4ac6-b3a8-eb230b2cd904"
+                        Authorization: "b3e233f5-1abc-44ff-9d43-d05165dd6578"
                     }
                 });
                 let farmerDistrict = await Uttarkhand.findOne({ District_Name: ordersArray[order].item.farmer.address });
@@ -50,7 +50,7 @@ module.exports = async function (req, orderId) {
                 deliveryAmount += (citiesCovered[city].distance * PricePerKilometer[truck]);
             }
             let amount = {
-                deliveryAmount: deliveryAmount,
+                deliveryAmount: Math.ceil(deliveryAmount),
                 itemTotal: orderPlaced.amount
             }
             resolve(amount);

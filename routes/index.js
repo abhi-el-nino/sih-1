@@ -3,7 +3,7 @@ const router=express.Router();
 const passport=require('passport');
 const homeController=require('../controllers/home_controller');
 const itemController=require('../controllers/items_controller');
-router.get('/',homeController.home);
+router.get('/ecommerce',homeController.ecommerce);
 router.get('/contact',homeController.contact);
 router.use('/api',require('./api'));
 router.post('/upload-item',passport.checkAuthentication,itemController.upload);
@@ -13,4 +13,5 @@ router.get('/sms',homeController.showSms)
 router.use('/farmer',require('./farmer.js'));
 router.use('/maps',require('./maps'));
 router.use('/order',passport.checkAuthentication,require('./order'));
+router.get('/',homeController.home);
 module.exports=router;

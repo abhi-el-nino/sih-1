@@ -68,15 +68,15 @@ module.exports.login = (req, res) => {
 
     if (req.isAuthenticated()) {
 
-        return res.redirect('/');
+        return res.redirect('/ecommerce');
     }
     return res.render('login', {layout:"loginLayout"});
 }
 module.exports.create_session = (req, res) => {
     // console.log("qq",req.query.code);
-    return res.redirect('/');
+    return res.redirect('/ecommerce');
 }
 module.exports.destroySession = function (req, res) {
     req.logout();
-    return res.redirect('/');
+    return res.redirect('/ecommerce');
 }

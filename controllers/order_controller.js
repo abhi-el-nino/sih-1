@@ -78,9 +78,9 @@ module.exports.paymentProcedure = async (req, res) => {
         let order = await Order.create({
             orderQuantity: cart.orderQuantity,
             buyer: req.user._id,
-            amount: cart.amount
+            amount: cart.amount,
+            delivery: cart.delivery
         });
-        let price = await pricePredictor(req , order._id);
         return res.redirect(`/order/payment/pay?orderId=${order._id}&deliveryCost=${price.deliveryAmount}`);
     }
 }
@@ -94,10 +94,15 @@ module.exports.shoppingCart = async (req, res) => {
                 path: 'item'
             }
         }).exec();
+        let price = await pricePredictor(req, cart._id);
+        cart.deliveryAmount = price.deliveryAmount;
+        await cart.save();
         return res.render('shopping-cart', {
             title: "SIH | Cart",
             cartItems: cart.orderQuantity,
-            amount: cart.amount
+            amount: cart.amount,
+            deliveryAmount: price.deliveryAmount,
+            total: cart.amount + price.deliveryAmount
         });
 
     } catch (e) {
@@ -170,11 +175,12 @@ module.exports.getItems = async (req, res) => {
                 path: 'item'
             }
         }).exec();
-        return res.json(200, {
-            cart: cart,
-            cartItems: cart.orderQuantity
-        });
-
+        if (cart) {
+            return res.json(200, {
+                cart: cart,
+                cartItems: cart.orderQuantity
+            });
+        }
     } catch (e) {
         console.log(e);
         return;

@@ -3,10 +3,17 @@ const Item = require('../models/item');
 const Sms = require('../models/sms');
 const User = require('../models/User');
 const Cart = require('../models/Cart');
-module.exports.home = async (req, res) => {
+
+module.exports.home=(req,res)=>{
+	return res.render('index',{
+		layout:"mainLayout"
+	})
+}
+
+module.exports.ecommerce = async (req, res) => {
 	var items = await Item.find({});
 
-	return res.render('index', {
+	return res.render('ecommerce-index', {
 		title: 'SIH | Home',
 		items: items
 	});
