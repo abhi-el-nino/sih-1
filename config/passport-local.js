@@ -1,22 +1,62 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
-
+const OTP = require('../models/Otp');
 passport.use(new localStrategy({
-    usernameField: 'emailOrPhone'
-}, function (emailOrPhone, password, done) {
+
+    usernameField: 'email'
+}, function (email, password, done) {
+    let phone = undefined;
+
+    if (Number.isNaN(parseInt(email))) {
+        User.findOne({ email: email }, function (err, user) {
+            if (err) {
+                console.log('error in finding-->passport');
+                return done(err);
+            }
+            if (!user || user.password != password) {
+                return done(null, false);
+            }
+          
+            return done(null, user);
+        });
+    } else {
+        phone = email;
+    
+        User.findOne({ phone: phone }, function (err, user) {
+            if (err) {
+                console.log('error in finding-->passport');
+                return done(err);
+            }
+         
+            if (!user) {
+                return done(null, false);
+            }
+            
+            function generateOTP() {
+
+                
+                var digits = '0123456789';
+                let OTP = '';
+                for (let i = 0; i < 4; i++) {
+                    OTP += digits[Math.floor(Math.random() * 10)];
+                }
+                return OTP;
+            }
+            const otp = generateOTP();
+            OTP.create({
+                user: user._id,
+                otp: otp
+            }, function (obj, err) {
+                if (err) {
+                    console.log(err);
+                }
+                return done(null, user);
+            })
 
 
-    User.findOne({ email: emailOrPhone }, function (err, user) {
-        if (err) {
-            console.log('error in finding-->passport');
-            return done(err);
-        }
-        if (!user || user.password != password) {
-            return done(null, false);
-        }
-        return done(null, user);
-    });
+        });
+    }
 
 }
 
@@ -25,16 +65,11 @@ passport.use(new localStrategy({
 
 
 passport.serializeUser(function (user, done) {
-
-    return done(null, user.id);
+    return done(null, user._id);
 });
 
 passport.deserializeUser(async function (id, done) {
     let user = await User.findById(id);
-
-    // console.log('error in finding-->passport');
-    // return done(err);
-
     return done(null, user);
 });
 
@@ -44,13 +79,13 @@ passport.checkAuthentication = function (req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    if(req.xhr){
-        return res.json(404,{
-            message:'Please Login'
+    if (req.xhr) {
+        return res.json(404, {
+            message: 'Please Login'
         })
     }
     //if the user is not signIn
-    req.flash('error','Permission Denied!! Login In to Proceed');
+    req.flash('error', 'Permission Denied!! Login In to Proceed');
     return res.redirect('/users/login');
 
 };

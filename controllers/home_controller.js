@@ -3,6 +3,7 @@ const Item = require('../models/item');
 const Sms = require('../models/sms');
 const User = require('../models/User');
 const Cart = require('../models/Cart');
+const OTP=require('../models/Otp');
 
 module.exports.home=(req,res)=>{
 	return res.render('index',{
