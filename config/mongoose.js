@@ -1,6 +1,6 @@
 
 const mongoose =require('mongoose');
-mongoose.connect('mongodb://localhost/buyfresh');
+mongoose.connect('mongodb+srv://Ishan:1234@buyfresh-tnsz5.mongodb.net/buyfresh?retryWrites=true&w=majority');
 mongoose.set('useFindAndModify', false);
 const db = mongoose.connection; //gives acess to database
 // if error
