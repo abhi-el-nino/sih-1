@@ -21,7 +21,7 @@ module.exports.markers = async (req, res) => {
         let district = await uttarkhand.findOne({ District_Name: i });
         let data = {
             District: i,
-            Latitude: district.Lattitude,
+            Lattitude: district.Lattitude,
             Longitude: district.Longitude
         }
         cordinateArray.push(data);
@@ -84,7 +84,7 @@ module.exports.fetchCrop = async (req, res) => {
         for(let i=0;i<topDistricts.length;i++){
             if(i==0){
                 sol_arr.push({
-                    lat:topDistricts[0].Latitude,
+                    lat:topDistricts[0].Lattitude,
                     lng:topDistricts[0].Longitude,
                     count:20
                 });
@@ -100,7 +100,7 @@ module.exports.fetchCrop = async (req, res) => {
                     // console.log(y);
                 }
                 sol_arr.push({
-                    lat:topDistricts[i].Latitude,
+                    lat:topDistricts[i].Lattitude,
                     lng:topDistricts[i].Longitude,
                     count:y
                 });

@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     function addMarkers(data) {
         for (i in data) {
-            let marker = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
+            let marker = L.marker([data[i].Lattitude, data[i].Longitude]).addTo(map);
             marker._icon.district = data[i].District;
             marker.bindTooltip(`${data[i].District}`).openTooltip();
             marker._icon.setAttribute("data-district", data[i].District);
