@@ -21,7 +21,7 @@ const dataSchema = new mongoose.Schema({
     Production: {
         type: Number
     },
-    Latitude: {
+    Lattitude: {
         type: String
     },
     Longitude: {

@@ -21,7 +21,7 @@ module.exports.markers = async (req, res) => {
         let district = await uttarkhand.findOne({ District_Name: i });
         let data = {
             District: i,
-            Latitude: district.Latitude,
+            Latitude: district.Lattitude,
             Longitude: district.Longitude
         }
         cordinateArray.push(data);
