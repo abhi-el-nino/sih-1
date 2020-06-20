@@ -13,10 +13,15 @@
     /*------------------
         Preloader
     --------------------*/
-    $(window).on('load', function () {
-        $(".loader").fadeOut();
-        $("#preloder").delay(200).fadeOut("slow");
+    var $window = $(window);
+
+    // Preloader active code
+    $window.on('load', function () {
+        $('#preloader').fadeOut('slow', function () {
+            $(this).remove();
+        });
     });
+
 
     /*------------------
         Background Set
