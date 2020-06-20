@@ -11,7 +11,6 @@ module.exports.register = (req, res) => {
 }
 module.exports.createUser = async (req, res) => {
     try {
-        console.log("creation", req.body);
         if (req.body.password != req.body.confirm_password) {
             return res.redirect('back');
         }
@@ -86,8 +85,6 @@ module.exports.loginWithOtp = (req, res) => {
 }
 
 module.exports.create_session = (req, res) => {
-    console.log(req.body);
-    // console.log("qq",req.query.code);
     return res.redirect('/ecommerce');
 }
 
