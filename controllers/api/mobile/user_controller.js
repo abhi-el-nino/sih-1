@@ -9,7 +9,7 @@ module.exports.localSignUp = async function (req, res) {
         farmer = await Farmer.create({
             phone: req.body.phone,
             email: req.body.email,
-            Name: req.body.firstName,
+            Name: req.body.name,
             password: req.body.password,
             address: req.body.address
         })
@@ -18,7 +18,7 @@ module.exports.localSignUp = async function (req, res) {
         farmer.local_access_token = token
         await farmer.save()
         return res.status(200).json({
-            message: 'User Sign Up Sucessfull',
+            message: 'User Sign Up Successfull',
             access_token: token
         })
     } catch (err) {
@@ -34,14 +34,14 @@ module.exports.googleSignUp = async function (req, res) {
         farmer = await Farmer.create({
             phone: req.body.phone,
             email: req.body.email,
-            Name: req.body.firstName,
+            Name: req.body.name,
             password: req.body.password,
             address: req.body.address,
             google_access_token: req.body.token
         })
 
         return res.status(200).json({
-            message: 'User Sign Up Sucessfull',
+            message: 'User Sign Up Successfull',
             access_token: req.body.token
         })
     } catch (err) {
@@ -89,8 +89,8 @@ module.exports.localLogin = async function (req, res) {
 
 module.exports.googleLogin = async function (req, res) {
     try {
-        farmer = await Farmer.findOne({ phone: req.body.phone });
-        farmer.google_access_token = req.body.token
+        farmer = await Farmer.findOne({ phone: req.query.phone });
+        farmer.google_access_token = req.query.token
         await farmer.save()
         return res.status(200).json({
             message: 'User Signed In',
