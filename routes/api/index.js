@@ -1,6 +1,7 @@
 const express=require('express');
 const router=express.Router();
 const homeController=require('../../controllers/api/api_home_controller');
+router.use('/mobile',require('./mobile/index'))
 router.get('/',homeController.api_home);
 router.get('/weather',homeController.whetherReport);
 router.get('/get-all-products/:id',homeController.getAllPRoducts);

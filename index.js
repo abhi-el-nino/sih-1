@@ -10,6 +10,7 @@ const passport = require('passport');
 const flash = require("connect-flash");
 const passportLocal = require('./config/passport-local');
 const strategy_Google = require('./config/passport-google-oauth2-strategy');
+const unique_token = require('./config/passport-unique-token')
 const mongoStore = require('connect-mongo')(session);
 //To allow cross origin requests
 const cors = require('cors');
