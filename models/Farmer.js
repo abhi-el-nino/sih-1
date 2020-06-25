@@ -6,7 +6,6 @@ const farmerSchema = new mongoose.Schema({
 
     email: {
         type: String,
-        unique: true,
     },
     phone:{
         type: String,
@@ -50,6 +49,9 @@ const farmerSchema = new mongoose.Schema({
 farmerSchema.methods.toJSON = function () {
     var obj = this.toObject();
     delete obj.password;
+    delete obj.createdAt;
+    delete obj.updatedAt;
+    delete obj.__v;
     return obj;
 }
 let storage = multer.diskStorage({

@@ -6,44 +6,59 @@ const { Token } = require('graphql')
 
 module.exports.localSignUp = async function (req, res) {
     try {
-        farmer = await Farmer.create({
-            phone: req.body.phone,
-            email: req.body.email,
-            Name: req.body.name,
-            password: req.body.password,
-            address: req.body.address
-        })
+        check = await Farmer.findOne({ phone: req.body.phone });
+        if (check) {
+            return res.status(500).json({
+                message: 'User already exist'
+            })
+        } else {
+            farmer = await Farmer.create({
+                phone: req.body.phone,
+                email: req.body.email,
+                Name: req.body.name,
+                password: req.body.password,
+                address: req.body.address
+            })
 
-        token = jwt.sign({ id: farmer._id }, secret, { expiresIn: 60 * 60 * 24 })
-        farmer.local_access_token = token
-        await farmer.save()
-        return res.status(200).json({
-            message: 'User Sign Up Successfull',
-            access_token: token
-        })
+            token = jwt.sign({ id: farmer._id }, secret, { expiresIn: 60 * 60 * 24 })
+            farmer.local_access_token = token
+            await farmer.save()
+            return res.status(200).json({
+                message: 'User Sign Up Successfull',
+                access_token: token
+            })
+        }
     } catch (err) {
         console.log(err)
         return res.status(404).json({
             message: 'Internal server Error'
         })
     }
+
 }
 
 module.exports.googleSignUp = async function (req, res) {
     try {
-        farmer = await Farmer.create({
-            phone: req.body.phone,
-            email: req.body.email,
-            Name: req.body.name,
-            password: req.body.password,
-            address: req.body.address,
-            google_access_token: req.body.token
-        })
+        check = await Farmer.findOne({ phone: req.body.phone });
+        if (check) {
+            return res.status(500).json({
+                message: 'User already exist'
+            })
+        } else {
+            farmer = await Farmer.create({
+                phone: req.body.phone,
+                email: req.body.email,
+                Name: req.body.name,
+                password: req.body.password,
+                address: req.body.address,
+                google_access_token: req.body.token
+            })
 
-        return res.status(200).json({
-            message: 'User Sign Up Successfull',
-            access_token: req.body.token
-        })
+            return res.status(200).json({
+                message: 'User Sign Up Successfull',
+                access_token: req.body.token
+            })
+        }
     } catch (err) {
         console.log(err)
         return res.status(404).json({
