@@ -27,7 +27,7 @@ module.exports.markers = async (req, res) => {
         }
         cordinateArray.push(data);
     }      
-    return res.json(200, cordinateArray);
+    return res.status(200).json(cordinateArray);
 }
 
 module.exports.chart = async (req, res) => {
@@ -60,7 +60,7 @@ module.exports.chart = async (req, res) => {
         else { production13Data.push(crop.Production); }
         count++;
     })
-    return res.json(200, {
+    return res.status(200).json({
         pie: {
             labels: labels,
             productionData: productionData,
