@@ -2,6 +2,7 @@ const express = require('express');
 let bodyParser = require('body-parser');
 const port = process.env.PORT || 8000;
 const app = express();
+// require("./config/view-helpers")(app);
 const db = require('./config/mongoose');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
@@ -10,6 +11,7 @@ const passport = require('passport');
 const flash = require("connect-flash");
 const passportLocal = require('./config/passport-local');
 const strategy_Google = require('./config/passport-google-oauth2-strategy');
+const passport_jwt  = require("./config/passport-jwt");
 const mongoStore = require('connect-mongo')(session);
 //To allow cross origin requests
 const cors = require('cors');

@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -323,6 +324,31 @@
         <script src="/js/heatmap.js"></script>
         <script src="/js/leaflet-heatmap.js"></script>
         <script src="/ajax/cart-icon.js"></script>
+        <script>
+
+      if(sessionStorage.getItem("lang")==="hi"){
+          console.log("laguage is hindi");
+          var markup = document.documentElement.innerHTML;
+    console.log(markup);
+        $.ajax({
+        type: "post",
+        url: `https://translation.googleapis.com/language/translate/v2?q=${markup}&key=AIzaSyCquyPHkufd6a-PQxsYT0KuuKdXz2fX7LM&target=hi&format=html&source=en&model=nmt`,
+        data: {},
+       
+        success: function (data) {
+
+     let newContent=data.data.translations[0].translatedText;
+         document.open();
+         document.write(newContent);
+         document.close();
+         $("#button").html("change language")
+
+        }, error: function (error) {
+          console.log(error);
+        }
+      });
+      }
+        </script>
         <script>
             <% if (success && success.length > 0) { %>
 

@@ -54,11 +54,7 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 //for ensuring that password is not show in api request
-userSchema.methods.toJSON = function () {
-    var obj = this.toObject();
-    delete obj.password;
-    return obj;
-}
+
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
 

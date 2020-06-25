@@ -1,8 +1,7 @@
 const mongoose=require('mongoose');
 const OtpSchema=new mongoose.Schema({
     user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Users',
+       type:String,
         required:true
     },
    
