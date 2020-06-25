@@ -17,7 +17,7 @@ const farmerSchema = new mongoose.Schema({
         required: true,
 
     },
-    Name: {
+    name: {
         type: String,
         required: true,
     },
