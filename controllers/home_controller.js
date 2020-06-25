@@ -3,6 +3,7 @@ const Item = require('../models/item');
 const Sms = require('../models/sms');
 const User = require('../models/User');
 const Cart = require('../models/Cart');
+const Order = require('../models/Order');
 const OTP=require('../models/Otp');
 
 module.exports.home=(req,res)=>{
@@ -16,7 +17,8 @@ module.exports.ecommerce = async (req, res) => {
 
 	return res.render('ecommerce-index', {
 		title: 'SIH | Home',
-		items: items
+		items: items,
+		active:'home'
 	});
 }
 
@@ -66,4 +68,29 @@ module.exports.showSms = async (req, res) => {
 			}
 		});
 	}
+}
+
+module.exports.allOrders = async (req,res)=>{
+	orders = await Order.find({buyer:req.user.id}).populate({
+		path:'orderQuantity',
+		populate:{
+			path:'item'
+		}
+	})
+	items_list=[]
+	for (order in orders){
+		items = orders[order].orderQuantity
+		for (item in items){
+			currItem = items[item]
+			items_list.push({
+				name : currItem.item.title,
+				price :currItem.item.price,
+				image: currItem.item.image,
+				quantity : currItem.quantity
+			})
+		}
+	}
+	return res.render('order_profile',{
+		items : items_list
+	});
 }

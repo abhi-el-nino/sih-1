@@ -15,7 +15,7 @@ module.exports.localSignUp = async function (req, res) {
             farmer = await Farmer.create({
                 phone: req.body.phone,
                 email: req.body.email,
-                Name: req.body.name,
+                name: req.body.name,
                 password: req.body.password,
                 address: req.body.address
             })
@@ -48,7 +48,7 @@ module.exports.googleSignUp = async function (req, res) {
             farmer = await Farmer.create({
                 phone: req.body.phone,
                 email: req.body.email,
-                Name: req.body.name,
+                name: req.body.name,
                 password: req.body.password,
                 address: req.body.address,
                 google_access_token: req.body.token

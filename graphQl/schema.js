@@ -4,6 +4,9 @@ const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLInt, GraphQLID, 
 
 const User = require('../models/User');
 const Item = require('../models/item');
+const Farmer = require('../models/Farmer');
+const Complaint = require('../models/Complaint');
+
 const jwt = require('jsonwebtoken');
 
 const ItemType = new GraphQLObjectType({
@@ -47,7 +50,7 @@ const UserType = new GraphQLObjectType({
             email: {
                 type: GraphQLString
             },
-            phone:{
+            phone: {
                 type: GraphQLString
             },
             name: {
@@ -74,6 +77,65 @@ const UserType = new GraphQLObjectType({
     )
 })
 
+const FarmerType = new GraphQLObjectType({
+    name: 'Farmer',
+    fields: () => ({
+        id:{
+            type:GraphQLID
+        },
+        email: {
+            type: GraphQLString,
+        },
+        phone: {
+            type: GraphQLString,
+        },
+        name: {
+            type: GraphQLString,
+        },
+        address: {
+            type: GraphQLString,
+        },
+        google_access_token: {
+            type: GraphQLString,
+        },
+        local_access_token: {
+            type: GraphQLString,
+        }
+    })
+})
+
+const ComplaintType = new GraphQLObjectType({
+    name: 'Complaint',
+    fields: () => ({
+        buyer: {
+            type: UserType,
+            async resolve(parent, args) {
+                user = await User.findById(parent.buyer)
+                return user
+            }
+        },
+        farmer: {
+            type: FarmerType,
+            async resolve(parent, args) {
+                farmer = await Farmer.findById(parent.farmer)
+                return farmer
+            }
+        },
+        content: {
+            type: GraphQLString
+        },
+        crop: {
+            type: GraphQLString
+        },
+        category: {
+            type: GraphQLString
+        },
+        content: {
+            type: GraphQLString
+        }
+    })
+})
+
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -87,31 +149,41 @@ const RootQuery = new GraphQLObjectType({
         },
         user: {
             type: UserType,
-            args: { phone: { type: GraphQLString }},
+            args: { phone: { type: GraphQLString } },
             async resolve(parent, args) {
-                let user = await User.findOne({ phone: args.phone});
+                let user = await User.findOne({ phone: args.phone });
                 return user
             }
         },
-        farmers:{
-                type: new GraphQLList(UserType),
-                async resolve(parent, args){
-                    let farmers = await User.findOne({role:'Farmer'});
-                    return farmers;
-                }
-        },
-        farmer:{
-            type:UserType,
-            args: {id:{type: GraphQLID }},
-            async resolve(parent, args){
-                let farmer = await User.findById(args.id);
-                return farmer;
+        farmers: {
+            type: new GraphQLList(FarmerType),
+            async resolve(parent, args) {
+                let farmers = await Farmer.find({});
+                return farmers;
             }
-    },
+        },
+
+        complaint: {
+            type: ComplaintType,
+            args: { id: { type: GraphQLID }, crop_name: { type: GraphQLString }, crop_category: { type: GraphQLString } },
+            async resolve(parent, args) {
+                let farmer = await Complaint.findOne({ _id: args.id, crop: args.crop_name, category: args.crop_category });
+                return farmer;
+            },
+        },
+
+        complaints: {
+            type: new GraphQLList(ComplaintType),
+            args: { crop: {type : GraphQLString }, category: {type:GraphQLString} },
+            async resolve(parent, args) {
+                let complaints = await Complaint.find({ crop: args.crop, category: args.category })
+                return complaints
+            }
+        },
 
         users: {
             type: new GraphQLList(UserType),
-            async resolve(parent, args,context) {
+            async resolve(parent, args, context) {
                 console.log(context.headers.authorization);
                 let users = await User.find({});
                 return users;
@@ -146,9 +218,9 @@ const Mutations = new GraphQLObjectType({
                     first_name: args.name,
                     emailOrPhone: args.emailOrPhone,
                     password: args.password,
-                    last_name:args.last_name,
-                    role:args.role,
-                    address:args.address
+                    last_name: args.last_name,
+                    role: args.role,
+                    address: args.address
                 });
                 return user;
             }
