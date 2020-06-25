@@ -85,6 +85,10 @@
                     </div>
                     <%}else{%>
                     <a href="/users/logout" class="login-panel"><i class="fa fa-user"></i>Logout</a>
+                    <div class="top-social">
+                        <a href="/pastOrders">Past Orders</a>
+                    </div>
+                    
                     <%}%>
                                 <div class="lan-selector">
                                     <select class="language_drop" name="countries" id="countries" style="width:300px;">
@@ -173,7 +177,7 @@
                         <%}else{%>
                         <li><a href="/ecommerce">Home</a></li>
                         <% } %>
-                        <li><a href="/shop">Shop</a></li>
+                        <li><a href="#">Shop</a></li>
                         <li>
                             <a href="#">Collection</a>
                             <ul class="dropdown">
@@ -182,7 +186,7 @@
                                 <li><a href="#">Cereals</a></li>
                             </ul>
                         </li>
-                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="#">Contact</a></li>
                         <% if(locals.active == 'map') { %>
                         <li class="active"><a href="/maps">Maps</a></li>
                         <%}else{%>

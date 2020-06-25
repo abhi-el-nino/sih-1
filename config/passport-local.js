@@ -80,7 +80,7 @@ passport.checkAuthentication = function (req, res, next) {
         return next();
     }
     if (req.xhr) {
-        return res.staus(404).json({
+        return res.status(404).json({
             message: 'Please Login'
         })
     }

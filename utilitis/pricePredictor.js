@@ -21,7 +21,7 @@ module.exports = async function (req, orderId) {
             for (order in ordersArray) {
                 let buyerCoordinates = await axios.get(`https://atlas.mapmyindia.com/api/places/geocode?address=${req.user.address}`, {
                     headers: {
-                        Authorization: "b3e233f5-1abc-44ff-9d43-d05165dd6578"
+                        Authorization: process.env.MAP_API
                     }
                 });
                 let farmerDistrict = await Uttarkhand.findOne({ District_Name: ordersArray[order].item.farmer.address });
