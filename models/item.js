@@ -11,8 +11,8 @@ const itemSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        required:true
-
+        required:true,
+        default:'Vegetable'
     },
     description: {
         type: String,
