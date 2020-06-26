@@ -7,12 +7,12 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
-        required:true
+        required: true
     },
-    phone:{
+    phone: {
         type: String,
         unique: true,
-        required:true
+        required: true
     },
     password: {
         type: String,
@@ -36,7 +36,12 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        required: true
+        required: true,
+        default: 'buyer'
+    },
+    verified:{
+        type:Boolean,
+        default:false
     },
     items: [
         {
@@ -44,10 +49,10 @@ const userSchema = new mongoose.Schema({
             ref: 'Items'
         }
     ],
-    orders:[
+    orders: [
         {
             type: mongoose.Schema.Types.ObjectId,
-                ref: 'Order'
+            ref: 'Order'
         }
     ]
 }, {

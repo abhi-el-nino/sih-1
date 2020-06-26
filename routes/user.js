@@ -13,7 +13,7 @@ failureFlash: "Invalid username or password!",
 successFlash: "Logged you in!" }), usersController.create_session);
 router.get('/auth/google',passport.authenticate('google',{scope :['profile','email']}));
 router.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'./signin'}),usersController.create_session);
-
+router.get('/verify/:jwt',usersController.verify)
 //otp routes
 
 router.post('/login/submit-otp',usersController.submitOtp);

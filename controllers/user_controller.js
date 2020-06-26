@@ -1,5 +1,8 @@
 const User = require('../models/User');
 const OTP = require('../models/Otp');
+const verificationMail = require('../mailer/verifcation')
+const jwt = require('jsonwebtoken')
+const secret = 'ARMgidxUv7jzZYBUNNJbW843lpDuQGRc'
 
 module.exports.register = (req, res) => {
     if (req.isAuthenticated()) {
@@ -9,11 +12,14 @@ module.exports.register = (req, res) => {
         title: "register"
     });
 }
+
 module.exports.createUser = async (req, res) => {
     try {
         if (req.body.password != req.body.confirm_password) {
+            req.flash('Password and Confirm Password do not match')
             return res.redirect('back');
         }
+
         let user = await User.findOne({
             email: req.body.email
         });
@@ -26,18 +32,26 @@ module.exports.createUser = async (req, res) => {
                 phone: req.body.phone,
                 password: req.body.password,
                 address: req.body.address,
-                role: req.body.userType
-
             });
-            req.login(newuser, function (err) {
+            jwt.sign({ id: newuser.id }, secret, {expiresIn:60*60},(err, token) => {
                 if (err) {
-                    console.log(err);
-                    return next(err);
+                    console.log(err)
+                    req.flash('Internal server Error')
+                    return res.redirect('/ecommerce')
                 }
-                return res.redirect('/users/login')
-            });
+                verificationMail.mail({token:token}, req.body.email)
+                req.login(newuser, function (err) {
+                    if (err) {
+                        console.log(err);
+                        return next(err);
+                    }
+                    req.flash('success', 'Verfication Mail Has been Sent')
+                    return res.redirect('/users/login')
+                });
+            })
 
         } else {
+            req.flash('User already exist')
             return res.redirect('back');
         }
 
@@ -47,6 +61,25 @@ module.exports.createUser = async (req, res) => {
         return;
     }
 
+}
+
+module.exports.verify = (req, res) => {
+    jwt.verify(req.params.jwt, secret, async function (err, decoded) {
+        if (err) {
+            req.flash('error', 'Your token has expired. Please send verification Mail again!');
+            return res.redirect('/');
+        }
+        await User.findByIdAndUpdate(decoded.id, { 'verified': true })
+        let newuser = await User.findById(decoded.id)
+        req.login(newuser, function (err) {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            req.flash('success', 'Verfication Mail Has been Sent')
+            return res.redirect('/users/login')
+        });
+    });
 }
 
 module.exports.login = (req, res) => {
