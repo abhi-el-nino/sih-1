@@ -80,30 +80,30 @@
 
                     <a href="/users/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
 
-                    <div class="top-social">
-                        <a href="/users/auth/google"><i class="fa fa-google" aria-hidden="true">&nbsp login</i>
-                        </a>
-                    </div>
                     <%}else{%>
                     <a href="/users/logout" class="login-panel"><i class="fa fa-user"></i>Logout</a>
+                    
                     <%}%>
-                                <div class="lan-selector">
-                                    <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                <option
-                  value="yt"
-                  data-image="/img/flag-1.jpg"
-                  data-imagecss="flag yt"
-                  data-title="English"
-                  >English
-                </option>
-                <option
-                  value="yu"
-                  data-image="/img/flag-2.jpg"
-                  data-imagecss="flag yu"
-                  data-title="Bangladesh"
-                  >German
-                </option>
-              </select>
+                    <div class="lan-selector">
+                        <select class="language_drop" name="countries" id="countries" style="width:300px;">
+                            <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
+                                data-title="English">English</option>
+                            <option value='yu' data-image="img/flag-2.png" data-imagecss="flag yu"
+                                data-title="Bangladesh">हिन्दी</option>
+                        </select>
+                    </div>
+                    <% if(locals.user == undefined){%>
+                        <div class="top-social">
+                            <a href="/users/register">Register</i>
+                            </a>
+                            <a href="/users/auth/google"><i class="fa fa-google" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <% } else{ %>
+                            <div class="top-social">
+                                <a href="/pastOrders">Past Orders</a>
+                            </div>
+                            <% } %>
                                 </div>
 
                 </div>
@@ -174,7 +174,7 @@
                         <%}else{%>
                         <li><a href="/ecommerce">Home</a></li>
                         <% } %>
-                        <li><a href="/shop">Shop</a></li>
+                        <li><a href="#">Shop</a></li>
                         <li>
                             <a href="#">Collection</a>
                             <ul class="dropdown">
@@ -183,7 +183,7 @@
                                 <li><a href="#">Cereals</a></li>
                             </ul>
                         </li>
-                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="#">Contact</a></li>
                         <% if(locals.active == 'map') { %>
                         <li class="active"><a href="/maps">Maps</a></li>
                         <%}else{%>

@@ -19,14 +19,15 @@ module.exports.localSignUp = async function (req, res) {
                 password: req.body.password,
                 address: req.body.address
             })
-
-            token = jwt.sign({ id: farmer._id }, secret, { expiresIn: 60 * 60 * 24 })
-            farmer.local_access_token = token
-            await farmer.save()
-            return res.status(200).json({
-                message: 'User Sign Up Successfull',
-                access_token: token
+            jwt.sign({ id: farmer._id }, secret, { expiresIn: 60 * 60 * 24 }, async (err, token) => {
+                farmer.local_access_token = token
+                await farmer.save()
+                return res.status(200).json({
+                    message: 'User Sign Up Successfull',
+                    access_token: token
+                })
             })
+
         }
     } catch (err) {
         console.log(err)
