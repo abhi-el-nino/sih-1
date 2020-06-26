@@ -2,8 +2,9 @@ const request = require("async-request");
 const Item = require("../../models/item");
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
+
 const Blacklisted = require("../../models/blacklisted");
-const Complaints = require("../../models/complaints");
+// const Complaints = require("../../models/complaints");
 const OTP = require("../../models/Otp");
 const axios = require("axios");
 const translator = require("../../googleTranslation");
@@ -89,7 +90,8 @@ module.exports.numberVerification = async (req, res) => {
         user: user.phone,
         otp: otp,
       });
-
+      let message = `your OTP for login to buyfresh-admin is ${otp}`
+      translator(message,req.body.phone);
       return res.json(200, {
         message: "user exits",
         exists: true,
@@ -138,24 +140,31 @@ module.exports.checkSession = (req, res) => {
   });
 };
 module.exports.takeAction = async (req, res) => {
-  let { action, number, crop, category } = req.body;
+  try{
+    let { action, number, crop, category, actionMessage } = req.body;
+    console.log(action,number,crop,category,actionMessage);
 
-  let actionMessage = req.body.message;
-  let farmer = await User.findOne({ phone: number });
+    let farmer = await User.findOne({ phone: number });
+  
+    if (!farmer) {
+      return res.json(404, {
+        message: "farmer does not exist",
+      });
+    }
+  
+    if (action === "blacklist") {
+  //blacklist the farmer
+  console.log("blacklist");
+    }else{
+      //warn the farmer
+  console.log("warn");
+    }
+   translator(actionMessage,number);
+    return res.json(200,{
+     data:"hello"
+   });
 
-  if (!farmer) {
-    return res.json(404, {
-      message: "farmer does not exist",
-    });
+  }catch(e){
+    throw e;
   }
-
-  if (action === "blacklist") {
-    let blacklisted = await Blacklisted.create({
-      farmer: farmer._id,
-      crop,
-      category,
-    });
-
-  }
- 
 };

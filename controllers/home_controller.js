@@ -16,7 +16,8 @@ module.exports.ecommerce = async (req, res) => {
 
 	return res.render('ecommerce-index', {
 		title: 'SIH | Home',
-		items: items
+		items: items,
+		active:'home'
 	});
 }
 

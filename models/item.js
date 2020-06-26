@@ -9,8 +9,9 @@ const itemSchema = new mongoose.Schema({
         required: true,
 
     },
-    quality: {
-        type: String
+    category: {
+        type: String,
+        required:true
 
     },
     description: {
@@ -18,14 +19,15 @@ const itemSchema = new mongoose.Schema({
     },
     farmer: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users'
+        ref: 'Farmers',
+        required:true
+    },
+    farmerId:{
+        type:String
     },
     quantity: {
         type: Number
 
-    },
-    quality: {
-        type: Number
     },
     image: {
         type: String

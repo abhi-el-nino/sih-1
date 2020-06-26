@@ -1,22 +1,24 @@
-// Imports the Google Cloud client library
-const {Translate} = require('@google-cloud/translate').v2;
-
+const { Translate } = require("@google-cloud/translate").v2;
+const axios = require("axios");
 // Creates a client
 const translate = new Translate();
 
-/**
- * TODO(developer): Uncomment the following lines before running the sample.
- */
-module.exports = async function translateText(text) {
-const target = 'hi';
-  // Translates the text into the target language. "text" can be a string for
-  // translating a single piece of text, or an array of strings for translating
-  // multiple texts.
-  let [translations] = await translate.translate(text, target);
-  translations = Array.isArray(translations) ? translations : [translations];
-  console.log('Translations:');
-  translations.forEach((translation, i) => {
-    console.log(`${text[i]} => (${target}) ${translation}`);
-  });
-}
-
+module.exports = async function translateText(text, number) {
+  try {
+    console.log("text", text, number);
+    const target = "hi";
+    console.log("credentials", process.env.GOOGLE_APPLICATION_CREDENTIALS);
+    let [translations] = await translate.translate(text, target);
+    translations = Array.isArray(translations) ? translations : [translations];
+    let response = await axios.post(
+      `https://api.textlocal.in/send/?unicode=1&apiKey=9vAkgLw23+M-6SZtbHOzAEJSS6L9hLuh4fKaCwSI0U&numbers=${number}&message=${encodeURIComponent(
+        translations[0]
+      )}`,
+      {
+        sender: "TXTLCL",
+      }
+    );
+  } catch (error) {
+    throw error;
+  }
+};

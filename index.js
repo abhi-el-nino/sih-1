@@ -1,6 +1,6 @@
 const express = require('express');
 let bodyParser = require('body-parser');
-const port = process.env.PORT || 8000;
+const port = 8000;
 const app = express();
 // require("./config/view-helpers")(app);
 const db = require('./config/mongoose');
@@ -12,15 +12,16 @@ const flash = require("connect-flash");
 const passportLocal = require('./config/passport-local');
 const strategy_Google = require('./config/passport-google-oauth2-strategy');
 const passport_jwt  = require("./config/passport-jwt");
+const unique_token = require('./config/passport-unique-token')
 const mongoStore = require('connect-mongo')(session);
 //To allow cross origin requests
 const cors = require('cors');
 app.use(cors());
 
 // setup the chat server to be used with socket.io
-const chatServer = require('http').Server(app);
-const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
-chatServer.listen(5000);
+// const chatServer = require('http').Server(app);
+// const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+// chatServer.listen(5000);
 //console.log('chat server is listening on port 5000');
 
 app.use(bodyParser.urlencoded({
