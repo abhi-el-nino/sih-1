@@ -9,7 +9,9 @@ let opts = {
 }
 passport.use(new JWTStrategy(opts,async function(payload,done){
 try{
+    console.log("payload",payload);
 let user=await User.findById(payload._id);
+console.log("user",user);
 if(user){
     return done(null,user);
 }else{

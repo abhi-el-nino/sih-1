@@ -12,7 +12,7 @@ var express = require('express'),
 router.get('/pay', async function (req, res) {
 
     try {
-        let order = await Order.findById(req.query.orderId);
+        let order = await Cart.findById(req.query.orderId);
         session = await stripe.checkout.sessions.create({
             customer_email: req.user.email,
             payment_method_types: ['card'],
@@ -49,7 +49,14 @@ router.get('/pay', async function (req, res) {
 
 
 router.get('/success', async function (req, res) {
-    let order = await Order.findById(req.query.orderId).populate('buyer').populate({
+    let cart = await Cart.findById(req.query.orderId)
+    let neworder = await Order.create({
+        orderQuantity: cart.orderQuantity,
+        buyer: req.user._id,
+        amount: cart.amount,
+        delivery: cart.delivery
+    });
+    let order = await Order.findById(neworder._id).populate('buyer').populate({
         path: 'orderQuantity',
         populate: {
             path: 'item'
@@ -92,7 +99,7 @@ router.get('/success', async function (req, res) {
         amount: parseInt(order.amount) + parseInt(req.query.deliveryCost)
     }
     mailer.mail(data, order.buyer.email);
-    return res.render('success', { sessionId: 'req.query.session_id' });
+    return res.render('success', { sessionId: req.query.session_id});
 });
 
 module.exports = router;

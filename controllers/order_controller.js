@@ -75,13 +75,10 @@ module.exports.toggleCart = async (req, res) => {
 module.exports.paymentProcedure = async (req, res) => {
     let cart = await Cart.findOne({ buyer: req.user._id }).exec();
     if (cart) {
-        let order = await Order.create({
-            orderQuantity: cart.orderQuantity,
-            buyer: req.user._id,
-            amount: cart.amount,
-            delivery: cart.delivery
-        });
-        return res.redirect(`/order/payment/pay?orderId=${order._id}&deliveryCost=${cart.delivery}`);
+        return res.redirect(`/order/payment/pay?orderId=${cart._id}&deliveryCost=${cart.delivery}`);
+    }else{
+        req.flash('Add some itmes to cart')
+        return res.redirect('back')
     }
 }
 

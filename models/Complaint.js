@@ -3,24 +3,24 @@ const ComplaintSchema = new mongoose.Schema({
     buyer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',
-        require:true
+        required:true
     },
     farmer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Farmers',
-        require:true
+        required:true
     },
     crop: {
         type: String,
-        require:true
+        required:true
     },
     category: {
         type: String,
-        require:true
+        required:true
     },
     content:{
         type:String,
-        require:true
+        required:true
     }
 }, {
     timestamps: true
