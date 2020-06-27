@@ -13,8 +13,7 @@ class RemoveFromCart {
                 url: `/order/remove-from-cart/${itemId}`,
                 success: function (data) {
                     $('#cart-total').text(`${data.amount}`);
-                    let cartCount = $('#cart-count').text();
-                    $('#cart-count').text(--cartCount);
+                    $('#cart-count').text(`${data.deleted}`);
                     $(`#cart-item-${itemId}`).remove();
                     new Noty({
                         theme: 'relax',
