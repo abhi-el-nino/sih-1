@@ -3,7 +3,6 @@ module.exports = function (latA, longA, latB, longB) {
         long1 = toRadians(longA);
         lat2 = toRadians(latB);
         long2 = toRadians(longB);
-
         let dlong = long2 - long1;
         let dlat = lat2 - lat1;
        

@@ -26,7 +26,7 @@ module.exports = async function (req, orderId) {
                 });
                 let farmerDistrict = await Uttarkhand.findOne({ District_Name: ordersArray[order].item.farmer.address });
                 if (!citiesCovered.includes(ordersArray[order].item.farmer.address)) {
-                    let distance = distanceCalculator(buyerCoordinates.data.copResults.latitude, buyerCoordinates.data.copResults.longitude, farmerDistrict.Latitude, farmerDistrict.Longitude);
+                    let distance = distanceCalculator(buyerCoordinates.data.copResults.latitude, buyerCoordinates.data.copResults.longitude, farmerDistrict.Lattitude, farmerDistrict.Longitude);
                     let data = {
                         distance: distance,
                         quantity: ordersArray[order].quantity
