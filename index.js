@@ -30,6 +30,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, './assets')));
 app.use('/uploads', express.static('./uploads'));
+app.use('/receipts', express.static('./receipts'));
 
 app.use(expressLayouts);
 app.set('layout extractStyles', true);

@@ -1,70 +1,52 @@
-
-
-<!-- Contact Section Begin -->
-<section class="contact-section">
+<!-- Faq Section Begin -->
+<div class="faq-section spad">
   <div class="container">
-    <br />
-    <div class="container">
-      <div class="row">
-
-      </div>
-
-    </div>
     <div class="row">
       <div class="col-lg-12">
-        <div class="contact-details">
-          <h2 class="text-center" style="font-size: 30px;">Your request for payment has been successfully
-            recorded <img src="img/check.png" style="width: 30px;"></h2>
-          <div class="contact-form">
-            <form action="#">
-              <div class="row">
-                <div class="col-lg-8">
-                  <input type="text" placeholder="none" value="<%= sessionId %>" id="transId" readonly>
-                </div>
-                <div class="col-lg-4">
-                  <button type="submit" class="submit-btn contact-btn" style="width:100%;"
-                    onclick="copyToClipBoard()">Copy to Clipboard</button>
-                </div>
+        <div class="faq-accordin">
+          <h2> Your payment has been successfull </h2>
+          <h3> Mail has been sent with your payment reciept to your registered Email address.</h3><br>
+          <div class="accordion" id="accordionExample">
+            <div class="card">
+              <div class="card-heading active">
+                <a class="active" data-toggle="collapse" data-target="#collapseOne">
+                  Session ID
+                </a>
               </div>
-
-            </form>
-          </div>
-          </form>
-          <br />
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12">
-                <p class="bigPara text-center">
-                  Keep this ID for future reference. A confirmation mail would be sent to you once the payment is
-                  confirmed by the bank
-                </p>
+              <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                <div class="card-body">
+                  <p><%= sessionId %></p>
+                  <!-- <button type="submit" class="primary-btn pd-cart" style="width:100%;"
+                    onclick="copyToClipBoard()">Copy to Clipboard</button> -->
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-lg-4"></div>
-              <div class="col-lg-4">
-                <button type="submit" class="submit-btn success-btn" style="width:100%;"
-                  onclick="window.location.href='/'">Back to Dashboard</button>
+            <div class="card">
+              <div class="card-heading">
+                <a data-toggle="collapse" data-target="#collapseTwo">
+                  Payment Receipt
+                </a>
               </div>
-              <div class="col-lg-4"></div>
-            </div>
-            <div class="row">
-
+              <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
+                <div class="card-body">
+                  <iframe src="/receipts/output.pdf" title="Payment Receipt" height="600px" width="500px"></iframe>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
-</section>
+</div>
+<!-- Faq Section End -->
 <script>
   function copyToClipBoard() {
-      var copyText = document.getElementById("transId");
-      copyText.select();
-      copyText.setSelectionRange(0, 99999);
-      document.execCommand("copy");
-      //copyText.setCustomValidity("Text copied");
-      alert("Copied " + copyText.value + " to clipboard");
+    var copyText = document.getElementById("transId");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    //copyText.setCustomValidity("Text copied");
+    alert("Copied " + copyText.value + " to clipboard");
   }
 </script>
