@@ -32,8 +32,8 @@ router.get('/pay', async function (req, res) {
                 // checkWebhook: 'Attendee'
             },
             // session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
-            success_url: `http://localhost:8000/order/payment/success?session_id={CHECKOUT_SESSION_ID}&orderId=${req.query.orderId}&deliveryCost=${req.query.deliveryCost}`,
-            cancel_url: `http://localhost:8000/order/transactionFailed?orderId=${req.query.orderId}`
+            success_url: `https://buyfreshdtu.xyz/order/payment/success?session_id={CHECKOUT_SESSION_ID}&orderId=${req.query.orderId}&deliveryCost=${req.query.deliveryCost}`,
+            cancel_url: `https://buyfreshdtu.xyz/order/transactionFailed?orderId=${req.query.orderId}`
         });
         return res.render('pay', {
             title: 'Payment',
