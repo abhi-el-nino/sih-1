@@ -2,6 +2,8 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 const OTP = require('../models/Otp');
+const Cart = require('../models/Cart')
+
 passport.use(new localStrategy({
 
     usernameField: 'email'
@@ -78,23 +80,27 @@ passport.checkAuthentication = function (req, res, next) {
 
     if (req.isAuthenticated()) {
         return next();
+    } else {
+        if (req.xhr) {
+            return res.status(404).json({
+                message: 'Please Login'
+            })
+        } else {
+            req.flash('error', 'Permission Denied!! Login In to Proceed');
+            return res.redirect('/users/login');
+        }
     }
-    if (req.xhr) {
-        return res.status(404).json({
-            message: 'Please Login'
-        })
-    }
-    //if the user is not signIn
-    req.flash('error', 'Permission Denied!! Login In to Proceed');
-    return res.redirect('/users/login');
-
 };
 
 
 //set the user for the views
-passport.setAuthenticatedUser = function (req, res, next) {
+passport.setAuthenticatedUser = async function (req, res, next) {
     if (req.isAuthenticated()) {
         res.locals.user = req.user;
+        let cart = await Cart.findOne({buyer:req.user.id})
+        if(cart){
+            res.locals.cartSize = cart.orderQuantity.length
+        }
     }
     return next();
 };

@@ -20,13 +20,10 @@ class CartFill {
                         quantity: quantity
                     },
 
-                    success: function (data) {
-                        let cartCount = $('#cart-count').text();
-                        cartCount = parseInt(cartCount);
-                        if (data.data.added == true) {
-                            cartCount++;   
-                        }
-                        $('#cart-count').text(cartCount);
+                    success: function (data){
+                        console.log('hi')
+                        console.log(data)
+                        $('#cart-count').text(`${data.data.added}`);
                         new Noty({
                             theme: 'relax',
                             text: 'Item added to cart',

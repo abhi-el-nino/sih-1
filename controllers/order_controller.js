@@ -7,7 +7,7 @@ const pricePredictor = require('../utilitis/pricePredictor');
 
 module.exports.toggleCart = async (req, res) => {
     try {
-        let cart = await Cart.findOneAndUpdate({ buyer: req.user._id });
+        let cart = await Cart.findOne({ buyer: req.user._id });
         let item = await Item.findById(req.body.itemId);
         if (cart == null) {
             let amount = parseInt(item.price) * parseInt(req.body.quantity);
@@ -26,7 +26,7 @@ module.exports.toggleCart = async (req, res) => {
             await newCart.save();
             return res.status(200).json({
                 data: {
-                    added: true
+                    added: 1
                 }, message: "item added and new cart created"
             });
 
@@ -41,7 +41,7 @@ module.exports.toggleCart = async (req, res) => {
                 await itemExisted.save()
                 return res.status(200).json({
                     data: {
-                        added: false
+                        added: cart.orderQuantity.length
                         , message: "item added to cart and cart existed"
                     }
                 });
@@ -56,7 +56,7 @@ module.exports.toggleCart = async (req, res) => {
 
                 return res.status(200).json({
                     data: {
-                        added: true
+                        added: cart.orderQuantity.length
                         , message: "item added to cart and cart existed"
                     }
                 });
@@ -136,12 +136,13 @@ module.exports.buyProduct = async (req, res) => {
             });
         }
     } catch (err) {
-        console.log("errrrrrrrrr", err);
+        console.log(err);
         return;
     }
 }
 
 module.exports.transactionFailed = function (req, res) {
+    req.flash('error','Transaction Failed')
     return res.redirect('/');
 }
 
@@ -154,6 +155,7 @@ module.exports.removeFromCart = async (req, res) => {
         await cart.save();
         return res.status(200).json({
             message: "removed from cart",
+            deleted : cart.orderQuantity.length,
             amount: cart.amount
         });
     } catch (error) {

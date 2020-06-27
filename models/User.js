@@ -43,12 +43,6 @@ const userSchema = new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    items: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Items'
-        }
-    ],
     orders: [
         {
             type: mongoose.Schema.Types.ObjectId,

@@ -141,7 +141,11 @@
                             <li class="cart-icon">
                                 <a href="/order/getCartItems">
                                     <i class="icon_bag_alt"></i>
-                                    <span id="cart-count">0</span>
+                                    <span id="cart-count"><% if(locals.cartSize){%>
+                                        <%= locals.cartSize %>
+                                   <% } else{%> 
+                                    <%= 0 %>
+                                    <% } %></span>
                                 </a>
                                 <%- include('_cart'); %>
                     </li>

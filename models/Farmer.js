@@ -36,11 +36,9 @@ const farmerSchema = new mongoose.Schema({
     ],
     google_access_token:{
         type:String,
-        unique:true
     },
     local_access_token: {
         type: String,
-        unique : true
     }
 }, {
     timestamps: true
