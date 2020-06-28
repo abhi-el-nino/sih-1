@@ -14,10 +14,12 @@ module.exports.home=(req,res)=>{
 
 module.exports.ecommerce = async (req, res) => {
 	var items = await Item.find({});
-
+	let filtered = items.filter((item,index)=>{
+		return (item.image != null)
+	});
 	return res.render('ecommerce-index', {
 		title: 'SIH | Home',
-		items: items,
+		items: filtered,
 		active:'home'
 	});
 }
