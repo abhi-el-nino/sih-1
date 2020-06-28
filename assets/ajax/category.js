@@ -13,6 +13,8 @@ let qualitySelection = function () {
                     data.sellers.items.forEach((seller) => {
                         let newRow = addSeller(seller);
                         table.prepend(newRow);
+                        addRating(`#rating-${seller._id}`)
+                        showInfo(`#radio-${seller._id}`,seller)
                     })
                     new Noty({
                         theme: 'relax',
@@ -39,23 +41,52 @@ let qualitySelection = function () {
 let addSeller = (data) => {
     return $(`
     <div class="co-item" id = ${data.farmer._id}>
-    <input type = radio class="farmer-radio-btn" data-item=${data._id} name = "farmer-selected">
+    <input type = radio class="farmer-radio-btn" data-item=${data._id} name = "farmer-selected" id="radio-${data._id}">
+    <label for="radio-${data._id}">Rs.${data.price}</label>
     <div class="avatar-pic">
-        <img src="${data.farmer.avatar}" alt="">
+        <img src="${data.image}" alt="">
     </div>
     <div class="avatar-text">
-        <div class="at-rating">
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star-o"></i>
+        <div class="at-rating" id="rating-${data._id}" data-rating=${4}>
         </div>
-        <h5>${data.farmer.name}</h5>
+        <h5>${data.farmer.name}<span>${data.createdAt}</span></h5>
         <div class="at-reply">${data.description}</div>
     </div>
 </div>`)
 }
 
+function addRating(element){
+   var rating = $(element).attr('data-rating') 
+   for(let i =0 ;i<rating;i++){
+       $(element).append('<i class="fa fa-star"></i> ')
+   } 
+   $(element).append(' <i class="fa fa-star-o"></i>')
+}
+
+function showInfo(element,product){
+    $(element).click(function(){
+        $('.specification-table table').remove()
+        $('.specification-table').append(`<table>
+        <tr>
+            <td class="p-catagory">Description</td>
+            <td>
+                <p>${product.description}</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="p-catagory">Availability</td>
+            <td>
+                <div class="p-stock">${product.quantity} in stock</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="p-catagory">Weight</td>
+            <td>
+                <div class="p-weight">1,3kg</div>
+            </td>
+        </tr>
+    </table>`)
+    })
+}
 qualitySelection();
 
