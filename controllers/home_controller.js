@@ -17,6 +17,7 @@ module.exports.ecommerce = async (req, res) => {
 	let filtered = items.filter((item,index)=>{
 		return (item.image != null)
 	});
+	console.log(filtered);
 	return res.render('ecommerce-index', {
 		title: 'SIH | Home',
 		items: filtered,
