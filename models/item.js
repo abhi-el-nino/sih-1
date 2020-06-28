@@ -26,20 +26,23 @@ const itemSchema = new mongoose.Schema({
         type:String
     },
     quantity: {
-        type: Number
-
+        type: Number,
+        required:true
     },
     image: {
         type: String
     },
     price: {
-        type: Number
+        type: Number,
+        required:true
     },
     discount: {
         type: Number
+    },
+    quality:{
+        type:String,
+        enum:['Premium','Elite','Classic']
     }
-
-
 }, {
     timestamps: true
 });

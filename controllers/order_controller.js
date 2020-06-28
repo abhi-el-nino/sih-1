@@ -1,9 +1,9 @@
-const Users = require('../models/User');
 const Item = require('../models/item');
 const Cart = require('../models/Cart');
 const Order = require('../models/Order');
 const OrderQuantity = require('../models/item_quantity');
 const pricePredictor = require('../utilitis/pricePredictor');
+const Category = require('../models/Category')
 
 module.exports.toggleCart = async (req, res) => {
     try {
@@ -76,7 +76,7 @@ module.exports.paymentProcedure = async (req, res) => {
     let cart = await Cart.findOne({ buyer: req.user._id }).exec();
     if (cart) {
         return res.redirect(`/order/payment/pay?orderId=${cart._id}&deliveryCost=${cart.delivery}`);
-    }else{
+    } else {
         req.flash('Add some itmes to cart')
         return res.redirect('back')
     }
@@ -92,7 +92,7 @@ module.exports.shoppingCart = async (req, res) => {
             }
         }).exec();
         let price = await pricePredictor(req, cart._id);
-        await Cart.update({buyer: req.user._id},{$set: { "delivery" :price.deliveryAmount}})
+        await Cart.update({ buyer: req.user._id }, { $set: { "delivery": price.deliveryAmount } })
 
         return res.render('shopping-cart', {
             title: "SIH | Cart",
@@ -110,30 +110,33 @@ module.exports.shoppingCart = async (req, res) => {
 }
 module.exports.buyProduct = async (req, res) => {
     try {
-
-        let item = await Item.findById(req.params.id);
-        let cart = await Cart.findOne({ buyer: req.user._id });
-        if (cart) {
-            let item_quantity = await OrderQuantity.findOne({ cart: cart._id, item: req.params.id });
-            if (item_quantity) {
-                return res.render("buy-product", {
-                    title: "SIH | Buy",
-                    product: item,
-                    quantity: item_quantity.quantity
-                });
+        if (req.params.id != "undefined") {
+            let item = await Item.findById(req.params.id);
+            let cart = await Cart.findOne({ buyer: req.user._id });
+            if (cart) {
+                let item_quantity = await OrderQuantity.findOne({ cart: cart._id, item: req.params.id });
+                if (item_quantity) {
+                    return res.render("buy-product", {
+                        title: "SIH | Buy",
+                        product: item,
+                        quantity: item_quantity.quantity
+                    });
+                } else {
+                    return res.render("buy-product", {
+                        title: "SIH | Buy",
+                        product: item,
+                        quantity: 0
+                    })
+                }
             } else {
                 return res.render("buy-product", {
                     title: "SIH | Buy",
                     product: item,
                     quantity: 0
-                })
+                });
             }
         } else {
-            return res.render("buy-product", {
-                title: "SIH | Buy",
-                product: item,
-                quantity: 0
-            });
+            return res.redirect('/')
         }
     } catch (err) {
         console.log(err);
@@ -142,7 +145,7 @@ module.exports.buyProduct = async (req, res) => {
 }
 
 module.exports.transactionFailed = function (req, res) {
-    req.flash('error','Transaction Failed')
+    req.flash('error', 'Transaction Failed')
     return res.redirect('/');
 }
 
@@ -155,7 +158,7 @@ module.exports.removeFromCart = async (req, res) => {
         await cart.save();
         return res.status(200).json({
             message: "removed from cart",
-            deleted : cart.orderQuantity.length,
+            deleted: cart.orderQuantity.length,
             amount: cart.amount
         });
     } catch (error) {
@@ -184,4 +187,11 @@ module.exports.getItems = async (req, res) => {
         console.log(e);
         return;
     }
+}
+
+module.exports.getSellers = async (req, res) => {
+    let sellers = await Category.findOne({ name: req.query.category }).populate({ path: 'items', match: { quality: req.query.quality },populate:{path:'farmer',select:'name _id avatar'}})
+    return res.status(200).json({
+        sellers: sellers
+    })
 }
