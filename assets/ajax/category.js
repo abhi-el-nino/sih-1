@@ -14,7 +14,8 @@ let qualitySelection = function () {
                         let newRow = addSeller(seller);
                         table.prepend(newRow);
                         addRating(`#rating-${seller._id}`)
-                        showInfo(`#radio-${seller._id}`,seller)
+                        showInfo(`#radio-${seller._id}`, seller)
+                        showComments(`#radio-${seller._id}`, seller)
                     })
                     new Noty({
                         theme: 'relax',
@@ -55,16 +56,16 @@ let addSeller = (data) => {
 </div>`)
 }
 
-function addRating(element){
-   var rating = $(element).attr('data-rating') 
-   for(let i =0 ;i<rating;i++){
-       $(element).append('<i class="fa fa-star"></i> ')
-   } 
-   $(element).append(' <i class="fa fa-star-o"></i>')
+function addRating(element) {
+    var rating = $(element).attr('data-rating')
+    for (let i = 0; i < rating; i++) {
+        $(element).append('<i class="fa fa-star"></i> ')
+    }
+    $(element).append(' <i class="fa fa-star-o"></i>')
 }
 
-function showInfo(element,product){
-    $(element).click(function(){
+function showInfo(element, product) {
+    $(element).click(function () {
         $('.specification-table table').remove()
         $('.specification-table').append(`<table>
         <tr>
@@ -86,6 +87,39 @@ function showInfo(element,product){
             </td>
         </tr>
     </table>`)
+    })
+}
+
+function showComments(element, item) {
+    $(element).click(function () {
+        $.ajax({
+            type: "get",
+            url: `/order/getComments/${item._id}`,
+            success: function (data) {
+                let div = $('#customer-reviews');
+                $('#num_comments').text(data.comments.length)
+                data.comments.forEach((comment) => {
+                    $(div).append(`<div class="co-item">
+                    <div class="avatar-pic">
+                        <img src="${comment.buyer.avatar}" alt="">
+                    </div>
+                    <div class="avatar-text">
+                        <div class="at-rating" id = "rating-${comment.id}" data-rating=${comment.rating}>
+                        </div>
+                        <h5>${comment.buyer.first_name}<span>${comment.createdAt}</span></h5>
+                        <div class="at-reply">${comment.content}</div>
+                    </div>
+                </div>`)
+                    var rating = $(`rating-${comment.id}`).attr('data-rating')
+                    for (let i = 0; i < rating; i++) {
+                        $(element).append('<i class="fa fa-star"></i> ')
+                    }
+                    $(element).append(' <i class="fa fa-star-o"></i>')
+                })
+            }, error: function (err) {
+                console.log(err);
+            }
+        });
     })
 }
 qualitySelection();

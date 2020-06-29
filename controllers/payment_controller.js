@@ -99,7 +99,7 @@ router.get('/success', async function (req, res) {
         amount: parseInt(order.amount) + parseInt(req.query.deliveryCost)
     }
     mailer.mail(data, order.buyer.email);
-    return res.render('success', { sessionId: req.query.session_id});
+    return res.render('success', { sessionId: req.query.session_id, orderId : neworder._id });
 });
 
 module.exports = router;

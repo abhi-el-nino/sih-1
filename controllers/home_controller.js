@@ -21,7 +21,6 @@ module.exports.ecommerce = async (req, res) => {
 		return item.image != null}
 		return false
 	});
-	console.log(items)
 	return res.render('ecommerce-index', {
 		title: 'SIH | Home',
 		items: filtered,
@@ -90,6 +89,7 @@ module.exports.allOrders = async (req, res) => {
 		for (item in items) {
 			currItem = items[item]
 			items_list.push({
+				id: currItem.item._id,
 				name: currItem.item.title,
 				price: currItem.item.price,
 				image: currItem.item.image,

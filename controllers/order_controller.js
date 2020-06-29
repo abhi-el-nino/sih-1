@@ -1,9 +1,12 @@
 const Item = require('../models/item');
 const Cart = require('../models/Cart');
-const Order = require('../models/Order');
 const OrderQuantity = require('../models/item_quantity');
 const pricePredictor = require('../utilitis/pricePredictor');
-const Category = require('../models/Category')
+const Category = require('../models/Category');
+const Complaint = require('../models/Complaint');
+const Feedback = require('../models/Feedback');
+const Order = require('../models/Order');
+const mongoose = require('mongoose')
 
 module.exports.toggleCart = async (req, res) => {
     try {
@@ -193,5 +196,31 @@ module.exports.getSellers = async (req, res) => {
     let sellers = await Category.findOne({ name: req.query.category }).populate({ path: 'items', match: { quality: req.query.quality },populate:{path:'farmer',select:'name _id avatar'}})
     return res.status(200).json({
         sellers: sellers
+    })
+}
+
+module.exports.feedback = async (req,res)=>{
+    let feedback = await Feedback.create({
+        item:req.params.id,
+        content : req.body.content,
+        rating : req.body.rating,
+        buyer:req.user.id
+    })
+
+    if(feedback.rating < 3){
+        let item = await Item.findById(mongoose.Types.ObjectId(req.params.id))
+        await Complaint.create({buyer:req.user.id,farmer:item.farmer,content:feedback.content,rating:feedback.rating,item:item._id,category:item.category,crop:item.title});
+        req.flash('success','Due to low rating of the item we have filed a complaint');
+        return res.redirect('back');
+    }else{
+    req.flash('success','Your Feedback Has Been Recorded')
+    return res.redirect('back')
+    }
+}
+
+module.exports.getComments= async(req,res)=>{
+    let comments = await Feedback.find({ item: mongoose.Types.ObjectId(req.params.id) }).populate({path:'buyer',select:'first_name avatar'})
+    return res.status(200).json({
+        comments:comments
     })
 }

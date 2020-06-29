@@ -14,5 +14,7 @@ router.get('/remove-from-cart/:itemId',passport.checkAuthentication,orderControl
 router.use('/payment',paymentController);
 router.get('/proceedForPayment',orderController.paymentProcedure);
 router.get('/getCartItems',orderController.getItems);
-router.get('/getSellers',orderController.getSellers)
+router.get('/getSellers',orderController.getSellers);
+router.post('/feedback/:id',orderController.feedback);
+router.get('/getComments/:id',orderController.getComments)
 module.exports=router;
