@@ -15,4 +15,52 @@ router.use('/maps',require('./maps'));
 router.use('/order',passport.checkAuthentication,require('./order'));
 router.get('/pastOrders',passport.checkAuthentication,homeController.allOrders)
 router.get('/',homeController.home);
+router.post("/search", async (req, res) => {
+    console.log(req.body);
+  
+    let keywords = req.body.query.split(" ");
+    console.log(keywords);
+  
+    let categories = "premiumeliteclassic"
+    if(keywords.length < 2){
+  
+      let value = keywords[0];
+  
+      let pattern = new RegExp(value,'i');
+  
+      if(categories.match(pattern)){
+          let items = await Items.find({
+            
+              category: pattern
+            }).populate('farmer');
+            return res.render('search_results',{
+                items:items
+            })
+  
+      }else{
+  
+          let items = await Items.find({
+            
+              title: pattern
+            }).populate('farmer');
+            return res.render('search_results',{
+              items:items
+          })
+      }
+  
+    }else{
+  let firstP = new RegExp(keywords[0],'i');
+  let secondP = new RegExp(keywords[1],'i');
+  
+      let categoryP = categories.match(firstP) ? firstP:secondP;
+     let  itemP = categories.match(firstP) ? secondP:firstP;
+     let items = await Items.find({
+      title: itemP,
+      category: categoryP,
+    }).populate('farmer');
+    return res.render('search_results',{
+      items:items
+  })
+    }
+  });
 module.exports=router;
