@@ -1,27 +1,30 @@
 const Message = require('../models/message');
 const Item = require('../models/item');
 const Sms = require('../models/sms');
-const User = require('../models/User');
-const Cart = require('../models/Cart');
 const Order = require('../models/Order');
-const OTP=require('../models/Otp');
+const Category = require('../models/Category')
 
-module.exports.home=(req,res)=>{
-	return res.render('index',{
-		layout:"mainLayout"
+module.exports.home = (req, res) => {
+	return res.render('index', {
+		layout: "mainLayout"
 	})
 }
 
 module.exports.ecommerce = async (req, res) => {
-	var items = await Item.find({});
-let filtered = items.filter((item,index)=>{
-	return item.image!=null
-});
-console.log(filtered);
+	var categories = await Category.find({}).populate({ path: 'items', match: { quality: 'Premium' }, options: { limit: 1 } });
+	let items = []
+	for (category in categories) {
+		items.push(categories[category].items[0])
+	}
+	let filtered = items.filter((item, index) => {
+		if(item){
+		return item.image != null}
+		return false
+	});
 	return res.render('ecommerce-index', {
 		title: 'SIH | Home',
 		items: filtered,
-		active:'home'
+		active: 'home'
 	});
 }
 
@@ -73,27 +76,28 @@ module.exports.showSms = async (req, res) => {
 	}
 }
 
-module.exports.allOrders = async (req,res)=>{
-	orders = await Order.find({buyer:req.user.id}).populate({
-		path:'orderQuantity',
-		populate:{
-			path:'item'
+module.exports.allOrders = async (req, res) => {
+	orders = await Order.find({ buyer: req.user.id }).populate({
+		path: 'orderQuantity',
+		populate: {
+			path: 'item'
 		}
 	})
-	items_list=[]
-	for (order in orders){
+	items_list = []
+	for (order in orders) {
 		items = orders[order].orderQuantity
-		for (item in items){
+		for (item in items) {
 			currItem = items[item]
 			items_list.push({
-				name : currItem.item.title,
-				price :currItem.item.price,
+				id: currItem.item._id,
+				name: currItem.item.title,
+				price: currItem.item.price,
 				image: currItem.item.image,
-				quantity : currItem.quantity
+				quantity: currItem.quantity
 			})
 		}
 	}
-	return res.render('order_profile',{
-		items : items_list
+	return res.render('order_profile', {
+		items: items_list
 	});
 }

@@ -10,8 +10,17 @@ class CartFill {
             let self = this;
             console.log(self);
             let quantity = ($("#item-quantity")[0].value);
-            let itemId = $(self).attr('id').split("-")[1];
-            if (quantity !== "") {
+            let itemId = $('input[name="farmer-selected"]:checked').attr("data-item");
+            if(itemId == null || itemId == undefined || itemId==""){
+                new Noty({
+                    theme: 'relax',
+                    text: 'Please Select a seller',
+                    type: 'error',
+                    layout: 'topRight',
+                    timeout: 2000
+                }).show();
+            }
+            else if (quantity !== "") {
                 $.ajax({
                     type: "post",
                     url: '/order/add-to-cart',
@@ -21,8 +30,6 @@ class CartFill {
                     },
 
                     success: function (data){
-                        console.log('hi')
-                        console.log(data)
                         $('#cart-count').text(`${data.data.added}`);
                         new Noty({
                             theme: 'relax',

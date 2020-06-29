@@ -21,6 +21,11 @@ const ComplaintSchema = new mongoose.Schema({
     content:{
         type:String,
         required:true
+    },
+    item:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Items',
+        required:true
     }
 }, {
     timestamps: true

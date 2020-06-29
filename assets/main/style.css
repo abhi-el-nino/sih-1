@@ -367,7 +367,7 @@ li {
 }
 
 .header_area {
-    background-color: rgba(4, 8, 29, 0.85);
+    background-color: transparent;
     position: fixed;
     width: 100%;
     z-index: 90;
@@ -525,7 +525,7 @@ li {
     100% {
         background-position: 0% 50%;
     }
-} */
+}
 
 @keyframes animated-image {
     0% {
@@ -537,7 +537,7 @@ li {
     100% {
         background-position: 0% 50%;
     }
-}
+} */
 
 /* Top Features Area CSS */
 
