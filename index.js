@@ -76,6 +76,7 @@ app.use('/graph', graphqlHTTP({
 app.use('/', require('./routes'));
 
 app.listen(port, function (err) {
+    console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
     if (err) {
         console.log(err, "error");
     }
