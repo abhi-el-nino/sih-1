@@ -1,0 +1,47 @@
+.result-list {
+    display: flex;
+    height: 228px;
+    width: 941px;
+    box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+    border-radius: 4px;
+    margin: 25px
+}
+
+.search-item-image {
+    width: 21rem;
+    height: 92%;
+    margin-top: 9px
+}
+
+.fav-button {
+    text-align: right;
+    color: lightgray;
+    width: 19rem;
+    padding: 10px;
+    font-size: 153%;
+    cursor: pointer;
+}
+
+.fav-button:hover {
+    color: red
+}
+
+.preview-button {
+    background-color: transparent;
+    border: 1px solid #dcdcdc;
+    height: 2.7rem;
+    width: 8.4rem
+}
+
+.preview-button:hover {
+    background-color: black;
+    color: white
+}
+
+.cart-button {
+    background-color: #E7AB3C;
+    color: white;
+    border: 1px solid #dcdcdc;
+    height: 2.7rem;
+    width: 3rem;
+}

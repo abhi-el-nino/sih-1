@@ -3,6 +3,7 @@ const router=express.Router();
 const passport=require('passport');
 const homeController=require('../controllers/home_controller');
 const itemController=require('../controllers/items_controller');
+const Items = require("../models/item");
 router.get('/ecommerce',homeController.ecommerce);
 router.get('/contact',homeController.contact);
 router.use('/api',require('./api'));
