@@ -11,14 +11,15 @@ module.exports.home = (req, res) => {
 }
 
 module.exports.ecommerce = async (req, res) => {
-	var categories = await Category.find({}).populate({ path: 'items', match: { quality: 'Premium' }, options: { limit: 1 } });
+	var categories = await Category.find({}).populate({ path: 'items', options: { limit: 1 } });
 	let items = []
 	for (category in categories) {
 		items.push(categories[category].items[0])
 	}
 	let filtered = items.filter((item, index) => {
-		if(item){
-		return item.image != null}
+		if (item) {
+			return item.image != null
+		}
 		return false
 	});
 	return res.render('ecommerce-index', {
@@ -100,4 +101,49 @@ module.exports.allOrders = async (req, res) => {
 	return res.render('order_profile', {
 		items: items_list
 	});
+}
+
+module.exports.search = async (req, res) => {
+	let keywords = req.body.query.split(" ");
+	let categories = "premiumeliteclassic"
+	if (keywords.length < 2) {
+
+		let value = keywords[0];
+
+		let pattern = new RegExp(value, 'i');
+
+		if (categories.match(pattern)) {
+			let items = await Item.find({
+
+				category: pattern
+			}).populate('farmer');
+			return res.render('search_results', {
+				items: items
+			})
+
+		} else {
+
+			let items = await Item.find({
+
+				title: pattern
+			}).populate('farmer');
+			return res.render('search_results', {
+				items: items
+			})
+		}
+
+	} else {
+		let firstP = new RegExp(keywords[0], 'i');
+		let secondP = new RegExp(keywords[1], 'i');
+
+		let categoryP = categories.match(firstP) ? firstP : secondP;
+		let itemP = categories.match(firstP) ? secondP : firstP;
+		let items = await Item.find({
+			title: itemP,
+			category: categoryP,
+		}).populate('farmer');
+		return res.render('search_results', {
+			items: items
+		})
+	}
 }

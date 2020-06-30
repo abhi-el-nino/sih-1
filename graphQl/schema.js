@@ -275,7 +275,6 @@ const RootQuery = new GraphQLObjectType({
           crops: ["Rice", "wheat", "Maize"],
           sales: [35.0, 28.4, 12.9],
         };
-        console.log(sales);
         return sales;
       },
     },
@@ -290,7 +289,6 @@ const RootQuery = new GraphQLObjectType({
         category: { type: GraphQLString },
       },
       async resolve(parent, args) {
-        console.log("complaints args",args)
         if (args.crop === "all" && args.category === "all") {
           let agg = [
             {
@@ -441,7 +439,6 @@ const Mutations = new GraphQLObjectType({
         role: { type: GraphQLString },
       },
       async resolve(parent, args) {
-        console.log("hey");
         let user = await User.create({
           first_name: args.name,
           emailOrPhone: args.emailOrPhone,
