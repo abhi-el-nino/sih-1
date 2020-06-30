@@ -28,6 +28,13 @@ module.exports.upload = (req, res) => {
                 let category = await Category.findOne({ name: req.body.category })
                 if (category) {
                     category.items.push(newItem._id)
+                    category.items.sort(function (I1, I2) {
+                        if (I1.quality == 'Premium') {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    })
                     await category.save()
                 }
                 else {
