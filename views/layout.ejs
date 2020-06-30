@@ -68,7 +68,7 @@
             <div class="container">
                 <div class="ht-left">
                     <div class="mail-service">
-                        <i class=" fa fa-envelope"></i> buyfresh009@gmail.com
+                        <i class=" fa fa-envelope"></i> buyfreshdtu007@gmail.com
                     </div>
                     <div class="phone-service">
                         <i class=" fa fa-phone"></i> +91-999999999
@@ -109,13 +109,13 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="inner-header">
+        <div class="container"  style="height:7rem;">
+            <div class="inner-header" style="padding:31px">
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
                             <a href="/">
-                                <img src="/img/logo.png" alt="" />
+                                <img style="margin-top:-14px" src="/img/logo.png" alt="" />
                             </a>
                         </div>
                     </div>
@@ -125,8 +125,10 @@
                   All Categories
                 </button>
                             <div class="input-group">
-                                <input type="text" placeholder="What do you need?" />
-                                <button type="button"><i class="ti-search"></i></button>
+                               <form action="/search" method="POST">
+                                <input required name="query" type="text" placeholder="What do you need?" />
+                                <button type="submit"><i class="ti-search"></i></button>
+                               </form>
                             </div>
                         </div>
                     </div>

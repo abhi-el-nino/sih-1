@@ -2,7 +2,7 @@ const request = require("async-request");
 const Item = require("../../models/item");
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
-
+const Farmer = require("../../models/Farmer");
 const Blacklisted = require("../../models/blacklisted");
 // const Complaints = require("../../models/complaints");
 const OTP = require("../../models/Otp");
@@ -110,8 +110,10 @@ module.exports.submitOtpfromAdmin = async (req, res) => {
     console.log(obj);
 
     let submittedOtp = `${req.body.otp}`;
+    console.log(obj && obj.otp == submittedOtp);
     if (obj && obj.otp == submittedOtp) {
       let user = await User.findOne({ phone: req.body.phone });
+      console.log(user);
       return res.status(200).json({
         message: "correct",
         correctOTP: true,
@@ -144,7 +146,7 @@ module.exports.takeAction = async (req, res) => {
     let { action, number, crop, category, actionMessage } = req.body;
     console.log(action,number,crop,category,actionMessage);
 
-    let farmer = await User.findOne({ phone: number });
+    let farmer = await Farmer.findOne({ phone: number });
   
     if (!farmer) {
       return res.json(404, {
