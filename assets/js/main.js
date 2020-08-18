@@ -6,7 +6,6 @@
     Version: 1.0
     Created: Colorlib
 ---------------------------------------------------------  */
-
 'use strict';
 
 (function ($) {
@@ -14,10 +13,15 @@
     /*------------------
         Preloader
     --------------------*/
-    $(window).on('load', function () {
-        $(".loader").fadeOut();
-        $("#preloder").delay(200).fadeOut("slow");
+    var $window = $(window);
+
+    // Preloader active code
+    $window.on('load', function () {
+        $('#preloader').fadeOut('slow', function () {
+            $(this).remove();
+        });
     });
+
 
     /*------------------
         Background Set
@@ -26,7 +30,6 @@
         var bg = $(this).data('setbg');
         $(this).css('background-image', 'url(' + bg + ')');
     });
-
     /*------------------
 		Navigation
 	--------------------*/
@@ -55,16 +58,21 @@
     /*------------------
         Product Slider
     --------------------*/
-   $(".product-slider").owlCarousel({
-        loop: true,
-        margin: 25,
+   $("#vegetables-slider").owlCarousel({
+       loop:true,
+     
+        margin:10,
         nav: true,
-        items: 4,
+        center:true,
+        items:5,
         dots: true,
         navText: ['<i class="ti-angle-left"></i>', '<i class="ti-angle-right"></i>'],
-        smartSpeed: 1200,
+        smartSpeed: 1000,
         autoHeight: false,
+        autoWidth:true,
         autoplay: true,
+        autoplayTimeout:3000,
+        responsiveClass:true,
         responsive: {
             0: {
                 items: 1,
@@ -76,10 +84,78 @@
                 items: 2,
             },
             1200: {
-                items: 3,
+                items: 4,
+                center:true,
+                margin:10,
+                stagePadding:10
             }
         }
     });
+    $("#cereals-slider").owlCarousel({
+        loop:true,
+         margin: 10,
+         nav: true,
+         center:true,
+         items:5,
+         dots: true,
+         navText: ['<i class="ti-angle-left"></i>', '<i class="ti-angle-right"></i>'],
+         smartSpeed: 1000,
+         autoHeight: false,
+         autoWidth:true,
+         autoplay: true,
+         autoplayTimeout:2000,
+         responsiveClass:true,
+         responsive: {
+             0: {
+                 items: 1,
+             },
+             576: {
+                 items: 2,
+             },
+             992: {
+                 items: 2,
+             },
+             1200: {
+                 items: 4,
+                 center:true,
+                 margin:10,
+                 stagePadding:10
+             }
+         }
+     });
+     $("#fruits-slider").owlCarousel({
+        loop:true,
+        rtl:true,
+         margin:10,
+         nav: true,
+         center:true,
+         items:5,
+         dots: true,
+         navText: ['<i class="ti-angle-left"></i>', '<i class="ti-angle-right"></i>'],
+         smartSpeed: 1000,
+         autoHeight: false,
+         autoWidth:true,
+         autoplay: true,
+         autoplayTimeout:2000,
+         responsiveClass:true,
+         responsive: {
+             0: {
+                 items: 1,
+             },
+             576: {
+                 items: 2,
+             },
+             992: {
+                 items: 2,
+             },
+             1200: {
+                 items: 4,
+                 center:true,
+                 margin:10,
+                 stagePadding:10
+             }
+         }
+     });
 
     /*------------------
        logo Carousel
@@ -199,7 +275,8 @@
     /*-------------------
 		Radio Btn
 	--------------------- */
-    $(".fw-size-choose .sc-item label, .pd-size-choose .sc-item label").on('click', function () {
+    $(".fw-size-choose .sc-item label, .pd-size-choose .sc-item label").on('click', function (e) {
+        e.preventDefault()
         $(".fw-size-choose .sc-item label, .pd-size-choose .sc-item label").removeClass('active');
         $(this).addClass('active');
     });
